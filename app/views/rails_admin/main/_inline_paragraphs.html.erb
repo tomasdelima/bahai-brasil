@@ -1,0 +1,17 @@
+<% _saved_object = @object %>
+<% _saved_form = form %>
+<% _saved_field = field %>
+
+<div id="paragraphs" class="col-sm-12">
+  <%= form.fields_for(:paragraphs) %>
+</div>
+<div id="" class="col-sm-12">
+  <%= form.link_to_add('Add Paragraph ', :paragraphs) %>
+</div>
+
+<% @object = _saved_object %>
+<% form = _saved_form %>
+<% field = _saved_field %>
+<% if field.errors.present? %>
+  <%= "#{field.label } #{field.errors.first}" %>
+<% end %>

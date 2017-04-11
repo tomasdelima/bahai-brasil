@@ -15,4 +15,17 @@ RailsAdmin.config do |config|
     delete
     show_in_app
   end
+
+  config.model 'Post' do
+    edit do
+      field :title
+      field :status
+      # form_builder :nested_form_for
+      field :paragraphs do
+        partial "inline_paragraphs"
+      end
+
+      field :author
+    end
+  end
 end

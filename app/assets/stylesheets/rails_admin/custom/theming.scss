@@ -1,0 +1,16 @@
+#paragraphs {
+  margin-top: 15px;
+
+  .paragraph {
+    textarea {
+      width: 100%;
+      height: 150px;
+      resize: vertical;
+      margin-bottom: 10px;
+    }
+
+    .remove_nested_fields {
+
+    }
+  }
+}

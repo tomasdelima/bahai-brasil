@@ -1,0 +1,14 @@
+<% ff = f %>
+<% ff.object.errors.full_messages.each do |msg| %>
+   <p class="flash_alert_msg"><%= msg %></p>
+<% end %>
+<div class="paragraph">
+  <div class="col-sm-8">
+    <%= ff.text_area(:body, class: "form-control")%>
+  </div>
+  <div class="col-sm-4">
+    <%= ff.label(:style)%>
+    <%= ff.text_field(:style, class: "form-control")%>
+    <% ff.link_to_remove('Remove') %>
+  </div>
+</div>
