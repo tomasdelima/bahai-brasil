@@ -16,6 +16,8 @@ RailsAdmin.config do |config|
     show_in_app
   end
 
+  config.excluded_models << Paragraph
+
   config.model 'Post' do
     edit do
       field :title
@@ -25,6 +27,17 @@ RailsAdmin.config do |config|
         partial "inline_paragraphs"
       end
 
+      field :author
+    end
+
+    show do
+      field :title
+      field :status
+      field :paragraphs do
+        pretty_value do
+          bindings[:view].content_tag(:div, value.reduce(""){|m,a| m+="<p class='#{a.style}'>#{a.body}</p>"}.html_safe)
+        end
+      end
       field :author
     end
   end
