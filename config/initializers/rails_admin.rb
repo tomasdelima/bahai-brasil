@@ -46,4 +46,14 @@ RailsAdmin.config do |config|
       field :author
     end
   end
+
+  config.model 'User' do
+    edit do
+      include_fields :name, :email, :password
+    end
+
+    list do
+      include_fields :name, :email, :password
+    end
+  end
 end
