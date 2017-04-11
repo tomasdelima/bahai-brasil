@@ -11,7 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411115804) do
+ActiveRecord::Schema.define(version: 20170411120831) do
+
+  create_table "paragraphs", force: :cascade do |t|
+    t.text     "body"
+    t.string   "style"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "paragraphs", ["post_id"], name: "index_paragraphs_on_post_id"
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "title"
+    t.string   "status"
+    t.integer  "created_by_id"
+    t.integer  "author_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "posts", ["author_id"], name: "index_posts_on_author_id"
+  add_index "posts", ["created_by_id"], name: "index_posts_on_created_by_id"
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false
