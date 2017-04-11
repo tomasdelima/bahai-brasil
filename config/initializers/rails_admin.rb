@@ -21,7 +21,9 @@ RailsAdmin.config do |config|
   config.model 'Post' do
     edit do
       field :title
-      field :status
+      field :status, :enum do
+        enum { Post::STATUSES }
+      end
       # form_builder :nested_form_for
       field :paragraphs do
         partial "inline_paragraphs"

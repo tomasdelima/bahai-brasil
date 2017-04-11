@@ -6,4 +6,6 @@ class Post < ActiveRecord::Base
 
   scope :published, -> { where(status: :published) }
   scope :pending, -> { where(status: :pending) }
+
+  STATUSES = ['pending', 'published']
 end
