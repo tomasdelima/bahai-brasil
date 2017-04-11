@@ -4,9 +4,7 @@
 
 <div id="paragraphs" class="col-sm-12">
   <%= form.fields_for(:paragraphs) %>
-</div>
-<div id="" class="col-sm-12">
-  <%= form.link_to_add('Add Paragraph ', :paragraphs) %>
+  <%= form.link_to_add('Add Paragraph ', :paragraphs, class: 'col-sm-12') %>
 </div>
 
 <% @object = _saved_object %>

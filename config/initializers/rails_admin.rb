@@ -30,6 +30,9 @@ RailsAdmin.config do |config|
       end
 
       field :author
+      field :created_by_id, :hidden do
+        default_value { bindings[:view]._current_user.id }
+      end
     end
 
     show do
