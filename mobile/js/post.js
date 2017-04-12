@@ -1,0 +1,33 @@
+import React, { Component } from 'react'
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  AsyncStorage,
+} from 'react-native'
+
+const s = require('./styles')
+
+module.exports = React.createClass({
+  goToPost () {
+    global.scenes.push({id: 'post', post: this.props.post, title: this.props.post.title})
+  },
+  renderInline () {
+    return <TouchableOpacity style={[s.post.inline.container]} onPress={this.goToPost}>
+      <Text style={[s.post.inline.title]}>{this.props.post.title}</Text>
+      <Text style={[s.post.inline.author]}>{this.props.post.author.name}</Text>
+    </TouchableOpacity>
+  },
+  renderFull () {
+    return <ScrollView style={[s.post.full.container]}>
+      <Text style={[s.post.full.title]}>{this.props.post.title}</Text>
+      {this.props.post.paragraphs.map((paragraph, i) => <Text style={[s.post.full.paragraph, s[paragraph.style]]} key={i}>{paragraph.body}</Text>)}
+      <Text style={[s.post.full.author, s.pagePadding]}>{this.props.post.author.name}</Text>
+    </ScrollView>
+  },
+  render () {
+    return this.props.inline ? this.renderInline() : this.renderFull()
+  }
+})
+
