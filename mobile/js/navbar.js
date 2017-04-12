@@ -13,14 +13,19 @@ module.exports = React.createClass({
   goToReturn () {
     global.scenes.pop()
   },
+  scrollToTop () {
+    this.scrollview.scrollTo({y: 0})
+  },
   render () {
     return <View>
       <View style={[s.navbar.container, s.row]}>
         <TouchableOpacity style={[s.navbar.left,s.red]} onPress={this.goToReturn}><Text style={[s.navbar.return]}>Return</Text></TouchableOpacity>
-        <Text style={[s.navbar.title]}>{this.props.title}</Text>
+        <TouchableOpacity style={[s.navbar.center]} onPress={this.scrollToTop}><Text style={[s.navbar.title]}>{this.props.title}</Text></TouchableOpacity>
         <Text style={[s.navbar.right]}></Text>
       </View>
-      {this.props.children}
+      <ScrollView ref={(s) => this.scrollview = s}>
+        {this.props.children}
+      </ScrollView>
     </View>
   }
 })

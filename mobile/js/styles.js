@@ -2,7 +2,7 @@ module.exports = {
   post: {
     inline: {
       container: { padding: 20, borderBottomWidth: 1, borderColor: '#eee' },
-      author: { fontSize: 17 },
+      author: { fontSize: 16, color: '#bbb' },
       title: { fontSize: 18 },
     },
     full: {
@@ -15,9 +15,10 @@ module.exports = {
 
   navbar: {
     container: { backgroundColor: '#FBBC31', height: 30},
-    title:  { flex: 1, textAlign: 'center' },
     left:   { flex: 0, width: 50 },
+    center: { flex: 1 },
     right:  { flex: 0, textAlign: 'center', width: 50 },
+    title:  { textAlign: 'center' },
     return: { textAlign: 'center' },
   },
 
@@ -27,7 +28,7 @@ module.exports = {
   left:    { textAlign: 'left'},
   right:   { textAlign: 'right'},
   center:  { textAlign: 'center'},
-  quote:   { paddingHorizontal: 20, marginHorizontal: 10, backgroundColor: '#d9d9d9', borderRadius: 10 },
+  quote:   { paddingHorizontal: 20, marginHorizontal: 10, backgroundColor: '#eee', borderRadius: 5 },
   indent1: { paddingLeft: 30 },
   indent2: { paddingLeft: 60 },
 

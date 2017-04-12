@@ -42,10 +42,10 @@ module.exports = React.createClass({
     global.scenes = global.scenes || navigator
 
     if (route.id == 'posts') {
-      var content = <ScrollView>
+      var content = <View>
         {this.state.posts.map((post, i) => <Post key={i} post={post} inline={true} />)}
         <Text style={[s.pagePadding]}/>
-      </ScrollView>
+      </View>
     } else if (route.id == 'post') {
       var content = <Post post={route.post} />
     }

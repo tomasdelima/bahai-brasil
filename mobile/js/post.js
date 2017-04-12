@@ -20,11 +20,17 @@ module.exports = React.createClass({
     </TouchableOpacity>
   },
   renderFull () {
-    return <ScrollView style={[s.post.full.container]}>
+
+    return <View style={[s.post.full.container]}>
       <Text style={[s.post.full.title]}>{this.props.post.title}</Text>
-      {this.props.post.paragraphs.map((paragraph, i) => <Text style={[s.post.full.paragraph, s[paragraph.style]]} key={i}>{paragraph.body}</Text>)}
-      <Text style={[s.post.full.author, s.pagePadding]}>{this.props.post.author.name}</Text>
-    </ScrollView>
+      {this.props.post.paragraphs.map((paragraph, i) => {
+        var styles = [s.post.full.paragraph]
+        paragraph.style.split(/\s+/).map((style) => styles.push(s[style]))
+
+        return <Text style={styles} key={i}>{paragraph.body}</Text>
+      })}
+      <Text style={[s.post.full.author, s.pagePadding]}>— {this.props.post.author.name}</Text>
+    </View>
   },
   render () {
     return this.props.inline ? this.renderInline() : this.renderFull()
