@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 const DB = {
   select: (table, where, orderBy) => {
     return AsyncStorage.getItem(table).then((r) => {
-      var result = JSON.parse(r)
+      var result = JSON.parse(r) || []
       console.log('SELECT    : ' + table + ' ' + JSON.stringify(where) + ' => ' + result.length + ' records')
       return result.filter((item) => {
         var rr = true
@@ -27,6 +27,9 @@ const DB = {
       AsyncStorage.setItem(table, JSON.stringify(result))
       return result
     })
+  },
+  reset: (table) => {
+    return AsyncStorage.removeItem(table)
   },
 }
 

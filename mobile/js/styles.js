@@ -14,7 +14,7 @@ module.exports = {
   },
 
   navbar: {
-    container: { backgroundColor: '#FBBC31', height: 30},
+    container: { backgroundColor: '#FBBC31', height: 35, alignItems: 'center'},
     left:   { flex: 0, width: 50 },
     center: { flex: 1 },
     right:  { flex: 0, textAlign: 'center', width: 50 },
@@ -31,6 +31,8 @@ module.exports = {
   quote:   { paddingHorizontal: 20, marginHorizontal: 10, backgroundColor: '#eee', borderRadius: 5 },
   indent1: { paddingLeft: 30 },
   indent2: { paddingLeft: 60 },
+  indent3: { paddingLeft: 90 },
+  indent4: { paddingLeft: 120 },
 
   red:   { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   green: { backgroundColor: 'rgba(0, 255, 0, 0.2)' },

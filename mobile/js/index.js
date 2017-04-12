@@ -13,7 +13,7 @@ const DB = require('./db')
 const s = require('./styles')
 
 module.exports = React.createClass({
-  componentDidMount() {
+  componentDidMount () {
     DB.select('posts', {status: ['published']}).then((oldPosts) => {
       this.setState({posts: oldPosts})
       DB.get('updated_at').then((updated_at) => {
@@ -29,10 +29,10 @@ module.exports = React.createClass({
       })
     })
   },
-  getInitialState() {
+  getInitialState () {
     return {posts: []}
   },
-  render() {
+  render () {
     return  <Navigator initialRoute={{id: 'posts', title: 'Postagens'}} renderScene={this.renderScene}/>
   },
   renderScene (route, navigator) {
