@@ -26,6 +26,15 @@ module.exports = React.createClass({
       .then((newPosts) => DB.update('posts', newPosts))
       .then((updatedPosts) => this.setState({posts: updatedPosts}))
   },
+  loadPost (id) {
+    var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
+    console.log('FETCH     : ' + url)
+    return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
+      .then((newPost) => {
+        DB.update('posts', [newPost])
+        this.setState({post: newPost})
+      })
+  },
   getInitialState () {
     return {posts: []}
   },
@@ -40,11 +49,13 @@ module.exports = React.createClass({
         {this.state.posts.map((post, i) => <Post key={i} post={post} inline={true} />)}
         <Text style={[s.pagePadding]}/>
       </View>
+      var onRefresh = this.loadPosts
     } else if (route.id == 'post') {
-      var content = <Post post={route.post} />
+      var content = <Post post={this.state.post || route.post} />
+      var onRefresh = () => this.loadPost(route.post.id)
     }
 
-    return <NavBar title={route.title} onRefresh={this.loadPosts}>{content}</NavBar>
+    return <NavBar title={route.title} onRefresh={onRefresh}>{content}</NavBar>
   }
 })
 
