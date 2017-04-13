@@ -20,7 +20,6 @@ module.exports = React.createClass({
     </TouchableOpacity>
   },
   renderFull () {
-
     return <View style={[s.post.full.container]}>
       <Text style={[s.post.full.title]}>{this.props.post.title}</Text>
       {this.props.post.paragraphs.map((paragraph, i) => {

@@ -16,18 +16,15 @@ module.exports = React.createClass({
   componentDidMount () {
     DB.select('posts', {status: ['published']}).then((oldPosts) => {
       this.setState({posts: oldPosts})
-      DB.get('updated_at').then((updated_at) => {
-        var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=' + ('2000-01-01')
-        console.log('FETCH     : ' + url)
-        fetch(url).then((response) => {
-          var parsedResponse = JSON.parse(response._bodyInit)
-          var newPosts = JSON.parse(parsedResponse.data)
-          DB.update('posts', newPosts).then((updatedPosts) => {
-            this.setState({posts: updatedPosts})
-          })
-        })
-      })
+      this.loadPosts()
     })
+  },
+  loadPosts () {
+    var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01'
+    console.log('FETCH     : ' + url)
+    return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
+      .then((newPosts) => DB.update('posts', newPosts))
+      .then((updatedPosts) => this.setState({posts: updatedPosts}))
   },
   getInitialState () {
     return {posts: []}
@@ -47,7 +44,7 @@ module.exports = React.createClass({
       var content = <Post post={route.post} />
     }
 
-    return <NavBar title={route.title}>{content}</NavBar>
+    return <NavBar title={route.title} onRefresh={this.loadPosts}>{content}</NavBar>
   }
 })
 

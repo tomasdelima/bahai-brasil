@@ -4,7 +4,7 @@ const DB = {
   select: (table, where, orderBy) => {
     return AsyncStorage.getItem(table).then((r) => {
       var result = JSON.parse(r) || []
-      console.log('SELECT    : ' + table + ' ' + JSON.stringify(where) + ' => ' + result.length + ' records')
+      console.log('SELECT    : ' + table + ' ' + (JSON.stringify(where) || '') + ' => ' + result.length + ' records')
       return result.filter((item) => {
         var rr = true
         for (var key in where) { rr = rr && where[key].indexOf(item[key]) >= 0 }
