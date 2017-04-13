@@ -5,4 +5,10 @@ class PostsController < ApplicationController
       format.json { render json: {data: posts, time: Time.now.utc} }
     end
   end
+
+  def show
+    respond_to do |format|
+      format.json { render json: {data: Post.find(params[:id]).to_json(include: [:author, :paragraphs])} }
+    end
+  end
 end
