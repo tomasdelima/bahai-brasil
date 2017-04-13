@@ -27,13 +27,13 @@ module.exports = React.createClass({
     return {refreshing: false}
   },
   onRefresh () {
-    var t0 = performance.now()
-    console.log('REFRESH   : START')
+    var t = performance.now()
+    console.log('REFRESH:')
     this.setState({refreshing: true})
     this.props.onRefresh().then(() => {
-      var t1 = performance.now()
-      console.log('REFRESH   : END => ' + (t1 - t0)/1000 + ' seconds')
       this.setState({refreshing: false})
+      t = performance.now() - t
+      console.log('REFRESH: ' + t/1000 + ' seconds')
     })
   },
   render () {
