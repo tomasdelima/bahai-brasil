@@ -22,26 +22,30 @@ module.exports = React.createClass({
   loadPosts (indent) {
     var t = performance.now()
     var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01'
-    console.log(indent + 'FETCH: ' + url)
+    if (DB.shouldLog) console.log(indent + 'FETCH: ' + url)
     return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
       .then((newPosts) => {
         t = performance.now() - t
         return DB.update('posts', newPosts, indent + '  ')
       })
       .then((updatedPosts) => this.setState({posts: updatedPosts}))
-      .then(() => console.log(indent + 'FETCH: ' + t/1000 + ' seconds'))
+      .then(() => {
+        if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds')
+      })
   },
   loadPost (id, indent) {
     var t = performance.now()
     var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
-    console.log(indent + 'FETCH: ' + url)
+    if (DB.shouldLog) console.log(indent + 'FETCH: ' + url)
     return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
       .then((newPost) => {
         t = performance.now() - t
         this.setState({post: newPost})
         return DB.update('posts', [newPost], indent + '  ')
       })
-      .then(() => console.log(indent + 'FETCH: ' + t/1000 + ' seconds'))
+      .then(() => {
+        if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds')
+      })
   },
   getInitialState () {
     return {posts: []}

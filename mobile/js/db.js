@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native'
 
 const DB = {
+  shouldLog: false,
   select: (table, where, indent) => {
     var t = performance.now()
     return AsyncStorage.getItem(table).then((r) => {
@@ -11,7 +12,7 @@ const DB = {
         return rr
       })
       t = performance.now() - t
-      console.log(indent + 'SELECT: ' + table + ' ' + (JSON.stringify(where) || '') + ' => ' + result.length + ' records, ' + t/1000 + ' seconds')
+      if (DB.shouldLog) console.log(indent + 'SELECT: ' + table + ' ' + (JSON.stringify(where) || '') + ' => ' + result.length + ' records, ' + t/1000 + ' seconds')
       return filteredResults
     })
   },
@@ -20,7 +21,7 @@ const DB = {
   },
   update: (table, objs, indent) => {
     var t = performance.now()
-    console.log(indent + 'UPDATE: ' + objs.length + ' records')
+    if (DB.shouldLog) console.log(indent + 'UPDATE: ' + objs.length + ' records')
 
     return DB.select(table,undefined, indent + '  ').then((result) => {
       t = performance.now() - t
@@ -32,7 +33,7 @@ const DB = {
       AsyncStorage.setItem(table, JSON.stringify(result))
       return result
     }).then((result) => {
-      console.log(indent + 'UPDATE: ' + t/1000 + ' seconds')
+      if (DB.shouldLog) console.log(indent + 'UPDATE: ' + t/1000 + ' seconds')
       return result
     })
   },

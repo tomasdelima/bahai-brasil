@@ -7,6 +7,7 @@ import {
   AsyncStorage,
 } from 'react-native'
 
+const Markdown = require('./markdown')
 const s = require('./styles')
 
 module.exports = React.createClass({
@@ -26,7 +27,7 @@ module.exports = React.createClass({
         var styles = [s.post.full.paragraph]
         paragraph.style.split(/\s+/).map((style) => styles.push(s[style]))
 
-        return <Text style={styles} key={i}>{paragraph.body}</Text>
+        return <Markdown style={styles} key={i}>{paragraph.body}</Markdown>
       })}
       <Text style={[s.post.full.author, s.pagePadding]}>— {this.props.post.author.name}</Text>
     </View>

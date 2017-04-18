@@ -34,6 +34,11 @@ module.exports = {
   indent3: { paddingLeft: 90 },
   indent4: { paddingLeft: 120 },
 
+  bold:       { fontWeight: 'bold', color: 'red' },
+  italic:     { fontStyle: 'italic' },
+  underline:  { textDecorationLine: 'underline' },
+  translucid: { opacity: 0.6 },
+
   red:   { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   green: { backgroundColor: 'rgba(0, 255, 0, 0.2)' },
   blue:  { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
