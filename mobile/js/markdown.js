@@ -8,27 +8,31 @@ module.exports = React.createClass({
     if (rules && rules.length > 0) {
       return this.fragmentStringByRule(str, rules)
     } else {
-      return [str]
+      return str
     }
   },
 
   fragmentStringByRule (str, rules) {
-    var rule = rules[0]
+    var sortedRules = rules.map((rule) => [(str.match(rule.regexp) || [''])[0].length, rule]).sort((a, b) => a[0]-b[0])
+    var rule = sortedRules[sortedRules.length-1][1]
+    var newRules = sortedRules.map((i) => i[1]).slice(0, -1)
+
     var splitted = str.split(rule.regexp) || []
     var matched =  str.match(rule.regexp) || []
     var shift = str.indexOf(splitted[0]) == 0
     var result = []
     splitted.map((p, j) => {
-      if (splitted[j]) result[j*2+(shift ? 0 : 1)] = this.maybeFragmentStringByRule(splitted[j], rules.slice(1))
-      if (matched[j])  result[j*2+(shift ? 1 : 0)] = {content: this.maybeFragmentStringByRule(matched[j].slice(1, -1), rules.slice(1)), ruleName: rule.name}
+      if(matched[j])console.log(matched[j].slice(1, -1))
+      if (splitted[j]) result[j*2+(shift ? 0 : 1)] = this.maybeFragmentStringByRule(splitted[j], newRules)
+      if (matched[j])  result[j*2+(shift ? 1 : 0)] = {content: this.maybeFragmentStringByRule(matched[j].slice(1, -1), newRules), ruleName: rule.name}
     })
-    return result
+    return result.filter((a) => a)
   },
 
   fragmentString (str) {
     var rules = [
-      {name: 'bold',   regexp: (/\*.+?\*/g)},
-      {name: 'italic', regexp: (/\/.+?\//g)},
+      {name: 'bold',      regexp: (/\*.+?\*/g)},
+      {name: 'italic',    regexp: (/\/.+?\//g)},
       {name: 'underline', regexp: (/\_.+?\_/g)},
     ]
     return this.fragmentStringByRule(str, rules)
@@ -57,7 +61,6 @@ module.exports = React.createClass({
     }
   },
   render () {
-    console.log('============================================')
     return <Text style={this.props.style}>
       {this.compileFragment(this.fragmentString(this.props.children))}
     </Text>
