@@ -9,6 +9,7 @@ import {
 
 const Markdown = require('./markdown')
 const s = require('./styles')
+const HumanDate = require('human-date')
 
 module.exports = React.createClass({
   goToPost () {
@@ -17,7 +18,10 @@ module.exports = React.createClass({
   renderInline () {
     return <TouchableOpacity style={[s.post.inline.container]} onPress={this.goToPost}>
       <Text style={[s.post.inline.title]}>{this.props.post.title}</Text>
-      <Text style={[s.post.inline.author]}>{this.props.post.author.name}</Text>
+      <View style={[s.row]}>
+        <Text style={[s.post.inline.author]}>{this.props.post.author.name}</Text>
+        <Text style={[s.post.inline.date]}>{HumanDate.relativeTime(this.props.post.updated_at)}</Text>
+      </View>
     </TouchableOpacity>
   },
   renderFull () {

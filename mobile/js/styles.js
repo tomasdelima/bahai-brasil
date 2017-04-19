@@ -2,14 +2,15 @@ module.exports = {
   post: {
     inline: {
       container: { padding: 20, borderBottomWidth: 1, borderColor: '#eee' },
-      author: { fontSize: 16, color: '#bbb' },
-      title: { fontSize: 18 },
+      author: { fontSize: 16, color: '#bbb', flex: 1 },
+      date:   { fontSize: 16, color: '#bbb', flex: 1, textAlign: 'right' },
+      title:  { fontSize: 18 },
     },
     full: {
       container: { padding: 10 },
-      author: { fontSize: 22 },
+      author:    { fontSize: 22 },
       paragraph: { fontSize: 20, padding: 20 },
-      title: { fontSize: 30 },
+      title:     { fontSize: 30 },
     },
   },
 
@@ -22,12 +23,13 @@ module.exports = {
     return: { textAlign: 'center' },
   },
 
-  row: { flexDirection: 'row' },
+  flex: { flex: 1 },
+  row:  { flexDirection: 'row' },
   pagePadding: { paddingBottom: 100 },
 
-  left:    { textAlign: 'left'},
-  right:   { textAlign: 'right'},
-  center:  { textAlign: 'center'},
+  left:    { textAlign: 'left' },
+  right:   { textAlign: 'right' },
+  center:  { textAlign: 'center' },
   quote:   { paddingHorizontal: 20, marginHorizontal: 10, backgroundColor: '#eee', borderRadius: 5 },
   indent1: { paddingLeft: 30 },
   indent2: { paddingLeft: 60 },

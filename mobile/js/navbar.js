@@ -10,6 +10,7 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 const s = require('./styles')
+const DB = require('./db')
 
 module.exports = React.createClass({
   goToReturn () {
@@ -28,12 +29,12 @@ module.exports = React.createClass({
   },
   onRefresh () {
     var t = performance.now()
-    console.log('REFRESH:')
+    if (DB.shouldLog) console.log('REFRESH:')
     this.setState({refreshing: true})
     this.props.onRefresh().then(() => {
       this.setState({refreshing: false})
       t = performance.now() - t
-      console.log('REFRESH: ' + t/1000 + ' seconds')
+      if (DB.shouldLog) console.log('REFRESH: ' + t/1000 + ' seconds')
     })
   },
   render () {

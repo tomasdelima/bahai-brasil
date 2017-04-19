@@ -13,11 +13,21 @@ const DB = require('./db')
 const s = require('./styles')
 
 module.exports = React.createClass({
+  setPosts (posts) {
+    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at)-new Date(a.updated_at))})
+  },
   componentDidMount () {
     DB.select('posts', {status: ['published']}, '').then((oldPosts) => {
-      this.setState({posts: oldPosts})
+      this.setPosts(oldPosts)
       this.loadPosts('  ')
     })
+    this.updateScreen()
+  },
+  updateScreen () {
+    setTimeout(() => {
+      this.forceUpdate()
+      this.updateScreen()
+    }, 60000)
   },
   loadPosts (indent) {
     var t = performance.now()
@@ -28,7 +38,7 @@ module.exports = React.createClass({
         t = performance.now() - t
         return DB.update('posts', newPosts, indent + '  ')
       })
-      .then((updatedPosts) => this.setState({posts: updatedPosts}))
+      .then((updatedPosts) => this.setPosts(updatedPosts))
       .then(() => {
         if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds')
       })
