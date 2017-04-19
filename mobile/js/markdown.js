@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text } from 'react-native'
+import { Text, Image } from 'react-native'
 
 const s = require('./styles')
 
@@ -31,6 +31,7 @@ module.exports = React.createClass({
 
   fragmentString (str) {
     var rules = [
+      {name: 'image',     regexp: (/\[image\:.+?\]/g)},
       {name: 'bold',      regexp: (/\*.+?\*/g)},
       {name: 'italic',    regexp: (/\/.+?\//g)},
       {name: 'underline', regexp: (/\_.+?\_/g)},
@@ -49,6 +50,8 @@ module.exports = React.createClass({
         return <Text key={i}>
           {fragment.map((item, i) => this.compileFragment(item, i))}
         </Text>
+      } else if (fragment.ruleName == 'image') {
+        return <Image key={i} resizeMode="contain" style={[s.wide(0.75), s.high(0.75)]} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}/>
       } else if (className == 'Object') {
         return <Text key={i} style={[s[fragment.ruleName]]}>
           {this.compileFragment(fragment.content)}

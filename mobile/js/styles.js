@@ -1,3 +1,5 @@
+import {Dimensions} from 'react-native'
+
 module.exports = {
   post: {
     inline: {
@@ -25,6 +27,8 @@ module.exports = {
 
   flex: { flex: 1 },
   row:  { flexDirection: 'row' },
+  wide: (ratio) => { return {width: Dimensions.get('window').width * ratio}},
+  high: (ratio) => { return {height: Dimensions.get('window').height * ratio}},
   pagePadding: { paddingBottom: 100 },
 
   left:    { textAlign: 'left' },
@@ -35,6 +39,7 @@ module.exports = {
   indent2: { paddingLeft: 60 },
   indent3: { paddingLeft: 90 },
   indent4: { paddingLeft: 120 },
+  caption: { fontSize: 16, color: '#555' },
 
   bold:       { fontWeight: 'bold', color: 'red' },
   italic:     { fontStyle: 'italic' },
