@@ -41,6 +41,7 @@ module.exports = {
   indent4: { paddingLeft: 120 },
   caption: { fontSize: 16, color: '#555' },
 
+  url:        { textDecorationLine: 'underline', color: '#469' },
   bold:       { fontWeight: 'bold', color: 'red' },
   italic:     { fontStyle: 'italic' },
   underline:  { textDecorationLine: 'underline' },

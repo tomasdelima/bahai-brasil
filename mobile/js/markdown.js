@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Text, Image } from 'react-native'
+import { Text, Image, Linking } from 'react-native'
 
 const s = require('./styles')
 
 module.exports = React.createClass({
   maybeFragmentStringByRule (str, rules) {
-    if (rules && rules.length > 0) {
+    if (rules && !rules[0].stopRulesPropagation && rules.length > 0) {
       return this.fragmentStringByRule(str, rules)
     } else {
       return str
@@ -31,7 +31,8 @@ module.exports = React.createClass({
 
   fragmentString (str) {
     var rules = [
-      {name: 'image',     regexp: (/\[image\:.+?\]/g)},
+      {name: 'image',     regexp: (/\[image\:.+?\]/g), stopRulesPropagation: true},
+      {name: 'url',       regexp: (/\[url\:.+?\]/g),   stopRulesPropagation: true},
       {name: 'bold',      regexp: (/\*.+?\*/g)},
       {name: 'italic',    regexp: (/\/.+?\//g)},
       {name: 'underline', regexp: (/\_.+?\_/g)},
@@ -47,17 +48,16 @@ module.exports = React.createClass({
       if (className == 'String') {
         return <Text key={i}>{fragment}</Text>
       } else if (className == 'Array') {
-        return <Text key={i}>
-          {fragment.map((item, i) => this.compileFragment(item, i))}
-        </Text>
+        return <Text key={i}>{fragment.map((item, i) => this.compileFragment(item, i))}</Text>
       } else if (fragment.ruleName == 'image') {
-        return <Image key={i} resizeMode="contain" style={[s.wide(0.75), s.high(0.75)]} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}/>
+        return <Image key={i} resizeMode="contain" style={[s.wide(0.75), s.high(0.75)]} source={{uri: fragment.content.slice(6)}}/>
+      } else if (fragment.ruleName == 'url') {
+        var url = fragment.content.slice(4)
+        return <Text key={i} style={[s.url]} onPress={() => Linking.openURL(url).catch()}>{url}</Text>
       } else if (className == 'Object') {
-        return <Text key={i} style={[s[fragment.ruleName]]}>
-          {this.compileFragment(fragment.content)}
-        </Text>
+        return <Text key={i} style={[s[fragment.ruleName]]}>{this.compileFragment(fragment.content)}</Text>
       } else {
-        console.log('ERROR!!!: UNKNOWN FRAGMENT CLASS')
+        console.log('ERROR!!!: UNKNOWN FRAGMENT')
       }
     } else {
       return null
