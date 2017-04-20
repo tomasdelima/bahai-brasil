@@ -58,4 +58,13 @@ RailsAdmin.config do |config|
       include_fields :name, :email, :password
     end
   end
+
+  config.model 'Image' do
+    edit do
+      field :title
+      field :image do
+        partial "add_image"
+      end
+    end
+  end
 end
