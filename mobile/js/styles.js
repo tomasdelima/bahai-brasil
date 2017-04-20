@@ -1,15 +1,18 @@
 import {Dimensions} from 'react-native'
 
-module.exports = {
+var styles = {
+  posts: {
+    container: { backgroundColor: '#eee' },
+  },
   post: {
     inline: {
-      container: { padding: 20, borderBottomWidth: 1, borderColor: '#eee' },
-      author: { fontSize: 16, color: '#bbb', flex: 1 },
-      date:   { fontSize: 16, color: '#bbb', flex: 1, textAlign: 'right' },
-      title:  { fontSize: 18 },
+      container: { margin: 7, marginBottom: 0, padding: 10, backgroundColor: 'white', borderRadius: 3},
+      title:  { fontSize: 16 },
+      author: { fontSize: 13, color: '#bbb', flex: 3},
+      date:   { fontSize: 13, color: '#bbb', flex: 2, textAlign: 'right' },
     },
     full: {
-      container: { padding: 10 },
+      container: { padding: 10, backgroundColor: 'white' },
       author:    { fontSize: 22 },
       paragraph: { fontSize: 20, padding: 20 },
       title:     { fontSize: 30 },
@@ -29,7 +32,7 @@ module.exports = {
   row:  { flexDirection: 'row' },
   wide: (ratio) => { return {width: Dimensions.get('window').width * ratio}},
   high: (ratio) => { return {height: Dimensions.get('window').height * ratio}},
-  pagePadding: { paddingBottom: 100 },
+  pagePadding: { paddingBottom: 35 },
 
   left:    { textAlign: 'left' },
   right:   { textAlign: 'right' },
@@ -50,4 +53,17 @@ module.exports = {
   red:   { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   green: { backgroundColor: 'rgba(0, 255, 0, 0.2)' },
   blue:  { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
+  shadow: {
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
+  }
 }
+
+styles.post.inline.banner = { marginBottom: 5, width: styles.wide(1) - styles.post.inline.container.padding*2 - styles.post.inline.container.margin*2, height: 100 }
+
+module.exports = styles

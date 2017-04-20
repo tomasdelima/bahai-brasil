@@ -67,7 +67,7 @@ module.exports = React.createClass({
     global.scenes = global.scenes || navigator
 
     if (route.id == 'posts') {
-      var content = <View>
+      var content = <View style={[s.posts.container]}>
         {this.state.posts.map((post, i) => <Post key={i} post={post} inline={true} />)}
         <Text style={[s.pagePadding]}/>
       </View>

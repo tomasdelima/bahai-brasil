@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
+  Image,
   ScrollView,
   TouchableOpacity,
   AsyncStorage,
@@ -16,7 +17,9 @@ module.exports = React.createClass({
     global.scenes.push({id: 'post', post: this.props.post, title: this.props.post.title})
   },
   renderInline () {
-    return <TouchableOpacity style={[s.post.inline.container]} onPress={this.goToPost}>
+    var banner = this.props.post.banner_url ? <Image style={[s.post.inline.banner]} repeatMode="contain" source={{uri: this.props.post.banner_url}} /> : null
+    return <TouchableOpacity activeOpacity={0.8} style={[s.post.inline.container]} onPress={this.goToPost} elevation={5}>
+      {banner}
       <Text style={[s.post.inline.title]}>{this.props.post.title}</Text>
       <View style={[s.row]}>
         <Text style={[s.post.inline.author]}>{this.props.post.author.name}</Text>

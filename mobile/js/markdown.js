@@ -50,7 +50,7 @@ module.exports = React.createClass({
       } else if (className == 'Array') {
         return <Text key={i}>{fragment.map((item, i) => this.compileFragment(item, i))}</Text>
       } else if (fragment.ruleName == 'image') {
-        return <Image key={i} resizeMode="contain" style={[s.wide(0.75), s.high(0.75)]} source={{uri: fragment.content.slice(6)}}/>
+        return <Image key={i} resizeMode="contain" style={[s.wide(0.9), s.high(0.9)]} source={{uri: fragment.content.slice(6)}}/>
       } else if (fragment.ruleName == 'url') {
         var url = fragment.content.slice(4)
         return <Text key={i} style={[s.url]} onPress={() => Linking.openURL(url).catch()}>{url}</Text>
