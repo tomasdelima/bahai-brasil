@@ -21,6 +21,7 @@ RailsAdmin.config do |config|
   config.model 'Post' do
     edit do
       field :title
+      field :category
       field :banner_url
       field :status, :enum do
         enum { Post::STATUSES }
@@ -38,6 +39,7 @@ RailsAdmin.config do |config|
 
     show do
       field :title
+      field :category
       field :banner_url
       field :status
       field :paragraphs do
