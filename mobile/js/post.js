@@ -20,10 +20,13 @@ module.exports = React.createClass({
     var banner = this.props.post.banner_url ? <Image style={[s.post.inline.banner]} repeatMode="contain" source={{uri: this.props.post.banner_url}} /> : null
     return <TouchableOpacity activeOpacity={0.8} style={[s.post.inline.container]} onPress={this.goToPost} elevation={5}>
       {banner}
-      <Text style={[s.post.inline.title]}>{this.props.post.title}</Text>
-      <View style={[s.row]}>
-        <Text style={[s.post.inline.author]}>{this.props.post.author.name}</Text>
-        <Text style={[s.post.inline.date]}>{HumanDate.relativeTime(this.props.post.updated_at)}</Text>
+      <View style={[s.post.inline.container2]}>
+        <View style={[s.row]}>
+          <Text style={[s.post.inline.category]}>{this.props.post.category}</Text>
+          <Text style={[s.post.inline.division]}>⚫</Text>
+          <Text style={[s.post.inline.date]}>{HumanDate.relativeTime(this.props.post.updated_at)}</Text>
+        </View>
+        <Text style={[s.post.inline.title]}>{this.props.post.title}</Text>
       </View>
     </TouchableOpacity>
   },
@@ -36,7 +39,7 @@ module.exports = React.createClass({
 
         return <Markdown style={styles} key={i}>{paragraph.body}</Markdown>
       })}
-      <Text style={[s.post.full.author, s.pagePadding]}>— {this.props.post.author.name}</Text>
+      <Text style={[s.post.full.author, s.pagePadding]}>Editado por {this.props.post.author.name}</Text>
     </View>
   },
   render () {

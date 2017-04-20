@@ -6,14 +6,16 @@ var styles = {
   },
   post: {
     inline: {
-      container: { margin: 7, marginBottom: 0, padding: 10, backgroundColor: 'white', borderRadius: 3},
-      title:  { fontSize: 16 },
-      author: { fontSize: 13, color: '#bbb', flex: 3},
-      date:   { fontSize: 13, color: '#bbb', flex: 2, textAlign: 'right' },
+      container: { margin: 7, marginBottom: 0, backgroundColor: 'white', borderRadius: 3},
+      container2: { padding: 5, paddingTop: 5 },
+      title:    { fontSize: 16, textAlign: 'center' },
+      category: { fontSize: 13, color: '#bbb', flex: 1, textAlign: 'right' },
+      division: { fontSize: 8,  color: '#bbb', flex: 0, paddingVertical: 5, paddingHorizontal: 10 },
+      date:     { fontSize: 13, color: '#bbb', flex: 1 },
     },
     full: {
       container: { padding: 10, backgroundColor: 'white' },
-      author:    { fontSize: 22 },
+      author:    { fontSize: 15, marginRight: 10, marginBottom: 10, color: '#bbb', textAlign: 'right' },
       paragraph: { fontSize: 20, padding: 20 },
       title:     { fontSize: 30 },
     },
@@ -64,6 +66,7 @@ var styles = {
   }
 }
 
-styles.post.inline.banner = { marginBottom: 5, width: styles.wide(1) - styles.post.inline.container.padding*2 - styles.post.inline.container.margin*2, height: 100 }
+var c = styles.post.inline.container
+styles.post.inline.banner = { borderTopLeftRadius: c.borderRadius, borderTopRightRadius: c.borderRadius, width: styles.wide(1) - c.padding*2 - c.margin*2, height: 100 }
 
 module.exports = styles

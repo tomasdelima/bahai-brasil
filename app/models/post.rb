@@ -4,7 +4,7 @@ class Post < ActiveRecord::Base
   has_many :paragraphs
   accepts_nested_attributes_for :paragraphs
 
-  validates :title, :status, :author, :created_by, presence: true
+  validates :title, :status, :author, :category, :created_by, presence: true
 
   scope :published, -> { where(status: :published) }
   scope :pending, -> { where(status: :pending) }
