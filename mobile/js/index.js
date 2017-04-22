@@ -74,7 +74,8 @@ module.exports = React.createClass({
       </View>
       var onRefresh = () => this.loadPosts('  ')
     } else if (route.id == 'post') {
-      var content = <Post post={this.state.post || route.post} />
+      if (route.post) this.state.post = route.post
+      var content = <Post post={this.state.post} />
       var onRefresh = () => this.loadPost(route.post.id, '  ')
     }
 
