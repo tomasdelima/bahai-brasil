@@ -11,6 +11,7 @@ const Post = require('./post')
 const NavBar = require('./navbar')
 const DB = require('./db')
 const s = require('./styles')
+require('./custom')
 
 module.exports = React.createClass({
   setPosts (posts) {

@@ -4,43 +4,38 @@ import { Text, Image, Linking } from 'react-native'
 const s = require('./styles')
 
 module.exports = React.createClass({
-  maybeFragmentStringByRule (str, rules) {
-    if (rules && !rules[0].stopRulesPropagation && rules.length > 0) {
-      return this.fragmentStringByRule(str, rules)
+  componentWillMount() {
+    this.rules = [
+      {name: 'literal',   regexp: (/\[literal\:(.+)\]/), stopRulesPropagation: true},
+      {name: 'image',     regexp: (/\[image\:(.+?)\]/),  stopRulesPropagation: true},
+      {name: 'url',       regexp: (/\[url\:(.+?)\]/),    stopRulesPropagation: true},
+      {name: 'bold',      regexp: (/\[bold:(.+)\]/)},
+      {name: 'bold',      regexp: (/\*(.+?)\*/)},
+      {name: 'italic',    regexp: (/\/(.+?)\//)},
+      {name: 'underline', regexp: (/\_(.+?)\_/)},
+    ]
+  },
+  fragmentString (str) {
+    var rule = this.firstMatchedRule(str)
+    if (rule) {
+      var index = str.search(rule.regexp)
+      var length = str.match(rule.regexp)[0].length
+      var before = str.slice(0, index)
+      var matched = str.match(rule.regexp)[1]
+      var fragmentedMatched = rule.stopRulesPropagation ? matched : this.fragmentString(matched)
+      var after = str.slice(index + length)
+      var result = [this.fragmentString(before), {content: fragmentedMatched, rule: rule.name}, this.fragmentString(after)]
+
+      return result.compact().flatten()
     } else {
       return str
     }
   },
-
-  fragmentStringByRule (str, rules) {
-    var sortedRules = rules.map((rule) => [(str.match(rule.regexp) || [''])[0].length, rule]).sort((a, b) => a[0]-b[0])
-    var rule = sortedRules[sortedRules.length-1][1]
-    var newRules = sortedRules.map((i) => i[1]).slice(0, -1)
-
-    var splitted = str.split(rule.regexp) || []
-    var matched =  str.match(rule.regexp) || []
-    var shift = str.indexOf(splitted[0]) == 0
-    var result = []
-    splitted.map((p, j) => {
-      if(matched[j])console.log(matched[j].slice(1, -1))
-      if (splitted[j]) result[j*2+(shift ? 0 : 1)] = this.maybeFragmentStringByRule(splitted[j], newRules)
-      if (matched[j])  result[j*2+(shift ? 1 : 0)] = {content: this.maybeFragmentStringByRule(matched[j].slice(1, -1), newRules), ruleName: rule.name}
-    })
-    return result.filter((a) => a)
+  firstMatchedRule (str) {
+    var sortedRules = this.rules.map((rule) => [str.search(rule.regexp), rule]).sort((a, b) => a[0]-b[0])
+    var filteredRules = sortedRules.filter((rule) => rule[0] >= 0).map((rule) => rule[1])
+    return filteredRules[0]
   },
-
-  fragmentString (str) {
-    var rules = [
-      {name: 'image',     regexp: (/\[image\:.+?\]/g), stopRulesPropagation: true},
-      {name: 'url',       regexp: (/\[url\:.+?\]/g),   stopRulesPropagation: true},
-      {name: 'bold',      regexp: (/\*.+?\*/g)},
-      {name: 'italic',    regexp: (/\/.+?\//g)},
-      {name: 'underline', regexp: (/\_.+?\_/g)},
-    ]
-    return this.fragmentStringByRule(str, rules)
-  },
-
-
   compileFragment (fragment, i) {
     if (fragment) {
       var className = fragment.constructor.name
@@ -49,13 +44,15 @@ module.exports = React.createClass({
         return <Text key={i}>{fragment}</Text>
       } else if (className == 'Array') {
         return <Text key={i}>{fragment.map((item, i) => this.compileFragment(item, i))}</Text>
-      } else if (fragment.ruleName == 'image') {
-        return <Image key={i} resizeMode="contain" style={[s.wide(0.9), s.high(0.9)]} source={{uri: fragment.content.slice(6)}}/>
-      } else if (fragment.ruleName == 'url') {
-        var url = fragment.content.slice(4)
+      } else if (fragment.rule == 'literal') {
+        return <Text key={i}>{fragment.content}</Text>
+      } else if (fragment.rule == 'image') {
+        return <Image key={i} resizeMode="contain" style={[s.wide(1), s.high(1)]} source={{uri: fragment.content}}/>
+      } else if (fragment.rule == 'url') {
+        var url = fragment.content
         return <Text key={i} style={[s.url]} onPress={() => Linking.openURL(url).catch()}>{url}</Text>
       } else if (className == 'Object') {
-        return <Text key={i} style={[s[fragment.ruleName]]}>{this.compileFragment(fragment.content)}</Text>
+        return <Text key={i} style={[s[fragment.rule]]}>{this.compileFragment(fragment.content)}</Text>
       } else {
         console.log('ERROR!!!: UNKNOWN FRAGMENT')
       }

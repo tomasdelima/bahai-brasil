@@ -15,9 +15,9 @@ var styles = {
     },
     full: {
       container: { padding: 10, backgroundColor: 'white' },
-      author:    { fontSize: 15, marginRight: 10, marginBottom: 10, color: '#bbb', textAlign: 'right' },
-      paragraph: { fontSize: 20, padding: 20 },
-      title:     { fontSize: 30 },
+      author:    { fontSize: 12, margin: 10, marginTop: 20, color: '#bbb', textAlign: 'right' },
+      paragraph: { fontSize: 14, padding: 20 },
+      title:     { fontSize: 20 },
     },
   },
 
@@ -44,7 +44,7 @@ var styles = {
   indent2: { paddingLeft: 60 },
   indent3: { paddingLeft: 90 },
   indent4: { paddingLeft: 120 },
-  caption: { fontSize: 16, color: '#555' },
+  caption: { fontSize: 12, color: '#777', fontStyle: 'italic' },
 
   url:        { textDecorationLine: 'underline', color: '#469' },
   bold:       { fontWeight: 'bold', color: 'red' },
@@ -55,15 +55,6 @@ var styles = {
   red:   { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   green: { backgroundColor: 'rgba(0, 255, 0, 0.2)' },
   blue:  { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
-  shadow: {
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowRadius: 5,
-    shadowOpacity: 1.0
-  }
 }
 
 var c = styles.post.inline.container
