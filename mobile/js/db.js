@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 const DB = {
   shouldLog: false,
   select: (table, where, indent) => {
-    var t = performance.now()
+    var t = new Date()
     return AsyncStorage.getItem(table).then((r) => {
       var result = JSON.parse(r) || []
       var filteredResults = result.filter((item) => {
@@ -11,7 +11,7 @@ const DB = {
         for (var key in where) { rr = rr && where[key].indexOf(item[key]) >= 0 }
         return rr
       })
-      t = performance.now() - t
+      t = new Date() - t
       if (DB.shouldLog) console.log(indent + 'SELECT: ' + table + ' ' + (JSON.stringify(where) || '') + ' => ' + result.length + ' records, ' + t/1000 + ' seconds')
       return filteredResults
     })
@@ -20,11 +20,11 @@ const DB = {
     return AsyncStorage.getItem(key)
   },
   update: (table, objs, indent) => {
-    var t = performance.now()
+    var t = new Date()
     if (DB.shouldLog) console.log(indent + 'UPDATE: ' + objs.length + ' records')
 
     return DB.select(table,undefined, indent + '  ').then((result) => {
-      t = performance.now() - t
+      t = new Date() - t
       var objResult = {}
       result.map((item) => objResult[item.id] = item)
       objs.map((obj) => objResult[obj.id] = obj)

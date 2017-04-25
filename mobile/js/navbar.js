@@ -28,12 +28,12 @@ module.exports = React.createClass({
     return {refreshing: false}
   },
   onRefresh () {
-    var t = performance.now()
+    var t = new Date()
     if (DB.shouldLog) console.log('REFRESH:')
     this.setState({refreshing: true})
     this.props.onRefresh().then(() => {
       this.setState({refreshing: false})
-      t = performance.now() - t
+      t = new Date() - t
       if (DB.shouldLog) console.log('REFRESH: ' + t/1000 + ' seconds')
     })
   },

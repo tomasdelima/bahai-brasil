@@ -15,7 +15,7 @@ require('./custom')
 
 module.exports = React.createClass({
   setPosts (posts) {
-    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at)-new Date(a.updated_at))})
+    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at))})
   },
   componentDidMount () {
     DB.select('posts', {status: ['published']}, '').then((oldPosts) => {
@@ -31,32 +31,28 @@ module.exports = React.createClass({
     }, 60000)
   },
   loadPosts (indent) {
-    var t = performance.now()
+    var t = new Date()
     var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01'
     if (DB.shouldLog) console.log(indent + 'FETCH: ' + url)
     return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
       .then((newPosts) => {
-        t = performance.now() - t
+        t = new Date() - t
         return DB.update('posts', newPosts, indent + '  ')
       })
       .then((updatedPosts) => this.setPosts(updatedPosts))
-      .then(() => {
-        if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds')
-      })
+      .then(() => { if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds') })
   },
   loadPost (id, indent) {
-    var t = performance.now()
+    var t = new Date()
     var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
     if (DB.shouldLog) console.log(indent + 'FETCH: ' + url)
     return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
       .then((newPost) => {
-        t = performance.now() - t
-        this.setState({post: newPost})
+        t = new Date() - t
         return DB.update('posts', [newPost], indent + '  ')
       })
-      .then(() => {
-        if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds')
-      })
+      .then((newPost) => this.setState({post: newPost}))
+      .then(() => { if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds') })
   },
   getInitialState () {
     return {posts: []}

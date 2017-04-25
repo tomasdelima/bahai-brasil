@@ -11,8 +11,7 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
-// CUSTOm
-import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
+import com.inprogress.reactnativeyoutube.ReactNativeYouTube; // CUSTOM
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -26,9 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-
-          // CUSTOM
-          new ReactNativeYouTube()
+          new ReactNativeYouTube() // CUSTOM
       );
     }
   };
