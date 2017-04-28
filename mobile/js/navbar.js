@@ -8,7 +8,7 @@ import {
   AsyncStorage,
 } from 'react-native'
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/EvilIcons';
 const s = require('./styles')
 const DB = require('./db')
 
@@ -20,7 +20,7 @@ module.exports = React.createClass({
     this.scrollview.scrollTo({y: 0})
   },
   componentWillMount() {
-    this.returnIcon = global.scenes.getCurrentRoutes().length > 1 ? <Icon style={[s.navbar.return]} size={25} name="chevron-left" /> : null
+    this.returnIcon = global.scenes.getCurrentRoutes().length > 1 ? <Icon style={[s.navbar.return]} size={40} name="chevron-left" /> : null
   },
   componentDidMount() {
   },

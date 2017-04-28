@@ -2,27 +2,44 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  ScrollView,
+  BackAndroid,
   Navigator,
+  ScrollView,
   AsyncStorage,
 } from 'react-native'
 
 const Post = require('./post')
 const NavBar = require('./navbar')
 const DB = require('./db')
+const MessageBar = require('./message-bar')
 const s = require('./styles')
 require('./custom')
 
 module.exports = React.createClass({
-  setPosts (posts) {
-    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at))})
+  getInitialState () {
+    return {posts: []}
   },
   componentDidMount () {
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      if (global.scenes && global.scenes.getCurrentRoutes().length > 1) {
+        global.scenes.pop()
+        return true
+      } else {
+        return false
+      }
+    })
+
     DB.select('posts', {status: ['published']}, '').then((oldPosts) => {
       this.setPosts(oldPosts)
       this.loadPosts('  ')
     })
     this.updateScreen()
+  },
+  setPosts (posts) {
+    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)), postsMessage: {type: 'success', body: 'Postagens atualizadas', timeout: 3000}})
+  },
+  setPost (post) {
+    this.setState({post: post, postMessage: {type: 'success', body: 'Postagem atualizada', timeout: 3000}})
   },
   updateScreen () {
     setTimeout(() => {
@@ -30,32 +47,34 @@ module.exports = React.createClass({
       this.updateScreen()
     }, 60000)
   },
-  loadPosts (indent) {
+  loadFromServer (url, indent, callBack) {
     var t = new Date()
-    var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01'
+    this.setState({message: {}})
     if (DB.shouldLog) console.log(indent + 'FETCH: ' + url)
     return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
-      .then((newPosts) => {
+      .then((response) => {
         t = new Date() - t
-        return DB.update('posts', newPosts, indent + '  ')
+        return callBack(response)
       })
-      .then((updatedPosts) => this.setPosts(updatedPosts))
       .then(() => { if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds') })
+      .catch((e) => {
+        console.log(indent + 'FETCH: ERROR: ' + e)
+        this.setState({message: {type: 'error', body: 'Sem conexão'}})
+      })
+  },
+  loadPosts (indent) {
+    var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01'
+    return this.loadFromServer(url, indent, (posts) => {
+      this.setPosts(posts)
+      return DB.update('posts', posts, indent + '  ')
+    })
   },
   loadPost (id, indent) {
-    var t = new Date()
     var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
-    if (DB.shouldLog) console.log(indent + 'FETCH: ' + url)
-    return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
-      .then((newPost) => {
-        t = new Date() - t
-        return DB.update('posts', [newPost], indent + '  ')
-      })
-      .then((newPost) => this.setState({post: newPost}))
-      .then(() => { if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds') })
-  },
-  getInitialState () {
-    return {posts: []}
+    return this.loadFromServer(url, indent, (post) => {
+      this.setPost(post)
+      return DB.update('post', [post], indent + '  ')
+    })
   },
   render () {
     return  <Navigator initialRoute={{id: 'posts', title: 'Postagens'}} renderScene={this.renderScene}/>
@@ -65,13 +84,17 @@ module.exports = React.createClass({
 
     if (route.id == 'posts') {
       var content = <View style={[s.posts.container]}>
+        <MessageBar message={this.state.postsMessage}/>
         {this.state.posts.map((post, i) => <Post key={i} post={post} inline={true} />)}
         <Text style={[s.pagePadding]}/>
       </View>
       var onRefresh = () => this.loadPosts('  ')
     } else if (route.id == 'post') {
       if (route.post) this.state.post = route.post
-      var content = <Post post={this.state.post} />
+      var content = <View>
+        <MessageBar message={this.state.postMessage}/>
+        <Post post={this.state.post} />
+      </View>
       var onRefresh = () => this.loadPost(route.post.id, '  ')
     }
 

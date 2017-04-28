@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native'
 
 const DB = {
-  shouldLog: false,
+  shouldLog: true,
   select: (table, where, indent) => {
     var t = new Date()
     return AsyncStorage.getItem(table).then((r) => {

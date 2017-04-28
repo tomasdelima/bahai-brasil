@@ -30,6 +30,24 @@ var styles = {
     return: { textAlign: 'center' },
   },
 
+  message: {
+    container: {
+    },
+    body: {
+      paddingTop: 1,
+      textAlign: 'center',
+      fontSize: 12,
+    },
+    close: {
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      padding: 3,
+    },
+    error: { backgroundColor: 'rgba(255, 0, 0, 0.5)' },
+    success: { backgroundColor: 'rgba(0, 255, 0, 0.5)' },
+  },
+
   flex: { flex: 1 },
   row:  { flexDirection: 'row' },
   wide: (ratio) => { return {width: Dimensions.get('window').width * ratio}},
