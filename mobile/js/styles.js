@@ -17,7 +17,7 @@ var styles = {
       container: { padding: 10, backgroundColor: 'white' },
       author:    { fontSize: 12, margin: 10, marginTop: 20, color: '#bbb', textAlign: 'right' },
       paragraph: { fontSize: 14, padding: 20 },
-      title:     { fontSize: 20 },
+      title:     { fontSize: 20, margin: 15 },
     },
   },
 

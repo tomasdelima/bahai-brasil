@@ -36,7 +36,7 @@ module.exports = React.createClass({
     this.updateScreen()
   },
   setPosts (posts) {
-    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)), postsMessage: {type: 'success', body: 'Postagens atualizadas', timeout: 3000}})
+    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)).filter((a) => a.status == 'published'), postsMessage: {type: 'success', body: 'Postagens atualizadas', timeout: 3000}})
   },
   setPost (post) {
     this.setState({post: post, postMessage: {type: 'success', body: 'Postagem atualizada', timeout: 3000}})
@@ -47,34 +47,34 @@ module.exports = React.createClass({
       this.updateScreen()
     }, 60000)
   },
-  loadFromServer (url, indent, callBack) {
+  loadFromServer (resource, indent, id) {
+    var url = {
+      posts: 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01',
+      post: 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
+    }[resource]
+
     var t = new Date()
     this.setState({message: {}})
     if (DB.shouldLog) console.log(indent + 'FETCH: ' + url)
     return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
       .then((response) => {
-        t = new Date() - t
-        return callBack(response)
+        t = new Date() - t;
+        ({posts: this.setPosts, post: this.setPost})[resource](response)
+        return DB.update(resource, response, indent + '  ')
       })
       .then(() => { if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds') })
       .catch((e) => {
         console.log(indent + 'FETCH: ERROR: ' + e)
-        this.setState({message: {type: 'error', body: 'Sem conexão'}})
+        var error = {}
+        error[resource + 'Message'] = {type: 'error', body: 'Sem conexão'}
+        this.setState(error)
       })
   },
   loadPosts (indent) {
-    var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01'
-    return this.loadFromServer(url, indent, (posts) => {
-      this.setPosts(posts)
-      return DB.update('posts', posts, indent + '  ')
-    })
+    return this.loadFromServer('posts', indent)
   },
   loadPost (id, indent) {
-    var url = 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
-    return this.loadFromServer(url, indent, (post) => {
-      this.setPost(post)
-      return DB.update('post', [post], indent + '  ')
-    })
+    return this.loadFromServer('post', indent, id)
   },
   render () {
     return  <Navigator initialRoute={{id: 'posts', title: 'Postagens'}} renderScene={this.renderScene}/>

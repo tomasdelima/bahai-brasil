@@ -21,9 +21,10 @@ const DB = {
   },
   update: (table, objs, indent) => {
     var t = new Date()
+    if (objs.constructor.name != 'Array') objs = [objs]
     if (DB.shouldLog) console.log(indent + 'UPDATE: ' + objs.length + ' records')
 
-    return DB.select(table,undefined, indent + '  ').then((result) => {
+    return DB.select(table, undefined, indent + '  ').then((result) => {
       t = new Date() - t
       var objResult = {}
       result.map((item) => objResult[item.id] = item)
