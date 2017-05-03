@@ -5,7 +5,7 @@ var styles = {
     container: { backgroundColor: '#eee' },
   },
   post: {
-    container: { margin: 7, marginBottom: 0, backgroundColor: 'white', borderRadius: 3},
+    container: { margin: 5, backgroundColor: 'white', borderRadius: 3},
     title:     { fontSize: 16, textAlign: 'center' },
     category:  { fontSize: 13, color: '#bbb', flex: 1, textAlign: 'right' },
     division:  { fontSize: 8,  color: '#bbb', flex: 0, paddingVertical: 5, paddingHorizontal: 10 },

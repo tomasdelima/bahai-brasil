@@ -48,17 +48,17 @@ module.exports = React.createClass({
   },
   animateBanner (height, opacity) {
     Animation.medium(this.state.banner.height, height)
-    Animation.medium(this.state.banner.opacity, opacity)
+    Animation.fast(this.state.banner.opacity, opacity)
   },
   animateTitle (fontSize, margin) {
-    Animation.medium(this.state.title.fontSize, fontSize)
-    Animation.medium(this.state.title.margin, margin)
+    Animation.fast(this.state.title.fontSize, fontSize)
+    Animation.fast(this.state.title.margin, margin)
   },
   animateBody (opacity) {
-    Animation.medium(this.state.body.opacity, opacity)
+    Animation.fast(this.state.body.opacity, opacity)
   },
   animateCategoryAndDate (height) {
-    Animation.medium(this.state.categoryAndDate.height, height)
+    Animation.fast(this.state.categoryAndDate.height, height)
   },
   renderBanner () {
     var p = this.props.post
@@ -96,12 +96,12 @@ module.exports = React.createClass({
     }
   },
   render () {
-    return <TouchableOpacity activeOpacity={0.8} style={[this.props.post.display == 'hidden' ? {} : s.post.container]} onPress={this.props.onPress} elevation={5}>
+    return <View style={[this.props.post.display == 'hidden' ? {} : s.post.container]} elevation={2}>
       {this.renderBanner()}
       {this.renderTitle()}
       {this.renderCategoryAndDate()}
       {this.renderBody()}
-    </TouchableOpacity>
+    </View>
   },
 })
 

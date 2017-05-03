@@ -14,7 +14,7 @@ const DB = require('./db')
 
 module.exports = React.createClass({
   scrollToTop () {
-    this.scrollview.scrollTo({y: 0})
+    global.scrollview.scrollTo({y: 0})
   },
   getInitialState() {
     return {refreshing: false}
@@ -46,7 +46,7 @@ module.exports = React.createClass({
         <Text style={[s.navbar.right]}></Text>
       </View>
 
-      <ScrollView style={[]} ref={(s) => this.scrollview = s} refreshControl={refreshControl}>
+      <ScrollView style={[]} ref={(s) => global.scrollview = s} refreshControl={refreshControl} onScroll={(e) => global.scrollOffset = e.nativeEvent.contentOffset.y} onTouchStart={() => global.userTouched = true}>
         {this.props.children}
       </ScrollView>
     </View>

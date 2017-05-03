@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
   Text,
+  TouchableOpacity,
   View,
   BackAndroid,
 } from 'react-native'
@@ -61,14 +62,14 @@ module.exports = React.createClass({
         this.setState(error)
       })
   },
-  setPost (post, showMessage) {
-    var message = showMessage ? {type: 'success', body: 'Postagem atualizada', timeout: 3000} : null
-    this.setState({post: post, message: message})
-  },
   setPosts (posts, showMessage) {
     var message = showMessage ? {type: 'success', body: 'Postagens atualizadas', timeout: 3000} : null
     this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)).filter((a) => a.status == 'published'), message: message})
     if (this.state.resource == 'post') this.goToPost(this.state.post)
+  },
+  setPost (post, showMessage) {
+    var message = showMessage ? {type: 'success', body: 'Postagem atualizada', timeout: 3000} : null
+    this.setState({post: post, message: message})
   },
   goToPosts () {
     this.state.posts.map((p) => p.display = 'inline')
@@ -79,18 +80,36 @@ module.exports = React.createClass({
     this.state.posts.map((p) => p.display = p.id == post.id ? 'full' : 'hidden')
     this.setState({resource: 'post'})
   },
+  scrollToOldScrollPosition () {
+    if (!global.userTouched) {
+      global.scrollview.scrollTo({y: this.old})
+      setTimeout(this.scrollToOldScrollPosition, 100)
+    }
+  },
+  goToPostsAndScroll () {
+    global.userTouched = false
+    this.scrollToOldScrollPosition()
+    this.goToPosts()
+  },
+  goToPostAndScroll (post) {
+    global.userTouched = false
+    this.old = (global.scrollOffset || 0) + 0
+    global.scrollview.scrollTo({y: 0})
+    this.goToPost(post)
+  },
   render () {
-    var goToPosts = this.state.resource == 'post' ? this.goToPosts : null
+    var goToPosts = this.state.resource == 'post' ? this.goToPostsAndScroll : null
     var loadPosts = () => this.loadFromRemoteServer(this.state.resource, '  ', (this.state.post || {}).id)
     var title = this.state.resource == 'posts' ? 'Postagens' : this.state.post.title
 
     return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
       <View style={[s.posts.container]}>
         <MessageBar message={this.state.message}/>
-        {this.state.posts.map((post, i) => <Post key={i} post={post} onPress={() => this.goToPost(post)} />)}
+        {this.state.posts.map((post, i) => <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => this.goToPostAndScroll(post)}>
+          <Post post={post} />
+        </TouchableOpacity>)}
         <Text style={[s.pagePadding]}/>
       </View>
     </NavBar>
   },
 })
-
