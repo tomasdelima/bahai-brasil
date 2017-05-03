@@ -13,16 +13,8 @@ const s = require('./styles')
 const DB = require('./db')
 
 module.exports = React.createClass({
-  goToReturn () {
-    global.scenes.pop()
-  },
   scrollToTop () {
     this.scrollview.scrollTo({y: 0})
-  },
-  componentWillMount() {
-    this.returnIcon = global.scenes.getCurrentRoutes().length > 1 ? <Icon style={[s.navbar.return]} size={40} name="chevron-left" /> : null
-  },
-  componentDidMount() {
   },
   getInitialState() {
     return {refreshing: false}
@@ -38,6 +30,8 @@ module.exports = React.createClass({
     })
   },
   render () {
+    var returnIcon = this.props.onReturn ? <Icon style={[s.navbar.return]} size={40} name="chevron-left" /> : null
+
     var refreshControl = <RefreshControl
       refreshing={this.state.refreshing}
       onRefresh={this.onRefresh}
@@ -47,7 +41,7 @@ module.exports = React.createClass({
 
     return <View>
       <View style={[s.navbar.container, s.row]}>
-        <TouchableOpacity style={[s.navbar.left]} onPress={this.goToReturn}>{this.returnIcon}</TouchableOpacity>
+        <TouchableOpacity style={[s.navbar.left]} onPress={this.props.onReturn}>{returnIcon}</TouchableOpacity>
         <TouchableOpacity style={[s.navbar.center]} onPress={this.scrollToTop}><Text style={[s.navbar.title]}>{this.props.title}</Text></TouchableOpacity>
         <Text style={[s.navbar.right]}></Text>
       </View>
@@ -58,4 +52,3 @@ module.exports = React.createClass({
     </View>
   }
 })
-

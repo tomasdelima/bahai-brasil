@@ -3,9 +3,6 @@ import {
   Text,
   View,
   BackAndroid,
-  Navigator,
-  ScrollView,
-  AsyncStorage,
 } from 'react-native'
 
 const Post = require('./post')
@@ -17,12 +14,12 @@ require('./custom')
 
 module.exports = React.createClass({
   getInitialState () {
-    return {posts: []}
+    return {posts: [], resource: 'posts'}
   },
   componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (global.scenes && global.scenes.getCurrentRoutes().length > 1) {
-        global.scenes.pop()
+      if (this.state.resource = 'post') {
+        this.goToPosts()
         return true
       } else {
         return false
@@ -31,15 +28,9 @@ module.exports = React.createClass({
 
     DB.select('posts', {status: ['published']}, '').then((oldPosts) => {
       this.setPosts(oldPosts)
-      this.loadPosts('  ')
+      this.loadFromRemoteServer('posts', '  ')
     })
     this.updateScreen()
-  },
-  setPosts (posts) {
-    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)).filter((a) => a.status == 'published'), postsMessage: {type: 'success', body: 'Postagens atualizadas', timeout: 3000}})
-  },
-  setPost (post) {
-    this.setState({post: post, postMessage: {type: 'success', body: 'Postagem atualizada', timeout: 3000}})
   },
   updateScreen () {
     setTimeout(() => {
@@ -47,7 +38,7 @@ module.exports = React.createClass({
       this.updateScreen()
     }, 60000)
   },
-  loadFromServer (resource, indent, id) {
+  loadFromRemoteServer (resource, indent, id) {
     var url = {
       posts: 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01',
       post: 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
@@ -59,7 +50,7 @@ module.exports = React.createClass({
     return fetch(url).then((response) => JSON.parse(JSON.parse(response._bodyInit).data))
       .then((response) => {
         t = new Date() - t;
-        ({posts: this.setPosts, post: this.setPost})[resource](response)
+        ({posts: this.setPosts, post: this.setPost})[resource](response, true)
         return DB.update(resource, response, indent + '  ')
       })
       .then(() => { if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds') })
@@ -70,35 +61,36 @@ module.exports = React.createClass({
         this.setState(error)
       })
   },
-  loadPosts (indent) {
-    return this.loadFromServer('posts', indent)
+  setPost (post, showMessage) {
+    var message = showMessage ? {type: 'success', body: 'Postagem atualizada', timeout: 3000} : null
+    this.setState({post: post, message: message})
   },
-  loadPost (id, indent) {
-    return this.loadFromServer('post', indent, id)
+  setPosts (posts, showMessage) {
+    var message = showMessage ? {type: 'success', body: 'Postagens atualizadas', timeout: 3000} : null
+    this.setState({posts: posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)).filter((a) => a.status == 'published'), message: message})
+    if (this.state.resource == 'post') this.goToPost(this.state.post)
+  },
+  goToPosts () {
+    this.state.posts.map((p) => p.display = 'inline')
+    this.setState({resource: 'posts'})
+  },
+  goToPost (post) {
+    this.setPost(post)
+    this.state.posts.map((p) => p.display = p.id == post.id ? 'full' : 'hidden')
+    this.setState({resource: 'post'})
   },
   render () {
-    return  <Navigator initialRoute={{id: 'posts', title: 'Postagens'}} renderScene={this.renderScene}/>
-  },
-  renderScene (route, navigator) {
-    global.scenes = global.scenes || navigator
+    var goToPosts = this.state.resource == 'post' ? this.goToPosts : null
+    var loadPosts = () => this.loadFromRemoteServer(this.state.resource, '  ', (this.state.post || {}).id)
+    var title = this.state.resource == 'posts' ? 'Postagens' : this.state.post.title
 
-    if (route.id == 'posts') {
-      var content = <View style={[s.posts.container]}>
-        <MessageBar message={this.state.postsMessage}/>
-        {this.state.posts.map((post, i) => <Post key={i} post={post} inline={true} />)}
+    return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
+      <View style={[s.posts.container]}>
+        <MessageBar message={this.state.message}/>
+        {this.state.posts.map((post, i) => <Post key={i} post={post} onPress={() => this.goToPost(post)} />)}
         <Text style={[s.pagePadding]}/>
       </View>
-      var onRefresh = () => this.loadPosts('  ')
-    } else if (route.id == 'post') {
-      if (route.post) this.state.post = route.post
-      var content = <View>
-        <MessageBar message={this.state.postMessage}/>
-        <Post post={this.state.post} />
-      </View>
-      var onRefresh = () => this.loadPost(route.post.id, '  ')
-    }
-
-    return <NavBar title={route.title} onRefresh={onRefresh}>{content}</NavBar>
-  }
+    </NavBar>
+  },
 })
 

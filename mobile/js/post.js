@@ -5,7 +5,6 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native'
 
 const Markdown = require('./markdown')
@@ -13,12 +12,9 @@ const s = require('./styles')
 const HumanDate = require('human-date')
 
 module.exports = React.createClass({
-  goToPost () {
-    global.scenes.push({id: 'post', post: this.props.post, title: this.props.post.title})
-  },
   renderInline () {
     var banner = this.props.post.banner_url ? <Image style={[s.post.inline.banner]} repeatMode="contain" source={{uri: this.props.post.banner_url}} /> : null
-    return <TouchableOpacity activeOpacity={0.8} style={[s.post.inline.container]} onPress={this.goToPost} elevation={5}>
+    return <TouchableOpacity activeOpacity={0.8} style={[s.post.inline.container]} onPress={this.props.onPress} elevation={5}>
       {banner}
       <View style={[s.post.inline.container2]}>
         <View style={[s.row]}>
@@ -42,8 +38,17 @@ module.exports = React.createClass({
       <Text style={[s.post.full.author, s.pagePadding]}>Editado por {this.props.post.author.name}</Text>
     </View>
   },
+  renderHidden () {
+    return null
+  },
   render () {
-    return this.props.inline ? this.renderInline() : this.renderFull()
+    if (this.props.post.display == 'full') {
+      return this.renderFull()
+    } else if (this.props.post.display == 'hidden') {
+      return this.renderHidden()
+    } else {
+      return this.renderInline()
+    }
   }
 })
 

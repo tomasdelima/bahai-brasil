@@ -24,12 +24,11 @@ module.exports = React.createClass({
   },
   show () {
     this.setHeight(20)
-    this.setState({hide: false})
     if (this.props.message.timeout) setTimeout(this.hide, this.props.message.timeout)
   },
   hide () { this.setHeight(0) },
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.message != this.props.message) {
+    if (this.props.message && this.props.message.body && prevProps.message != this.props.message) {
       this.show()
     }
   },
