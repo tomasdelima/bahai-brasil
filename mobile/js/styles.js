@@ -5,20 +5,13 @@ var styles = {
     container: { backgroundColor: '#eee' },
   },
   post: {
-    inline: {
-      container: { margin: 7, marginBottom: 0, backgroundColor: 'white', borderRadius: 3},
-      container2: { padding: 5, paddingTop: 5 },
-      title:    { fontSize: 16, textAlign: 'center' },
-      category: { fontSize: 13, color: '#bbb', flex: 1, textAlign: 'right' },
-      division: { fontSize: 8,  color: '#bbb', flex: 0, paddingVertical: 5, paddingHorizontal: 10 },
-      date:     { fontSize: 13, color: '#bbb', flex: 1 },
-    },
-    full: {
-      container: { padding: 10, backgroundColor: 'white' },
-      author:    { fontSize: 12, margin: 10, marginTop: 20, color: '#bbb', textAlign: 'right' },
-      paragraph: { fontSize: 14, padding: 20 },
-      title:     { fontSize: 20, margin: 15 },
-    },
+    container: { margin: 7, marginBottom: 0, backgroundColor: 'white', borderRadius: 3},
+    title:     { fontSize: 16, textAlign: 'center' },
+    category:  { fontSize: 13, color: '#bbb', flex: 1, textAlign: 'right' },
+    division:  { fontSize: 8,  color: '#bbb', flex: 0, paddingVertical: 5, paddingHorizontal: 10 },
+    date:      { color: '#bbb', flex: 1 },
+    author:    { fontSize: 12, margin: 10, marginTop: 20, color: '#bbb', textAlign: 'right' },
+    paragraph: { fontSize: 14, padding: 20 },
   },
 
   navbar: {
@@ -73,9 +66,10 @@ var styles = {
   red:   { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   green: { backgroundColor: 'rgba(0, 255, 0, 0.2)' },
   blue:  { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
+  gray:  { backgroundColor: 'rgba(126, 126, 126, 0.5)' },
 }
 
-var c = styles.post.inline.container
-styles.post.inline.banner = { borderTopLeftRadius: c.borderRadius, borderTopRightRadius: c.borderRadius, width: styles.wide(1) - c.padding*2 - c.margin*2, height: 100 }
+var c = styles.post.container
+styles.post.banner = { borderTopLeftRadius: c.borderRadius, borderTopRightRadius: c.borderRadius, width: styles.wide(1) - c.padding*2 - c.margin*2 }
 
 module.exports = styles

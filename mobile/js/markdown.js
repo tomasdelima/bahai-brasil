@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, Image, Linking } from 'react-native'
+import { Text, Animated, Image, Linking } from 'react-native'
 
 const s = require('./styles')
 
@@ -61,8 +61,8 @@ module.exports = React.createClass({
     }
   },
   render () {
-    return <Text style={this.props.style}>
+    return <Animated.Text style={this.props.style}>
       {this.compileFragment(this.fragmentString(this.props.children))}
-    </Text>
+    </Animated.Text>
   }
 })
