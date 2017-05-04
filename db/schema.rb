@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170420043826) do
+ActiveRecord::Schema.define(version: 20170504143222) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "images", force: :cascade do |t|
     t.string   "title"
@@ -41,10 +47,11 @@ ActiveRecord::Schema.define(version: 20170420043826) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "banner_url"
-    t.string   "category"
+    t.integer  "category_id"
   end
 
   add_index "posts", ["author_id"], name: "index_posts_on_author_id"
+  add_index "posts", ["category_id"], name: "index_posts_on_category_id"
   add_index "posts", ["created_by_id"], name: "index_posts_on_created_by_id"
 
   create_table "users", force: :cascade do |t|
