@@ -19,8 +19,8 @@ module.exports = React.createClass({
   },
   componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (this.state.resource = 'post') {
-        this.goToPosts()
+      if (this.state.resource == 'post') {
+        this.goToPostsAndScroll()
         return true
       } else {
         return false
@@ -57,9 +57,7 @@ module.exports = React.createClass({
       .then(() => { if (DB.shouldLog) console.log(indent + 'FETCH: ' + t/1000 + ' seconds') })
       .catch((e) => {
         console.log(indent + 'FETCH: ERROR: ' + e)
-        var error = {}
-        error[resource + 'Message'] = {type: 'error', body: 'Sem conexão'}
-        this.setState(error)
+        this.setState({message: {type: 'error', body: 'Sem conexão'}})
       })
   },
   setPosts (posts, showMessage) {
@@ -80,20 +78,20 @@ module.exports = React.createClass({
     this.state.posts.map((p) => p.display = p.id == post.id ? 'full' : 'hidden')
     this.setState({resource: 'post'})
   },
-  scrollToOldScrollPosition () {
+  scrollToOldScrollPosition (i) {
     if (!global.userTouched) {
-      global.scrollview.scrollTo({y: this.old})
-      setTimeout(this.scrollToOldScrollPosition, 100)
+      global.scrollview.scrollTo({y: this.oldScrollPosition})
+      setTimeout(() => this.scrollToOldScrollPosition(i*2), 100*i)
     }
   },
   goToPostsAndScroll () {
     global.userTouched = false
-    this.scrollToOldScrollPosition()
+    this.scrollToOldScrollPosition(1)
     this.goToPosts()
   },
   goToPostAndScroll (post) {
     global.userTouched = false
-    this.old = (global.scrollOffset || 0) + 0
+    this.oldScrollPosition = (global.scrollOffset || 0) + 0
     global.scrollview.scrollTo({y: 0})
     this.goToPost(post)
   },
