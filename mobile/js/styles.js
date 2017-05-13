@@ -1,15 +1,20 @@
 import {Dimensions} from 'react-native'
 
+var colors = {yellow: '#FBBC31', darkYellow: '#DB9C11'}
+
 var styles = {
   posts: {
     container: { backgroundColor: '#eee' },
   },
+  category: {
+    container: {  },
+    showMore:  { flex: 1, textAlign: 'center', backgroundColor: colors.yellow, borderRadius: 3 },
+    name:      {  },
+  },
   post: {
-    container: { margin: 5, backgroundColor: 'white', borderRadius: 3},
-    title:     { fontSize: 16, textAlign: 'center' },
-    category:  { fontSize: 13, color: '#bbb', flex: 1, textAlign: 'right' },
-    division:  { fontSize: 8,  color: '#bbb', flex: 0, paddingVertical: 5, paddingHorizontal: 10 },
-    date:      { color: '#bbb', flex: 1 },
+    container: { marginBottom: 3, backgroundColor: 'white', borderRadius: 3 },
+    title:     { flex: 1, textAlign: 'left' },
+    date:      { flex: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: '#bbb', textAlign: 'right' },
     author:    { fontSize: 12, margin: 10, marginTop: 20, color: '#bbb', textAlign: 'right' },
     paragraph: { fontSize: 14, padding: 20 },
   },
@@ -50,6 +55,7 @@ var styles = {
   left:    { textAlign: 'left' },
   right:   { textAlign: 'right' },
   center:  { textAlign: 'center' },
+  // justify: { textAlign: 'justify' }, DOES NOT WORK
   quote:   { paddingHorizontal: 20, marginHorizontal: 10, backgroundColor: '#eee', borderRadius: 5 },
   indent1: { paddingLeft: 30 },
   indent2: { paddingLeft: 60 },

@@ -15,76 +15,82 @@ const HumanDate = require('human-date')
 
 module.exports = React.createClass({
   getInitialState() {
+    var h = this.props.post.display == 'hidden'
     return {
-      banner: {
-        height: new Animated.Value(100),
-        opacity: new Animated.Value(1),
-      },
-      title: {
-        fontSize: new Animated.Value(16),
-        margin: new Animated.Value(15),
-      },
-      categoryAndDate: {height: new Animated.Value(30)},
-      body: {opacity: new Animated.Value(0)}
+      banner: Object.merge(s.post.banner, {
+        height:  new Animated.Value(h ? 0 : 100),
+        opacity: new Animated.Value(h ? 0 : 1),
+      }),
+      title: Object.merge(s.post.title, {
+        fontSize: new Animated.Value(h ? 0 : 16),
+        padding:  new Animated.Value(h ? 0 : 15),
+        opacity:  new Animated.Value(h ? 0 : 1),
+      }),
+      date: Object.merge(s.post.date, {height: new Animated.Value(h ? 0 : 30)}),
+      body: Object.merge(s.post.paragraph, {opacity: new Animated.Value(h ? 0 : 0)}),
     }
   },
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.post.display == 'hidden') {
-      this.animateBanner(0, 0)
-      this.animateTitle(0, 0)
-      this.animateCategoryAndDate(0)
-      this.animateBody(0)
+    if (this.props.post.display == 'hidden') {
+      this.animateOpacity(0).then(() => {
+        this.animateBanner(0)
+        this.animateTitle(0, 0)
+        this.animateDate(0)
+        this.animateBody(0)
+      })
     } else if (this.props.post.display == 'full') {
-      this.animateBanner(200, 1)
+      this.animateOpacity(1)
+      this.animateBanner(200)
       this.animateTitle(20, 25)
-      this.animateCategoryAndDate(30)
+      this.animateDate(30)
       this.animateBody(1)
     } else {
-      this.animateBanner(100, 1)
-      this.animateTitle(16, 15)
-      this.animateCategoryAndDate(30)
-      this.animateBody(0)
+      this.animateOpacity(1).then(() => {
+        this.animateBanner(100)
+        this.animateTitle(16, 15)
+        this.animateDate(30)
+        this.animateBody(0)
+      })
     }
   },
-  animateBanner (height, opacity) {
-    Animation.medium(this.state.banner.height, height)
-    Animation.fast(this.state.banner.opacity, opacity)
+  animateOpacity (opacity) {
+    Animation.fast(this.state.title.opacity, opacity)
+    return Animation.fast(this.state.banner.opacity, opacity)
   },
-  animateTitle (fontSize, margin) {
+  animateBanner (height) {
+    Animation.fast(this.state.banner.height, height)
+  },
+  animateTitle (fontSize, padding) {
     Animation.fast(this.state.title.fontSize, fontSize)
-    Animation.fast(this.state.title.margin, margin)
+    Animation.fast(this.state.title.padding, padding)
   },
   animateBody (opacity) {
     Animation.fast(this.state.body.opacity, opacity)
   },
-  animateCategoryAndDate (height) {
-    Animation.fast(this.state.categoryAndDate.height, height)
+  animateDate (height) {
+    Animation.fast(this.state.date.height, height)
   },
   renderBanner () {
     var p = this.props.post
     if (p.banner_url) {
-      return <Animated.Image style={[s.post.banner, this.state.banner]} repeatMode="contain" source={{uri: this.props.post.banner_url}} />
+      return <Animated.Image style={[this.state.banner]} repeatMode="contain" source={{uri: this.props.post.banner_url}} />
     } else {
       null
     }
   },
-  renderTitle () {
+  renderTitleAndDate () {
     var p = this.props.post
-    return <Animated.Text style={[this.state.title]}>{p.title}</Animated.Text>
-  },
-  renderCategoryAndDate() {
-    return <Animated.View style={[s.row, this.state.categoryAndDate]}>
-      <Text style={[s.post.category]}>{this.props.post.category}</Text>
-      <Text style={[s.post.division]}>⚫</Text>
-      <Text style={[s.post.date]}>{HumanDate.relativeTime(this.props.post.updated_at)}</Text>
-    </Animated.View>
+    return <View style={[s.row, {alignItems: 'center'}]}>
+      <Animated.Text style={[this.state.title]}>{p.title}</Animated.Text>
+      <Animated.Text style={[this.state.date]}>{HumanDate.relativeTime(this.props.post.updated_at)}</Animated.Text>
+    </View>
   },
   renderBody () {
     var p = this.props.post
     if (p.display == 'full') {
       return <View>
         {this.props.post.paragraphs.map((paragraph, i) => {
-          var styles = [this.state.body, s.post.paragraph]
+          var styles = [this.state.body]
           paragraph.style.split(/\s+/).map((style) => styles.push(s[style]))
 
           return <Markdown style={styles} key={i}>{paragraph.body}</Markdown>
@@ -98,8 +104,7 @@ module.exports = React.createClass({
   render () {
     return <View style={[this.props.post.display == 'hidden' ? {} : s.post.container]} elevation={2}>
       {this.renderBanner()}
-      {this.renderTitle()}
-      {this.renderCategoryAndDate()}
+      {this.renderTitleAndDate()}
       {this.renderBody()}
     </View>
   },
