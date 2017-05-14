@@ -20,6 +20,7 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'localtunnel' # Test the ap on local network: lt --port 3000 -s test
 end
 
 group :production do

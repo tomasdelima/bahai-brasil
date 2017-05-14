@@ -60,4 +60,19 @@ RailsAdmin.config do |config|
       include_fields :name, :email, :password
     end
   end
+
+  config.model 'Category' do
+    edit do
+      field :name
+      field :icon_library, :enum do
+        enum { Category::Icons.keys }
+      end
+      field :icon_name, :enum do
+        help 'Please, first save the field "Icon Library", then edit this category again to view the possible values of this field'
+        enum {
+          Category::Icons[bindings[:object].icon_library] || []
+        }
+      end
+    end
+  end
 end

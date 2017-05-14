@@ -20,6 +20,8 @@ module.exports = React.createClass({
   },
   componentDidMount () {
     global.goToPostAndScroll = this.goToPostAndScroll
+    global.domain = 'https://bahai-brasil.herokuapp.com/'
+    // global.domain = 'https://test.localtunnel.me/'
 
     BackAndroid.addEventListener('hardwareBackPress', () => {
       if (this.state.resource == 'post') {
@@ -44,8 +46,8 @@ module.exports = React.createClass({
   },
   loadFromRemoteServer (resource, indent, id) {
     var url = {
-      posts: 'https://bahai-brasil.herokuapp.com/api/v1/posts.json?updated_at=2000-01-01',
-      post: 'https://bahai-brasil.herokuapp.com/api/v1/posts/' + id + '.json'
+      posts: global.domain + 'api/v1/posts.json?updated_at=2000-01-01',
+      post: global.domain + 'api/v1/posts/' + id + '.json'
     }[resource]
 
     var t = new Date()
@@ -119,7 +121,7 @@ module.exports = React.createClass({
       <View style={[s.posts.container]}>
         <MessageBar message={this.state.message}/>
         {Object.map(this.state.posts, (category, posts, i) =>
-          <Category key={i} name={category} posts={posts}/>
+          <Category key={i} category={posts[0].category} posts={posts}/>
         )}
         <Text style={[s.pagePadding]}/>
       </View>

@@ -7,9 +7,11 @@ var styles = {
     container: { backgroundColor: '#eee' },
   },
   category: {
-    container: {  },
-    showMore:  { flex: 1, textAlign: 'center', backgroundColor: colors.yellow, borderRadius: 3 },
-    name:      {  },
+    container:  {  },
+    container2: { flex: 1, flexDirection: 'row' },
+    showMore:   { flex: 1, textAlign: 'center', backgroundColor: colors.yellow, borderRadius: 3 },
+    name:       { textAlignVertical: 'center' },
+    icon:       { paddingRight: 10, paddingBottom: 7 },
   },
   post: {
     container: { marginBottom: 3, backgroundColor: 'white', borderRadius: 3 },
