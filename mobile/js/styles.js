@@ -25,7 +25,7 @@ var styles = {
     container: { backgroundColor: '#FBBC31', height: 35, alignItems: 'center'},
     left:   { flex: 0, width: 50 },
     center: { flex: 1 },
-    right:  { flex: 0, textAlign: 'center', width: 50 },
+    right:  { flex: 0, width: 50 },
     title:  { textAlign: 'center' },
     return: { textAlign: 'center' },
   },

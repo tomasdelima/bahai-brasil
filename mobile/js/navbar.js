@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   AsyncStorage,
 } from 'react-native'
+import EvilIcon from 'react-native-vector-icons/EvilIcons'
+import Ionicon from 'react-native-vector-icons/Ionicons'
 
-import Icon from 'react-native-vector-icons/EvilIcons';
 const s = require('./styles')
 const DB = require('./db')
 
@@ -30,7 +31,13 @@ module.exports = React.createClass({
     })
   },
   render () {
-    var returnIcon = this.props.onReturn ? <Icon style={[s.navbar.return]} size={40} name="chevron-left" /> : null
+    if (this.props.onReturn) {
+      this.returnIcon = <EvilIcon style={[s.navbar.return]} size={40} name="chevron-left" />
+      this.shareIcon = <Ionicon style={[s.navbar.return]} size={25} name="md-share" />
+    } else {
+      this.returnIcon = null
+      this.shareIcon = null
+    }
 
     var refreshControl = <RefreshControl
       refreshing={this.state.refreshing}
@@ -41,9 +48,9 @@ module.exports = React.createClass({
 
     return <View>
       <View style={[s.navbar.container, s.row]}>
-        <TouchableOpacity style={[s.navbar.left]} onPress={this.props.onReturn}>{returnIcon}</TouchableOpacity>
+        <TouchableOpacity style={[s.navbar.left]} onPress={this.props.onReturn}>{this.returnIcon}</TouchableOpacity>
         <TouchableOpacity style={[s.navbar.center]} onPress={this.scrollToTop}><Text style={[s.navbar.title]}>{this.props.title}</Text></TouchableOpacity>
-        <Text style={[s.navbar.right]}></Text>
+        <TouchableOpacity style={[s.navbar.right]} onPress={global.sharePost}>{this.shareIcon}</TouchableOpacity>
       </View>
 
       <ScrollView style={[]} ref={(s) => global.scrollview = s} refreshControl={refreshControl} onScroll={(e) => global.scrollOffset = e.nativeEvent.contentOffset.y} onTouchStart={() => global.userTouched = true}>

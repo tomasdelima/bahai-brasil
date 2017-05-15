@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   BackAndroid,
+  Share,
 } from 'react-native'
 
 const Category = require('./category')
@@ -22,6 +23,7 @@ module.exports = React.createClass({
     global.goToPostAndScroll = this.goToPostAndScroll
     global.domain = 'https://bahai-brasil.herokuapp.com/'
     // global.domain = 'https://test.localtunnel.me/'
+    global.sharePost = this.sharePost
 
     BackAndroid.addEventListener('hardwareBackPress', () => {
       if (this.state.resource == 'post') {
@@ -65,6 +67,9 @@ module.exports = React.createClass({
         console.log(indent + 'FETCH: ERROR: ' + e)
         this.setState({message: {type: 'error', body: 'Sem conexão'}})
       })
+  },
+  getFullPost () {
+    return Object.map(this.state.posts, (c, posts) => posts.filter((p) => p.display == 'full')[0]).compact()[0]
   },
   setPosts (posts, showMessage) {
     var message = showMessage ? {type: 'success', body: 'Postagens atualizadas', timeout: 3000} : null
@@ -111,6 +116,9 @@ module.exports = React.createClass({
     this.oldScrollPosition = (global.scrollOffset || 0) + 0
     global.scrollview.scrollTo({y: 0})
     this.goToPost(post)
+  },
+  sharePost () {
+    Share.share({message: this.getFullPost().title + "\n\n" + this.getFullPost().paragraphs.reduce((m, p) => m = m + p.body , '')})
   },
   render () {
     var goToPosts = this.state.resource == 'post' ? this.goToPostsAndScroll : null
