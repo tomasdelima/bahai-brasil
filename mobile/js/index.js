@@ -123,7 +123,7 @@ module.exports = React.createClass({
   render () {
     var goToPosts = this.state.resource == 'post' ? this.goToPostsAndScroll : null
     var loadPosts = () => this.loadFromRemoteServer(this.state.resource, '  ', (this.state.post || {}).id)
-    var title = this.state.resource == 'posts' ? 'Postagens' : this.state.post.category.name
+    var title = this.state.resource == 'posts' ? "Bahá'í Brasil" : this.state.post.category.name
 
     return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
       <View style={[s.posts.container]}>

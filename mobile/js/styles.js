@@ -18,6 +18,7 @@ var t = {
   yellow: (alpha) => rgba(126, 126, 0, alpha),
   purple: (alpha) => rgba(126, 0, 126, alpha),
   water:  (alpha) => rgba(0, 126, 126, alpha),
+  darkWater: (alpha) => rgba(0, 40, 40, alpha),
 
   gray: (alpha) => rgba(126, 126, 126, alpha),
 }
@@ -29,9 +30,9 @@ var styles = {
   category: {
     container:  {  },
     container2: { flex: 1, flexDirection: 'row', marginBottom: 10 },
-    showMore:   { flex: 1, textAlign: 'center', backgroundColor: c.yellow, borderRadius: 3 },
+    showMore:   { flex: 1, textAlign: 'center', backgroundColor: t.darkWater(0.8), borderRadius: 3 },
     name:       { textAlignVertical: 'center', color: c.dark },
-    icon:       { paddingRight: 10, paddingBottom: 7, color: c.dark },
+    icon:       { paddingRight: 10, paddingBottom: 7, color: t.darkWater(0.8) },
   },
   post: {
     container: { marginBottom: 3, backgroundColor: 'white', borderRadius: 3 },
@@ -42,12 +43,12 @@ var styles = {
   },
 
   navbar: {
-    container: { backgroundColor: c.yellow, height: 35, alignItems: 'center'},
-    left:   { flex: 0, width: 50 },
-    center: { flex: 1 },
-    right:  { flex: 0, width: 50 },
-    title:  { textAlign: 'center' },
-    return: { textAlign: 'center' },
+    container:     { backgroundColor: t.darkWater(0.8), height: 50, alignItems: 'center'},
+    center:        { flex: 1 },
+    title:         { textAlign: 'center', fontSize: 25, fontFamily: 'bree_serif', color: 'white' },
+    logo:          { marginLeft: 5, height: 40, width: 40 },
+    sideContainer: { flex: 0, width: 50 },
+    sideButton:    { textAlign: 'center', flex: 1, textAlignVertical: 'center', backgroundColor: t.darkWater(0.5), color: 'white' },
   },
 
   message: {
@@ -57,6 +58,7 @@ var styles = {
       paddingTop: 1,
       textAlign: 'center',
       fontSize: 12,
+      color: 'white',
     },
     close: {
       position: 'absolute',
@@ -65,7 +67,7 @@ var styles = {
       padding: 3,
     },
     error: { backgroundColor: t.red(0.5) },
-    success: { backgroundColor: t.green(0.5) },
+    success: { backgroundColor: t.water(0.7) },
   },
 
   flex: { flex: 1 },
@@ -96,6 +98,7 @@ var styles = {
   blue:  { backgroundColor: t.blue(0.2) },
   yellow:{ backgroundColor: t.yellow(0.2) },
   gray:  { backgroundColor: t.gray(0.5) },
+  t: t,
 }
 
 var pc = styles.post.container

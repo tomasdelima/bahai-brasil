@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
+  Image,
   ScrollView,
   RefreshControl,
   TouchableOpacity,
@@ -30,27 +31,32 @@ module.exports = React.createClass({
       if (DB.shouldLog) console.log('REFRESH: ' + t/1000 + ' seconds')
     })
   },
+  leftPress () {
+    if (this.props.onReturn) {
+      this.props.onReturn()
+    }
+  },
   render () {
     if (this.props.onReturn) {
-      this.returnIcon = <EvilIcon style={[s.navbar.return]} size={40} name="chevron-left" />
-      this.shareIcon = <Ionicon style={[s.navbar.return]} size={25} name="md-share" />
+      this.leftIcon = <EvilIcon style={[s.navbar.sideButton]} size={40} name="chevron-left" />
+      this.shareIcon = <Ionicon style={[s.navbar.sideButton]} size={25} name="md-share" />
     } else {
-      this.returnIcon = null
+      this.leftIcon = <Image source={require('../images/logo.png')} style={[s.navbar.logo]}/>
       this.shareIcon = null
     }
 
     var refreshControl = <RefreshControl
       refreshing={this.state.refreshing}
       onRefresh={this.onRefresh}
-      colors={['#500', '#050', '#005']}
-      progressBackgroundColor="#FFF"
+      colors={[s.t.water(1)]}
+      progressBackgroundColor={'white'}
     />
 
     return <View>
       <View style={[s.navbar.container, s.row]}>
-        <TouchableOpacity style={[s.navbar.left]} onPress={this.props.onReturn}>{this.returnIcon}</TouchableOpacity>
+        <TouchableOpacity style={[s.navbar.sideContainer]} onPress={this.leftPress}>{this.leftIcon}</TouchableOpacity>
         <TouchableOpacity style={[s.navbar.center]} onPress={this.scrollToTop}><Text style={[s.navbar.title]}>{this.props.title}</Text></TouchableOpacity>
-        <TouchableOpacity style={[s.navbar.right]} onPress={global.sharePost}>{this.shareIcon}</TouchableOpacity>
+        <TouchableOpacity style={[s.navbar.sideContainer]} onPress={global.sharePost}>{this.shareIcon}</TouchableOpacity>
       </View>
 
       <ScrollView style={[]} ref={(s) => global.scrollview = s} refreshControl={refreshControl} onScroll={(e) => global.scrollOffset = e.nativeEvent.contentOffset.y} onTouchStart={() => global.userTouched = true}>
