@@ -29,17 +29,17 @@ var styles = {
   },
   category: {
     container:  {  },
-    container2: { flex: 1, flexDirection: 'row', marginBottom: 10 },
-    showMore:   { flex: 1, textAlign: 'center', backgroundColor: t.darkWater(0.8), borderRadius: 3 },
-    name:       { textAlignVertical: 'center', color: c.dark },
-    icon:       { paddingRight: 10, paddingBottom: 7, color: t.darkWater(0.8) },
+    container2: { flex: 1, flexDirection: 'row', justifyContent: 'flex-start' },
+    showMore:   { flex: 1, textAlign: 'center', backgroundColor: t.darkWater(0.8), color: 'white', borderRadius: 3 },
+    name:       { color: c.dark },
+    icon:       { marginRight: 10, color: t.darkWater(0.8) },
   },
   post: {
     container: { marginBottom: 3, backgroundColor: 'white', borderRadius: 3 },
     title:     { flex: 1, textAlign: 'left' },
     date:      { flex: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: c.pale2, textAlign: 'right' },
     author:    { fontSize: 12, margin: 10, marginTop: 20, color: c.pale2, textAlign: 'right' },
-    paragraph: { fontSize: 14, padding: 20 },
+    paragraph: { fontSize: 15, padding: 20 },
   },
 
   navbar: {

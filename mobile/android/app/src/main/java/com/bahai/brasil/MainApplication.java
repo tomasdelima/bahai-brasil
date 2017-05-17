@@ -1,4 +1,4 @@
-package com.bahaibrasil;
+package com.bahai.brasil;
 
 import android.app.Application;
 

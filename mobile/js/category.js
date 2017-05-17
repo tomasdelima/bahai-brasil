@@ -29,6 +29,9 @@ module.exports = React.createClass({
       container: Object.merge(s.category.container, {
         margin: new Animated.Value(20),
       }),
+      container2: Object.merge(s.category.container2, {
+        marginBottom: new Animated.Value(10),
+      }),
       name: Object.merge(s.category.name, {
         fontSize: new Animated.Value(18),
         opacity:  new Animated.Value(1),
@@ -49,12 +52,14 @@ module.exports = React.createClass({
 
     if (this.state.allPostsAreInline) {
       Animation.fast(this.state.container.margin, 20)
+      Animation.fast(this.state.container2.marginBottom, 10)
       Animation.fast(this.state.name.fontSize, 18)
       Animation.fast(this.state.name.opacity, 1)
       Animation.fast(this.state.showMore.fontSize, nextProps.posts.length > this.showing ? 15 : 0)
       Animation.fast(this.state.showMore.padding, nextProps.posts.length > this.showing ? 5 : 0)
     } else {
       Animation.fast(this.state.container.margin, 0)
+      Animation.fast(this.state.container2.marginBottom, 0)
       Animation.fast(this.state.name.fontSize, 0)
       Animation.fast(this.state.name.opacity, 0)
       Animation.fast(this.state.showMore.padding, 0)
@@ -75,17 +80,17 @@ module.exports = React.createClass({
     if (this.state.allPostsAreInline && this.props.category.icon_library && this.props.category.icon_name) {
       var icon_library = {EvilIcons: EvilIcons, Ionicons: Ionicons, Entypo: Entypo, Foundation: Foundation, FontAwesome: FontAwesome, MaterialIcons: MaterialIcons, MaterialCommunityIcons: MaterialCommunityIcons, Zocial: Zocial, Octicons: Octicons, SimpleLineIcons: SimpleLineIcons}[this.props.category.icon_library]
       var icon = <Animated.Text style={[s.category.icon]}>
-        {React.createElement(icon_library, {name: this.props.category.icon_name, size: 30})}
+        {React.createElement(icon_library, {name: this.props.category.icon_name, size: 25})}
       </Animated.Text>
     } else {
       var icon = null
     }
 
     return <Animated.View style={[this.state.container]}>
-      <View style={[s.category.container2]}>
+      <Animated.View style={[this.state.container2]}>
         {icon}
         <Animated.Text style={[this.state.name]}>{this.props.category.name}</Animated.Text>
-      </View>
+      </Animated.View>
 
       {this.state.posts.map((post, i) =>
         <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => global.goToPostAndScroll(post)}>
