@@ -1,4 +1,5 @@
 import {Dimensions} from 'react-native'
+// fontFamily: ['bree_serif', 'quattrocento', 'colwell', 'oswaldesque_light', 'oswaldesque_regular', 'oswaldesque_bold']
 
 var c = {
   yellow: '#FBBC31', darkYellow: '#DB9C11',
