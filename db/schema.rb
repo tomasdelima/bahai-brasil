@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170513135742) do
+ActiveRecord::Schema.define(version: 20170518203411) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -44,17 +44,15 @@ ActiveRecord::Schema.define(version: 20170513135742) do
   create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.string   "status"
-    t.integer  "created_by_id"
     t.integer  "author_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "banner_url"
     t.integer  "category_id"
   end
 
   add_index "posts", ["author_id"], name: "index_posts_on_author_id"
   add_index "posts", ["category_id"], name: "index_posts_on_category_id"
-  add_index "posts", ["created_by_id"], name: "index_posts_on_created_by_id"
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false

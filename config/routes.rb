@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   get 'api/v1/posts' => 'posts#index'
   get 'api/v1/posts/:id' => 'posts#show'
-  get 'api/v1/images/:id' => 'images#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

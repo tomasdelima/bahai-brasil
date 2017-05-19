@@ -38,7 +38,6 @@ var styles = {
     container: { marginBottom: 3, backgroundColor: 'white', borderRadius: 3 },
     title:     { flex: 1, textAlign: 'left' },
     date:      { flex: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: c.pale2, textAlign: 'right' },
-    author:    { fontSize: 12, margin: 10, marginTop: 20, color: c.pale2, textAlign: 'right' },
     paragraph: { fontSize: 15, padding: 20 },
   },
 

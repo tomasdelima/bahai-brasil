@@ -95,7 +95,6 @@ module.exports = React.createClass({
 
           return <Markdown style={styles} key={i}>{paragraph.body}</Markdown>
         })}
-        <Text style={[s.post.author, s.pagePadding]}>Editado por {this.props.post.author.name}</Text>
       </View>
     } else {
       return null

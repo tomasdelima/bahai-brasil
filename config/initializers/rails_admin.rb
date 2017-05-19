@@ -30,11 +30,6 @@ RailsAdmin.config do |config|
       field :paragraphs do
         partial "inline_paragraphs"
       end
-
-      field :author
-      field :created_by_id, :hidden do
-        default_value { bindings[:view]._current_user.id }
-      end
     end
 
     show do
@@ -47,7 +42,6 @@ RailsAdmin.config do |config|
           bindings[:view].content_tag(:div, value.reduce(""){|m,a| m+="<p class='#{a.style}'>#{a.body}</p>"}.html_safe)
         end
       end
-      field :author
     end
   end
 
