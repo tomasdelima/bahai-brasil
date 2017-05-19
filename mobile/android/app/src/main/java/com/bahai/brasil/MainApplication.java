@@ -1,6 +1,7 @@
 package com.bahai.brasil;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube; // CUSTOM
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
