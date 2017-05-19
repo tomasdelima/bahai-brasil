@@ -1,9 +1,9 @@
 package com.bahai.brasil;
 
 import android.app.Application;
-import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube; // CUSTOM
 
-public class MainApplication extends MultiDexApplication implements ReactApplication {
+public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -27,7 +27,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new VectorIconsPackage(),
+          new FIRMessagingPackage(),
+          new VectorIconsPackage(),
           new ReactNativeYouTube() // CUSTOM
       );
     }

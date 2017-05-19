@@ -7,6 +7,7 @@ import {
   Share,
 } from 'react-native'
 
+const Push = require('./push')
 const Category = require('./category')
 const NavBar = require('./navbar')
 const DB = require('./db')
@@ -24,6 +25,7 @@ module.exports = React.createClass({
     global.domain = 'https://bahai-brasil.herokuapp.com/'
     // global.domain = 'https://test.localtunnel.me/'
     global.sharePost = this.sharePost
+    global.db = DB
 
     BackAndroid.addEventListener('hardwareBackPress', () => {
       if (this.state.resource == 'post') {
@@ -126,6 +128,7 @@ module.exports = React.createClass({
     var title = this.state.resource == 'posts' ? "Bahá'í Brasil" : this.state.post.category.name
 
     return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
+      <Push/>
       <View style={[s.posts.container]}>
         <MessageBar message={this.state.message}/>
         {Object.map(this.state.posts, (category, posts, i) =>
