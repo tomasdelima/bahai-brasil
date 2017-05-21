@@ -23,7 +23,7 @@ module.exports = React.createClass({
   componentDidMount () {
     global.goToPostAndScroll = this.goToPostAndScroll
     global.domain = 'https://bahai-brasil.herokuapp.com/'
-    // global.domain = 'https://test.localtunnel.me/'
+    // global.domain = 'https://bahai-brasil.localtunnel.me/'
     global.sharePost = this.sharePost
     global.db = DB
 
