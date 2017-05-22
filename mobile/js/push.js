@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm'
 
+const MessageBar = require('./message-bar')
+
 module.exports = React.createClass({
   componentDidMount () {
     this.syncFCMToken()
@@ -18,13 +20,20 @@ module.exports = React.createClass({
     this.notificationListener.remove()
     this.refreshTokenListener.remove()
   },
+  getInitialState() {
+    return {}
+  },
   syncFCMToken () {
     AsyncStorage.getItem('token', (token) => {
       if (!token) {
-        FCM.getFCMToken().then(token => {
-          AsyncStorage.setItem('token', token)
-          this.registerTokenOnServer(token)
-        })
+        try {
+          FCM.getFCMToken().then(token => {
+            AsyncStorage.setItem('token', token)
+            this.registerTokenOnServer(token)
+          })
+        } catch (e) {
+          this.setState({message: {type: 'error', body: e.message}})
+        }
       }
     })
   },
@@ -77,6 +86,6 @@ module.exports = React.createClass({
     })
   },
   render () {
-    return null
+    return <MessageBar message={this.state.message}/>
   }
 })

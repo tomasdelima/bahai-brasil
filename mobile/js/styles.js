@@ -1,11 +1,14 @@
 import {Dimensions} from 'react-native'
 // fontFamily: ['bree_serif', 'quattrocento', 'colwell', 'oswaldesque_light', 'oswaldesque_regular', 'oswaldesque_bold']
 
+var Width = Dimensions.get('window').width
+var Height = Dimensions.get('window').height
+
 var c = {
   yellow: '#FBBC31', darkYellow: '#DB9C11',
   blue: '#469',
   pale: '#eee', pale2: '#bbb', pale3: '#777',
-  dark: '#333',
+  dark: '#333', veryDark: '#111',
 }
 
 var rgba = (r, g, b, a) => 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'
@@ -39,6 +42,17 @@ var styles = {
     title:     { flex: 1, textAlign: 'left' },
     date:      { flex: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: c.pale2, textAlign: 'right' },
     paragraph: { fontSize: 15, padding: 20 },
+
+    zoomedBanner: {
+      container: {
+        justifyContent: 'center',
+        height: Height,
+        width: Width,
+        backgroundColor: c.veryDark,
+        top: 0,
+        left: 0,
+      }
+    },
   },
 
   navbar: {
@@ -71,8 +85,10 @@ var styles = {
 
   flex: { flex: 1 },
   row:  { flexDirection: 'row' },
-  wide: (ratio) => { return {width: Dimensions.get('window').width * ratio}},
-  high: (ratio) => { return {height: Dimensions.get('window').height * ratio}},
+  wide: (ratio) => { return {width: Width * ratio}},
+  high: (ratio) => { return {height: Height * ratio}},
+  Width: Width,
+  Height: Height,
   pagePadding: { paddingBottom: 35 },
 
   left:    { textAlign: 'left' },
@@ -87,7 +103,7 @@ var styles = {
   caption: { fontSize: 12, color: c.pale3, fontStyle: 'italic' },
 
   url:        { textDecorationLine: 'underline', color: c.blue },
-  bold:       { fontWeight: 'bold', color: 'red' },
+  bold:       { fontWeight: 'bold', color: t.water(1) },
   italic:     { fontStyle: 'italic' },
   underline:  { textDecorationLine: 'underline' },
   translucid: { opacity: 0.6 },
