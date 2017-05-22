@@ -30,6 +30,11 @@ module.exports = React.createClass({
       body: Object.merge(s.post.paragraph, {opacity: new Animated.Value(h ? 0 : 0)}),
     }
   },
+  componentWillUpdate(prevProps, prevState) {
+    var borderRadius = this.props.post.display == 'full' ? 0 : s.post.container.borderRadius
+    this.state.banner.borderTopLeftRadius = borderRadius
+    this.state.banner.borderTopRightRadius = borderRadius
+  },
   componentDidUpdate(prevProps, prevState) {
     if (this.props.post.display == 'hidden') {
       this.animateOpacity(0).then(() => {
@@ -86,8 +91,7 @@ module.exports = React.createClass({
     </View>
   },
   renderBody () {
-    var p = this.props.post
-    if (p.display == 'full') {
+    if (this.props.post.display == 'full') {
       return <View>
         {this.props.post.paragraphs.map((paragraph, i) => {
           var styles = [this.state.body]
