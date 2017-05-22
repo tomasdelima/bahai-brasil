@@ -10,6 +10,7 @@
     <!-- CUSTOM -->
       <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
       <uses-permission android:name="android.permission.VIBRATE" />
+      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- END CUSTOM -->
 
     <uses-sdk

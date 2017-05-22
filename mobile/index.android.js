@@ -10,4 +10,5 @@ const BahaiBrasil = React.createClass({
   }
 })
 
+AppRegistry.registerHeadlessTask('KeepAppAlive', () => {})
 AppRegistry.registerComponent('BahaiBrasil', () => BahaiBrasil)
