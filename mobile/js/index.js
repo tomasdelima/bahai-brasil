@@ -23,7 +23,7 @@ module.exports = React.createClass({
   componentDidMount () {
     global.goToPostAndScroll = this.goToPostAndScroll
     global.domain = 'https://bahai-brasil.herokuapp.com/'
-    // global.domain = 'https://bahai-brasil.localtunnel.me/'
+    // global.domain = 'https://bahaibrasil.localtunnel.me/'
     global.sharePost = this.sharePost
     global.db = DB
 
@@ -127,8 +127,8 @@ module.exports = React.createClass({
     var loadPosts = () => this.loadFromRemoteServer(this.state.resource, '  ', (this.state.post || {}).id)
     var title = this.state.resource == 'posts' ? "Bahá'í Brasil" : this.state.post.category.name
 
+      // <Push/>
     return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
-      <Push/>
       <View style={[s.posts.container]}>
         <MessageBar message={this.state.message}/>
         {Object.map(this.state.posts, (category, posts, i) =>

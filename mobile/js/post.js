@@ -10,7 +10,6 @@ import {
   Modal,
   PanResponder,
 } from 'react-native'
-import PhotoView from 'react-native-photo-view'
 
 const Markdown = require('./markdown')
 const s = require('./styles')
@@ -25,7 +24,7 @@ module.exports = React.createClass({
     var p = this.props.post
     var h = p.display == 'hidden'
     return {
-      banner: Object.merge(s.post.banner, {
+      banner: Object.merge(s.post.banner.image, {
         height:  new Animated.Value(h ? 0 : 100),
         opacity: new Animated.Value(h ? 0 : 1),
       }),
@@ -33,7 +32,8 @@ module.exports = React.createClass({
       zoomedBannerPosition: {top: 0, left: 0},
       title: Object.merge(s.post.title, {
         fontSize: new Animated.Value(h ? 0 : 16),
-        padding:  new Animated.Value(h ? 0 : 15),
+        height:   new Animated.Value(h ? 0 : 40),
+        margin:   new Animated.Value(h ? 0 : 15),
         opacity:  new Animated.Value(h ? 0 : 1),
       }),
       date: Object.merge(s.post.date, {height: new Animated.Value(h ? 0 : 30)}),
@@ -85,20 +85,20 @@ module.exports = React.createClass({
     if (this.props.post.display == 'hidden') {
       this.animateOpacity(0).then(() => {
         this.animateBanner(0)
-        this.animateTitle(0, 0)
+        this.animateTitle(0, 0, 0)
         this.animateDate(0)
         this.animateBody(0)
       })
     } else if (this.props.post.display == 'full') {
       this.animateOpacity(1)
       this.animateBanner(200)
-      this.animateTitle(20, 25)
+      this.animateTitle(20, 50, 25)
       this.animateDate(30)
       this.animateBody(1)
     } else {
       this.animateOpacity(1).then(() => {
         this.animateBanner(100)
-        this.animateTitle(16, 15)
+        this.animateTitle(16, 40, 15)
         this.animateDate(30)
         this.animateBody(0)
       })
@@ -128,9 +128,10 @@ module.exports = React.createClass({
   animateBanner (height) {
     Animation.fast(this.state.banner.height, height)
   },
-  animateTitle (fontSize, padding) {
+  animateTitle (fontSize, height, margin) {
     Animation.fast(this.state.title.fontSize, fontSize)
-    Animation.fast(this.state.title.padding, padding)
+    Animation.fast(this.state.title.height, height)
+    Animation.fast(this.state.title.margin, margin)
   },
   animateBody (opacity) {
     Animation.fast(this.state.body.opacity, opacity)
@@ -143,7 +144,7 @@ module.exports = React.createClass({
     if (p.banner_url) {
       var onBannerPress = () => p.display != 'full' ? global.goToPostAndScroll(p) : this.setState({zoomBanner: true})
 
-      return <View>
+      return <View style={[s.post.banner.container]}>
         <TouchableOpacity onPress={onBannerPress}>
           <Animated.Image style={[this.state.banner]} repeatMode="contain" source={{uri: p.banner_url}} />
         </TouchableOpacity>

@@ -4,6 +4,8 @@ import {Dimensions} from 'react-native'
 var Width = Dimensions.get('window').width
 var Height = Dimensions.get('window').height
 
+var border = 3 // Default border radius
+
 var c = {
   yellow: '#FBBC31', darkYellow: '#DB9C11',
   blue: '#469',
@@ -33,13 +35,17 @@ var styles = {
   category: {
     container:  {  },
     container2: { flex: 1, flexDirection: 'row', justifyContent: 'flex-start' },
-    showMore:   { flex: 1, textAlign: 'center', backgroundColor: t.darkWater(0.8), color: 'white', borderRadius: 3 },
-    name:       { color: c.dark },
+    showMore:   { flex: 1, textAlign: 'center', backgroundColor: t.darkWater(0.8), color: 'white', borderRadius: border },
+    name:       { color: c.dark, fontSize: 18, flexWrap: "wrap", width: Width - 55 }, // 75 = s.category.icon.marginRight + 2 * s.category.container.margin
     icon:       { marginRight: 10, color: t.darkWater(0.8) },
   },
   post: {
-    container: { marginBottom: 3, backgroundColor: 'white', borderRadius: 3 },
-    title:     { flex: 1, textAlign: 'left' },
+    container: { marginBottom: 3, backgroundColor: 'white', borderRadius: border },
+    banner: {
+      container: { borderTopLeftRadius: 3, borderTopRightRadius: 3, overflow: 'hidden' },
+      image: {  },
+    },
+    title:     { flex: 1, textAlign: 'left', textAlignVertical: 'center' },
     date:      { flex: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: c.pale2, textAlign: 'right' },
     paragraph: { fontSize: 15, padding: 20 },
 
@@ -58,7 +64,7 @@ var styles = {
   navbar: {
     container:     { backgroundColor: t.darkWater(0.8), height: 50, alignItems: 'center'},
     center:        { flex: 1 },
-    title:         { textAlign: 'center', fontSize: 25, fontFamily: 'bree_serif', color: 'white' },
+    title:         { textAlign: 'center', fontSize: 20, lineHeight: 19, color: 'white' },
     logo:          { marginLeft: 5, height: 40, width: 40 },
     sideContainer: { flex: 0, width: 50 },
     sideButton:    { textAlign: 'center', flex: 1, textAlignVertical: 'center', backgroundColor: t.darkWater(0.5), color: 'white' },
@@ -95,7 +101,7 @@ var styles = {
   right:   { textAlign: 'right' },
   center:  { textAlign: 'center' },
   // justify: { textAlign: 'justify' }, DOES NOT WORK
-  quote:   { paddingHorizontal: 20, marginHorizontal: 10, backgroundColor: '#eee', borderRadius: 5 },
+  quote:   { paddingHorizontal: 20, marginHorizontal: 10, backgroundColor: '#eee', borderRadius: border },
   indent1: { paddingLeft: 30 },
   indent2: { paddingLeft: 60 },
   indent3: { paddingLeft: 90 },
@@ -115,8 +121,5 @@ var styles = {
   gray:  { backgroundColor: t.gray(0.5) },
   t: t,
 }
-
-var pc = styles.post.container
-styles.post.banner = { borderTopLeftRadius: pc.borderRadius, borderTopRightRadius: pc.borderRadius, width: styles.wide(1) - pc.padding*2 - pc.margin*2 }
 
 module.exports = styles

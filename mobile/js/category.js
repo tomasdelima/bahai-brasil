@@ -23,24 +23,19 @@ const Animation = require ('./animation')
 
 module.exports = React.createClass({
   getInitialState() {
-    this.showing = 5
+    this.showingIncrement = 5
+    this.showing = 0 + this.showingIncrement
 
     return {
       container: Object.merge(s.category.container, {
-        margin: new Animated.Value(20),
-      }),
-      container2: Object.merge(s.category.container2, {
-        marginBottom: new Animated.Value(10),
+        margin: new Animated.Value(10),
       }),
       name: Object.merge(s.category.name, {
-        fontSize: new Animated.Value(18),
+        height: new Animated.Value(45),
         opacity:  new Animated.Value(1),
       }),
       posts: this.getPostsFromProps(),
-      showMore: Object.merge(s.category.showMore, {
-        fontSize: new Animated.Value(this.props.posts.length > this.showing ? 15 : 0),
-        padding: new Animated.Value(this.props.posts.length > this.showing ? 5 : 0),
-      }),
+      showMore: Object.merge(s.category.showMore, {height: new Animated.Value(this.showMoreHeight())}),
     }
   },
   getPostsFromProps () {
@@ -51,30 +46,28 @@ module.exports = React.createClass({
     this.state.allPostsAreInline = nextProps.posts.filter((p) => !p.display || p.display == 'inline').length > 0
 
     if (this.state.allPostsAreInline) {
-      Animation.fast(this.state.container.margin, 20)
-      Animation.fast(this.state.container2.marginBottom, 10)
-      Animation.fast(this.state.name.fontSize, 18)
+      Animation.fast(this.state.container.margin, 10)
+      Animation.fast(this.state.name.height, 45)
       Animation.fast(this.state.name.opacity, 1)
-      Animation.fast(this.state.showMore.fontSize, nextProps.posts.length > this.showing ? 15 : 0)
-      Animation.fast(this.state.showMore.padding, nextProps.posts.length > this.showing ? 5 : 0)
+      Animation.fast(this.state.showMore.height, this.showMoreHeight(nextProps))
     } else {
       Animation.fast(this.state.container.margin, 0)
-      Animation.fast(this.state.container2.marginBottom, 0)
-      Animation.fast(this.state.name.fontSize, 0)
+      Animation.fast(this.state.name.height, 0)
       Animation.fast(this.state.name.opacity, 0)
-      Animation.fast(this.state.showMore.padding, 0)
-      Animation.fast(this.state.showMore.fontSize, 0)
+      Animation.fast(this.state.showMore.height, 0)
     }
     this.forceUpdate()
   },
   showMore () {
-    this.showing += 5
+    this.showing += this.showingIncrement
     this.state.posts.map((p, i) => {p.display = i < this.showing ? 'inline' : 'hidden'})
     this.forceUpdate()
     if (this.state.posts.length <= this.showing) {
-      Animation.fast(this.state.showMore.padding, 0)
-      Animation.fast(this.state.showMore.fontSize, 0)
+      Animation.fast(this.state.showMore.height, 0)
     }
+  },
+  showMoreHeight (props) {
+    return (props||this.props).posts.length > this.showing ? 20 : 0
   },
   render () {
     if (this.state.allPostsAreInline && this.props.category.icon_library && this.props.category.icon_name) {
@@ -87,7 +80,7 @@ module.exports = React.createClass({
     }
 
     return <Animated.View style={[this.state.container]}>
-      <Animated.View style={[this.state.container2]}>
+      <Animated.View style={[s.category.container2]}>
         {icon}
         <Animated.Text style={[this.state.name]}>{this.props.category.name}</Animated.Text>
       </Animated.View>
@@ -97,7 +90,7 @@ module.exports = React.createClass({
           <Post post={post} />
         </TouchableOpacity>
       )}
-      <Animated.Text style={[s.red,this.state.showMore]} onPress={this.showMore}>Mostrar mais</Animated.Text>
+      <Animated.Text style={[this.state.showMore]} onPress={this.showMore}>Mostrar mais</Animated.Text>
     </Animated.View>
   },
 })
