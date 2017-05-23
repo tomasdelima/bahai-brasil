@@ -38,11 +38,11 @@ module.exports = React.createClass({
       showMore: Object.merge(s.category.showMore, {height: new Animated.Value(this.showMoreHeight())}),
     }
   },
-  getPostsFromProps () {
-    return this.props.posts.map((p, i) => {p.display = i < this.showing ? p.display : 'hidden'; return p})
+  getPostsFromProps (nextProps) {
+    return (nextProps||this.props).posts.map((p, i) => {p.display = i < this.showing ? p.display : 'hidden'; return p})
   },
   componentWillReceiveProps(nextProps) {
-    this.state.posts = this.getPostsFromProps()
+    this.state.posts = this.getPostsFromProps(nextProps)
     this.state.allPostsAreInline = nextProps.posts.filter((p) => !p.display || p.display == 'inline').length > 0
 
     if (this.state.allPostsAreInline) {
