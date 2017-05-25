@@ -42,14 +42,14 @@ module.exports = React.createClass({
     var t = new Date()
     var data = {os: 'android', token: token}
 
-    if (global.db.shouldLog) console.log('TOKEN: ' + url + ' => ' + JSON.stringify(data))
+    global.db.log('TOKEN: ' + url + ' => ' + JSON.stringify(data))
     fetch(url, {
       method: 'POST',
       headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
       body: JSON.stringify(data)
     })
-      .then(() => { if (global.db.shouldLog) console.log('TOKEN: ' + (new Date() - t)/1000 + ' seconds') })
-      .catch((e) => console.log('TOKEN: ERROR: ' + e))
+      .then(() => global.db.log('TOKEN: ' + (new Date() - t)/1000 + ' seconds'))
+      .catch((e) => global.db.log('TOKEN: ERROR: ' + e))
   },
   listenToNotifications () {
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {

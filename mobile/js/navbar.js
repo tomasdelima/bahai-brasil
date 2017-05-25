@@ -12,7 +12,6 @@ import EvilIcon from 'react-native-vector-icons/EvilIcons'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
 const s = require('./styles')
-const DB = require('./db')
 
 module.exports = React.createClass({
   scrollToTop () {
@@ -23,12 +22,12 @@ module.exports = React.createClass({
   },
   onRefresh () {
     var t = new Date()
-    if (DB.shouldLog) console.log('REFRESH:')
+    global.db.log('REFRESH:')
     this.setState({refreshing: true})
     this.props.onRefresh().then(() => {
       this.setState({refreshing: false})
       t = new Date() - t
-      if (DB.shouldLog) console.log('REFRESH: ' + t/1000 + ' seconds')
+      global.db.log('REFRESH: ' + t/1000 + ' seconds')
     })
   },
   leftPress () {

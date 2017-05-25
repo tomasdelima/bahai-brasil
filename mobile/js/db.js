@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native'
 
 const DB = {
   shouldLog: true,
+  log: function () { if(DB.shouldLog && arguments.length) console.log(...arguments) },
   select: (table, where, indent) => {
     var t = new Date()
     return AsyncStorage.getItem(table).then((r) => {
@@ -12,7 +13,7 @@ const DB = {
         return rr
       })
       t = new Date() - t
-      if (DB.shouldLog) console.log(indent + 'SELECT: ' + table + ' ' + (JSON.stringify(where) || '') + ' => ' + result.length + ' records, ' + t/1000 + ' seconds')
+      DB.log(indent + 'SELECT: ' + table + ' ' + (JSON.stringify(where) || '') + ' => ' + result.length + ' records, ' + t/1000 + ' seconds')
       return filteredResults
     })
   },
@@ -22,7 +23,7 @@ const DB = {
   update: (table, objs, indent) => {
     var t = new Date()
     if (objs.constructor.name != 'Array') objs = [objs]
-    if (DB.shouldLog) console.log(indent + 'UPDATE: ' + objs.length + ' records')
+    DB.log(indent + 'UPDATE: ' + objs.length + ' records')
 
     return DB.select(table, undefined, indent + '  ').then((result) => {
       t = new Date() - t
@@ -34,7 +35,7 @@ const DB = {
       AsyncStorage.setItem(table, JSON.stringify(result))
       return result
     }).then((result) => {
-      if (DB.shouldLog) console.log(indent + 'UPDATE: ' + t/1000 + ' seconds')
+      DB.log(indent + 'UPDATE: ' + t/1000 + ' seconds')
       return result
     })
   },

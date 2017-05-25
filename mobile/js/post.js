@@ -52,7 +52,6 @@ module.exports = React.createClass({
         this.lastPressed = new Date()
       },
       onPanResponderMove: (evt, gestureState) => {
-        console.log(this.lastTop , gestureState.dy, this.lastLeft , gestureState.dx)
         this.moveImageTo(this.lastTop + gestureState.dy, this.lastLeft + gestureState.dx)
       },
       onPanResponderRelease: (evt, gestureState) => {

@@ -54,7 +54,7 @@ module.exports = React.createClass({
       } else if (className == 'Object') {
         return <Text key={i} style={[s[fragment.rule]]}>{this.compileFragment(fragment.content)}</Text>
       } else {
-        console.log('ERROR!!!: UNKNOWN FRAGMENT')
+        global.db.log('ERROR!!!: UNKNOWN FRAGMENT')
       }
     } else {
       return null
