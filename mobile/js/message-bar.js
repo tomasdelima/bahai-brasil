@@ -34,12 +34,14 @@ module.exports = React.createClass({
   },
   render () {
     var message = this.props.message || {}
-    return message.body ? <Animated.View style={[s.message.container, s.message[message.type], {height: this.state.height}]}>
-      <Text style={[s.message.body]}>{message.body}</Text>
-      {message.timeout ? null : <TouchableHighlight style={[s.message.close]} underlayColor='rgba(0, 0, 0, 0.1)' onPress={this.hide}>
-        <Icon name="close" size={15}/>
-      </TouchableHighlight>}
-    </Animated.View> : null
+    return message.body ? <TouchableHighlight onPress={() => {this.hide(); message.onPress()}}>
+      <Animated.View style={[s.message.container, s.message[message.type], {height: this.state.height}]}>
+        <Text style={[s.message.body]}>{message.body}</Text>
+        {message.timeout || message.onPress ? null : <TouchableHighlight style={[s.message.close]} underlayColor='rgba(0, 0, 0, 0.1)' onPress={this.hide}>
+          <Icon name="close" size={15}/>
+        </TouchableHighlight>}
+      </Animated.View>
+    </TouchableHighlight> : null
   }
 })
 

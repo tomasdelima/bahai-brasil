@@ -6,6 +6,7 @@ import {
   Animated,
   ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Button,
   Modal,
   PanResponder,
@@ -145,9 +146,9 @@ module.exports = React.createClass({
       var onBannerPress = () => p.display != 'full' ? global.goToPostAndScroll(p) : this.setState({zoomBanner: true})
 
       return <View style={[s.post.banner.container]}>
-        <TouchableOpacity onPress={onBannerPress}>
+        <TouchableWithoutFeedback onPress={onBannerPress}>
           <Animated.Image style={[this.state.banner]} repeatMode="contain" source={{uri: p.banner_url}} />
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
 
         <Modal animationType={"slide"} transparent={true} visible={!!this.state.zoomBanner} onRequestClose={() => this.setState({zoomBanner: false})}>
           <TouchableOpacity style={[s.post.zoomedBanner.container]} onPress={() => this.setState({zoomBanner: false})}>

@@ -85,7 +85,8 @@ var styles = {
       top: 0,
       padding: 3,
     },
-    error: { backgroundColor: t.red(0.5) },
+    error:   { backgroundColor: t.red(0.5) },
+    warning: { backgroundColor: c.yellow },
     success: { backgroundColor: t.water(0.7) },
   },
 
@@ -109,6 +110,7 @@ var styles = {
   caption: { fontSize: 12, color: c.pale3, fontStyle: 'italic' },
 
   url:        { textDecorationLine: 'underline', color: c.blue },
+  lightUrl:   { textDecorationLine: 'underline', color: c.white },
   bold:       { fontWeight: 'bold', color: t.water(1) },
   italic:     { fontStyle: 'italic' },
   underline:  { textDecorationLine: 'underline' },
