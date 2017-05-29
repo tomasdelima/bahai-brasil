@@ -148,7 +148,7 @@ module.exports = React.createClass({
     this.goToPost(post)
   },
   sharePost () {
-    Share.share({message: this.getFullPost().title + "\n\n" + this.getFullPost().paragraphs.reduce((m, p) => m = m + p.body , '')})
+    Share.share({message: Markdown.onlyText(this.getFullPost().title + "\n\n" + this.getFullPost().paragraphs.reduce((m, p) => m = m + p.body , ''))})
   },
   render () {
     var goToPosts = this.state.resource == 'post' ? this.goToPostsAndScroll : null
