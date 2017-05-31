@@ -26,6 +26,7 @@ var t = {
   darkWater: (alpha) => rgba(0, 40, 40, alpha),
 
   gray: (alpha) => rgba(126, 126, 126, alpha),
+  dark: (alpha) => rgba(16, 16, 16, alpha),
 }
 
 var styles = {
@@ -49,7 +50,7 @@ var styles = {
     date:      { flex: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: c.pale2, textAlign: 'right' },
     paragraph: { fontSize: 15, padding: 20 },
 
-    zoomedBanner: {
+    gallery: {
       container: {
         justifyContent: 'center',
         height: Height,
@@ -57,7 +58,20 @@ var styles = {
         backgroundColor: c.veryDark,
         top: 0,
         left: 0,
-      }
+      },
+      back: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        margin: 10,
+        width: 60,
+        height: 60,
+        borderRadius: 60,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        backgroundColor: t.dark(0.5),
+        color: 'white',
+      },
     },
   },
 

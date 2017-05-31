@@ -4,22 +4,33 @@ import { Text, Animated, Image, Linking } from 'react-native'
 const s = require('./styles')
 
 class Markdown extends React.Component {
-  static onlyText (str) {
-    var a = new Markdown()
-    return a.compileTextFragment(a.fragmentString(str))
+  static rules = [
+    {name: 'literal',   regexp: (/\[literal\:(.+)\]/),           stopRulesPropagation: true},
+    {name: 'image',     regexp: (/\[image\:(.+?)\]/),            stopRulesPropagation: true},
+    {name: 'url',       regexp: (/\[url\:((.+?):)?(http.+?)\]/), stopRulesPropagation: true},
+    {name: 'bold',      regexp: (/\[bold:(.+)\]/)},
+    {name: 'bold',      regexp: (/\*(.+?)\*/)},
+    {name: 'italic',    regexp: (/\/(.+?)\//)},
+    {name: 'underline', regexp: (/\_(.+?)\_/)},
+  ]
+
+static getText (str) {
+    var markdown = new Markdown()
+    return markdown.compileTextFragment(markdown.fragmentString(str))
   }
 
-  constructor (props) {
-    super(props)
-    this.rules = [
-      {name: 'literal',   regexp: (/\[literal\:(.+)\]/),           stopRulesPropagation: true},
-      {name: 'image',     regexp: (/\[image\:(.+?)\]/),            stopRulesPropagation: true},
-      {name: 'url',       regexp: (/\[url\:((.+?):)?(http.+?)\]/), stopRulesPropagation: true},
-      {name: 'bold',      regexp: (/\[bold:(.+)\]/)},
-      {name: 'bold',      regexp: (/\*(.+?)\*/)},
-      {name: 'italic',    regexp: (/\/(.+?)\//)},
-      {name: 'underline', regexp: (/\_(.+?)\_/)},
-    ]
+  static getImages (str) {
+    var rule = Markdown.rules.filter((rule) => rule.name == 'image')[0]
+    var images = []
+    var matched = str.match(rule.regexp)
+
+    while(matched) {
+      images.push(matched[1])
+      str = str.slice(matched.index + matched[0].length)
+      matched = str.match(rule.regexp)
+    }
+
+    return images
   }
 
   fragmentString (str) {
@@ -40,7 +51,7 @@ class Markdown extends React.Component {
   }
 
   firstMatchedRule (str) {
-    var sortedRules = this.rules.map((rule) => [str.search(rule.regexp), rule]).sort((a, b) => a[0]-b[0])
+    var sortedRules = Markdown.rules.map((rule) => [str.search(rule.regexp), rule]).sort((a, b) => a[0]-b[0])
     var filteredRules = sortedRules.filter((rule) => rule[0] >= 0).map((rule) => rule[1])
     return filteredRules[0]
   }
