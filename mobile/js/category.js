@@ -25,17 +25,19 @@ module.exports = React.createClass({
   getInitialState() {
     this.showingIncrement = 5
     this.showing = 0 + this.showingIncrement
+    this.animation = new Animation(1, [0, 1])
+    this.showMoreAnimation = new Animation(1, [0, 1])
 
     return {
       container: Object.merge(s.category.container, {
-        margin: new Animated.Value(10),
+        margin: this.animation.interpolate([0, 10]),
       }),
       name: Object.merge(s.category.name, {
-        height: new Animated.Value(45),
-        opacity:  new Animated.Value(1),
+        height: this.animation.interpolate([0, 45]),
+        opacity:  this.animation.interpolate([0, 1]),
       }),
       posts: this.getPostsFromProps(),
-      showMore: Object.merge(s.category.showMore, {height: new Animated.Value(this.showMoreHeight())}),
+      showMore: Object.merge(s.category.showMore, {height: this.showMoreAnimation.interpolate([0, this.showMoreHeight()])}),
     }
   },
   getPostsFromProps (nextProps) {
@@ -46,15 +48,11 @@ module.exports = React.createClass({
     this.state.allPostsAreInline = nextProps.posts.filter((p) => !p.display || p.display == 'inline').length > 0
 
     if (this.state.allPostsAreInline) {
-      Animation.fast(this.state.container.margin, 10)
-      Animation.fast(this.state.name.height, 45)
-      Animation.fast(this.state.name.opacity, 1)
-      Animation.fast(this.state.showMore.height, this.showMoreHeight(nextProps))
+      this.animation.fast(1)
+      this.showMoreAnimation.fast(this.state.posts.length <= this.showing ? 0 : 1)
     } else {
-      Animation.fast(this.state.container.margin, 0)
-      Animation.fast(this.state.name.height, 0)
-      Animation.fast(this.state.name.opacity, 0)
-      Animation.fast(this.state.showMore.height, 0)
+      this.animation.fast(0)
+      this.showMoreAnimation.fast(0)
     }
     this.forceUpdate()
   },
@@ -63,11 +61,11 @@ module.exports = React.createClass({
     this.state.posts.map((p, i) => {p.display = i < this.showing ? 'inline' : 'hidden'})
     this.forceUpdate()
     if (this.state.posts.length <= this.showing) {
-      Animation.fast(this.state.showMore.height, 0)
+      this.showMoreAnimation.fast(0)
     }
   },
   showMoreHeight (props) {
-    return (props||this.props).posts.length > this.showing ? 20 : 0
+    return (props||this.props).posts.length > this.showing ? 30 : 0
   },
   render () {
     if (this.state.allPostsAreInline && this.props.category.icon_library && this.props.category.icon_name) {

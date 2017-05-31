@@ -59,7 +59,7 @@ module.exports = React.createClass({
     fetch(url).then((response) => {
       DB.log(indent + 'FETCH: ' + (new Date() - t)/1000 + ' seconds')
       var latestVersion = response._bodyInit
-      var currentVersion = VersionNumber.buildVersion
+      var currentVersion = '' + VersionNumber.buildVersion
 
       if (latestVersion != currentVersion) {
         var storeUrl = {

@@ -37,7 +37,7 @@ var styles = {
   category: {
     container:  {  },
     container2: { flex: 1, flexDirection: 'row', justifyContent: 'flex-start' },
-    showMore:   { flex: 1, textAlign: 'center', backgroundColor: t.darkWater(0.8), color: 'white', borderRadius: border },
+    showMore:   { flex: 1, textAlignVertical: 'center', textAlign: 'center', backgroundColor: t.darkWater(0.8), color: 'white', borderRadius: border },
     name:       { color: c.dark, fontSize: 18, flexWrap: "wrap", width: Width - 55 }, // 75 = s.category.icon.marginRight + 2 * s.category.container.margin
     icon:       { marginRight: 10, color: t.darkWater(0.8) },
   },
