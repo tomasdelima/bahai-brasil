@@ -114,7 +114,7 @@ module.exports = React.createClass({
   },
   renderGallery () {
     return <Modal animationType={"slide"} transparent={true} visible={!!this.state.showGallery} onRequestClose={() => this.setState({showGallery: false})}>
-      <Gallery pageMargin={10} style={[s.post.gallery.container]} images={this.images} />
+      <Gallery initialPage={this.state.imageCounter} pageMargin={10} style={[s.post.gallery.container]} images={this.images} />
       <EvilIcon style={[s.post.gallery.back]} size={60} name="chevron-left" onPress={() => this.setState({showGallery: false})} />
     </Modal>
   },
@@ -132,7 +132,7 @@ module.exports = React.createClass({
           var styles = [this.state.body]
           paragraph.style.split(/\s+/).map((style) => styles.push(s[style]))
 
-          return <Markdown style={styles} key={i}>{paragraph.body}</Markdown>
+          return <Markdown style={styles} key={i} onImagePress={(imageCounter) => this.setState({showGallery: true, imageCounter: imageCounter})}>{paragraph.body}</Markdown>
         })}
       </View>
     } else {

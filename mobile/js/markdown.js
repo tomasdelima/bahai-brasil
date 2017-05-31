@@ -14,7 +14,7 @@ class Markdown extends React.Component {
     {name: 'underline', regexp: (/\_(.+?)\_/)},
   ]
 
-static getText (str) {
+  static getText (str) {
     var markdown = new Markdown()
     return markdown.compileTextFragment(markdown.fragmentString(str))
   }
@@ -67,7 +67,11 @@ static getText (str) {
       } else if (fragment.rule == 'literal') {
         return <Text key={i}>{fragment.content[1]}</Text>
       } else if (fragment.rule == 'image') {
-        return <Image key={i} resizeMode="contain" style={[s.wide(1), s.high(1)]} source={{uri: fragment.content}}/>
+        this.imageCounter += 1
+        var localImageCounter = this.imageCounter + 0
+        return <Text key={i} onPress={() => this.props.onImagePress(localImageCounter)}>
+          <Image resizeMode="contain" style={[s.wide(1), s.high(1)]} source={{uri: fragment.content}}/>
+        </Text>
       } else if (fragment.rule == 'url') {
         var url = fragment.content
         return <Text key={i} style={[s.url]} onPress={() => Linking.openURL(url[3]).catch()}>{url[2] || url[3]}</Text>
@@ -104,6 +108,7 @@ static getText (str) {
   }
 
   render () {
+    this.imageCounter = 0
     return <Animated.Text style={this.props.style}>
       {this.compileFragment(this.fragmentString(this.props.children))}
     </Animated.Text>
