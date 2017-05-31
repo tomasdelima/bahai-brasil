@@ -79,7 +79,7 @@ var styles = {
     container:     { backgroundColor: t.darkWater(0.8), height: 50, alignItems: 'center'},
     center:        { flex: 1 },
     title:         { textAlign: 'center', fontSize: 20, lineHeight: 19, color: 'white' },
-    logo:          { marginLeft: 5, height: 40, width: 40 },
+    logo:          { marginLeft: 3, height: 50, width: 50 },
     sideContainer: { flex: 0, width: 50 },
     sideButton:    { textAlign: 'center', flex: 1, textAlignVertical: 'center', backgroundColor: t.darkWater(0.5), color: 'white' },
   },

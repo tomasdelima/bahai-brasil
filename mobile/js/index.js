@@ -155,8 +155,8 @@ module.exports = React.createClass({
     var loadPosts = () => this.loadFromRemoteServer(this.state.resource, '  ', (this.state.post || {}).id)
     var title = this.state.resource == 'posts' ? "Bahá'í Brasil" : this.state.post.category.name
 
-      // <Push/>
     return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
+      <Push/>
       <View style={[s.posts.container]}>
         <MessageBar message={this.state.message}/>
         <MessageBar message={this.state.message2}/>

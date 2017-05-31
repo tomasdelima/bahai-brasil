@@ -40,7 +40,7 @@ module.exports = React.createClass({
       this.leftIcon = <EvilIcon style={[s.navbar.sideButton]} size={40} name="chevron-left" />
       this.shareIcon = <Ionicon style={[s.navbar.sideButton]} size={25} name="md-share" />
     } else {
-      this.leftIcon = <Image source={require('../images/logo.png')} style={[s.navbar.logo]}/>
+      this.leftIcon = <Image source={require('../images/white512.png')} style={[s.navbar.logo]}/>
       this.shareIcon = null
     }
 
