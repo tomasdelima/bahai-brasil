@@ -40,4 +40,9 @@ class Post < ActiveRecord::Base
       'Authorization' => "key=#{ENV["FCM_API_KEY"]}"
     }
   end
+
+  def author
+    # Method kept for compatibility. As soon there is no more app on 1.1, remove this method
+    {name: ''}
+  end
 end
