@@ -5,10 +5,12 @@ import {
 
 const Index = require('./js/index')
 const BahaiBrasil = React.createClass({
+  componentWillMount() {
+    global.platform = 'ios'
+  },
   render() {
     return <Index/>
   }
 })
 
-// AppRegistry.registerHeadlessTask('KeepAppAlive', () => {})
 AppRegistry.registerComponent('BahaiBrasil', () => BahaiBrasil)

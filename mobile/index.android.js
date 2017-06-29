@@ -5,6 +5,9 @@ import {
 
 const Index = require('./js/index')
 const BahaiBrasil = React.createClass({
+  componentWillMount() {
+    global.platform = 'android'
+  },
   render() {
     return <Index/>
   }

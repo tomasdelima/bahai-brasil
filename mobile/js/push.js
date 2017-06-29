@@ -40,7 +40,7 @@ module.exports = React.createClass({
   registerTokenOnServer (token) {
     var url = global.domain + 'api/v1/devices'
     var t = new Date()
-    var data = {os: 'android', token: token}
+    var data = {os: global.platform, token: token}
 
     global.db.log('TOKEN: ' + url + ' => ' + JSON.stringify(data))
     fetch(url, {

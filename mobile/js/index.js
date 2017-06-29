@@ -39,7 +39,7 @@ module.exports = React.createClass({
       }
     })
 
-    DB.select('posts', {status: ['published']}, '').then((oldPosts) => {
+    DB.select('posts', undefined, '').then((oldPosts) => {
       this.setPosts(oldPosts)
       this.loadFromRemoteServer('posts', '  ')
     })
@@ -156,7 +156,7 @@ module.exports = React.createClass({
     var title = this.state.resource == 'posts' ? "Bahá'í Brasil" : this.state.post.category.name
 
     return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
-      <Push/>
+      {global.platform == 'android' ? <Push/> : null}
       <View style={[s.posts.container]}>
         <MessageBar message={this.state.message}/>
         <MessageBar message={this.state.message2}/>
