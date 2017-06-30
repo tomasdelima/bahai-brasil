@@ -33,6 +33,7 @@ var styles = {
   posts: {
     container: { backgroundColor: c.pale },
   },
+
   category: {
     container:  {  },
     container2: { flex: 1, flexDirection: 'row', justifyContent: 'flex-start' },
@@ -40,6 +41,7 @@ var styles = {
     name:       { color: c.dark, fontSize: 18, flexWrap: "wrap", width: Width - 55 }, // 75 = s.category.icon.marginRight + 2 * s.category.container.margin
     icon:       { marginRight: 10, color: t.darkWater(0.8) },
   },
+
   post: {
     container: { marginBottom: 3, backgroundColor: 'white', borderRadius: border },
     banner: {
@@ -103,6 +105,8 @@ var styles = {
     warning: { backgroundColor: c.yellow },
     success: { backgroundColor: t.water(0.7) },
   },
+
+  md: {},
 
   flex: { flex: 1 },
   row:  { flexDirection: 'row' },

@@ -1,5 +1,7 @@
-var styles = require('./common-styles')
+var s = require('./common-styles')
 
-styles.navbar.title.fontFamily = 'bree_serif'
+s.navbar.title.fontFamily = 'bree_serif'
 
-module.exports = styles
+s.md.image = (w, h) => [s.wide(1), s.high(1)]
+
+module.exports = s

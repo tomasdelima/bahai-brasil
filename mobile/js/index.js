@@ -39,7 +39,7 @@ module.exports = React.createClass({
       }
     })
 
-    DB.select('posts', undefined, '').then((oldPosts) => {
+    DB.select('posts', {status: ['published']}, '').then((oldPosts) => {
       this.setPosts(oldPosts)
       this.loadFromRemoteServer('posts', '  ')
     })

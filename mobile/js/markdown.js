@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, Animated, Image, Linking } from 'react-native'
+import { Text, View, Animated, Image, Linking } from 'react-native'
 
 const s = require('./styles')
 
@@ -31,6 +31,11 @@ class Markdown extends React.Component {
     }
 
     return images
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {images: []}
   }
 
   fragmentString (str) {
@@ -69,9 +74,16 @@ class Markdown extends React.Component {
       } else if (fragment.rule == 'image') {
         this.imageCounter += 1
         var localImageCounter = this.imageCounter + 0
-        return <Text key={i} onPress={() => this.props.onImagePress(localImageCounter)}>
-          <Image resizeMode="contain" style={[s.wide(1), s.high(1)]} source={{uri: fragment.content}}/>
-        </Text>
+
+        if (!this.state.images[i]) {
+          Image.getSize(fragment.content, (w, h) => {
+            this.state.images[i] = <Text key={i} style={[]} onPress={() => this.props.onImagePress(localImageCounter)}>
+              <Image resizeMode="contain" style={[s.md.image(w, h)]} source={{uri: fragment.content}}/>
+            </Text>
+            this.forceUpdate()
+          }, (e) => {})
+        }
+        return this.state.images[i]
       } else if (fragment.rule == 'url') {
         var url = fragment.content
         return <Text key={i} style={[s.url]} onPress={() => Linking.openURL(url[3]).catch()}>{url[2] || url[3]}</Text>
@@ -109,6 +121,7 @@ class Markdown extends React.Component {
 
   render () {
     this.imageCounter = 0
+    this.images = []
     return <Animated.Text style={this.props.style}>
       {this.compileFragment(this.fragmentString(this.props.children))}
     </Animated.Text>

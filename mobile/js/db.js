@@ -25,7 +25,7 @@ const DB = {
     if (objs.constructor.name != 'Array') objs = [objs]
     DB.log(indent + 'UPDATE: ' + objs.length + ' records')
 
-    return DB.select(table, undefined, indent + '  ').then((result) => {
+    return DB.select(table, {status: ['published']}, indent + '  ').then((result) => {
       t = new Date() - t
       var objResult = {}
       result.map((item) => objResult[item.id] = item)
