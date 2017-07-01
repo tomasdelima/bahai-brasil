@@ -8,6 +8,7 @@ class Post < ActiveRecord::Base
 
   scope :published, -> { where(status: :published) }
   scope :pending, -> { where(status: :pending) }
+  default_scope { order "created_at DESC" }
 
   STATUSES = ['pending', 'published']
 

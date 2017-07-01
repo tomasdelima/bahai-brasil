@@ -1,3 +1,5 @@
+require Rails.root.join('lib', 'export_to_pdf.rb')
+
 RailsAdmin.config do |config|
   config.authenticate_with do
     warden.authenticate! scope: :user
@@ -14,6 +16,8 @@ RailsAdmin.config do |config|
     edit
     delete
     show_in_app
+
+    export_to_pdf
   end
 
   config.excluded_models << Paragraph

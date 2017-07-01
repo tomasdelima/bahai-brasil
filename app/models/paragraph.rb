@@ -7,7 +7,7 @@ class Paragraph < ActiveRecord::Base
   STYLES = [:left, :center, :right, :quote, :indent1, :indent2, :indent3, :indent4]
 
   def set_default_ordering
-    self.ordering ||= post.paragraphs.map(&:ordering).compact.max + 1
+    self.ordering ||= (post.paragraphs.map(&:ordering).compact.max || 0) + 1
   end
 
   def split_by_image

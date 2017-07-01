@@ -1,0 +1,83 @@
+<div id="export-to-pdf">
+  <div class="no-post">
+    <input type="checkbox" id="select-all"/>
+    <div class="field id">Id</div>
+    <div class="field title">Title</div>
+    <div class="field status">Status</div>
+    <div class="field body">Body</div>
+    <div class="field created-at">Created at</div>
+  </div>
+
+  <% Post.all.each do |post| %>
+    <div data-id="<%= post.id %>" class="post">
+      <input type="checkbox" class="id" value="<%= post.id %>"/>
+      <div class="field id"><%= post.id %></div>
+      <div class="field title"><%= post.title %></div>
+      <div class="field status"><%= post.status %></div>
+      <div class="field body"><%= post.paragraphs[0].body[0..100] %></div>
+      <div class="field created-at"><%= post.created_at.strftime("%d/%m/%Y") %></div>
+    </div>
+  <% end %>
+
+  <button id="export" class="btn btn-primary">Export selected posts</button>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(() => {
+    $('#select-all').change((e1) =>
+      $('#export-to-pdf input').map((i, e2) =>
+        $(e2).prop('checked', $(e1.currentTarget).prop('checked'))
+      )
+    )
+
+    $('#export-to-pdf .post').on('click', (e1) => {
+      if (e1.target.tagName != 'INPUT') {
+        $('#export-to-pdf input[value=' + $(e1.currentTarget).data('id') + ']').map((i, e2) =>
+          $(e2).prop('checked', !$(e2).prop('checked'))
+        )
+      }
+    })
+
+    $('#export-to-pdf button').on('click', () => {
+      var selectedPosts = []
+
+      $('#export-to-pdf input.id')
+        .filter((i, e) => $(e).prop('checked'))
+        .map((i, e) => selectedPosts.push($(e).val()))
+
+      window.location = '/api/v1/reports/posts.pdf?posts=[' + selectedPosts.join(',') +']'
+    })
+  })
+</script>
+
+<style type="text/css">
+  .no-post {
+    font-weight: bold;
+  }
+
+  .post, .no-post {
+    display: flex;
+    padding: 7px;
+    border-bottom: 1px solid #ddd;
+  }
+  .post:nth-child(even) { background: #f3f3f3; }
+  .post:hover { cursor: pointer; }
+
+  .field {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .field.id    { width: 70px; }
+  .field.title { width: 300px; }
+  .field.body  { width: calc(100% - 470px); }
+
+  input[type=checkbox].id, #select-all {
+    margin-right: 10px;
+  }
+
+  #export {
+    margin: 20px 0 50px;
+  }
+</style>

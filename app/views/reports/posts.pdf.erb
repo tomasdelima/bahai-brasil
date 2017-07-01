@@ -1,0 +1,46 @@
+<meta charset="utf-8" />
+
+<% @posts.each do |post| %>
+  <div class="post">
+    <div class="title">
+      <%= post.title %>
+      <span class="created-at"><%= post.created_at.strftime("%d/%m/%Y") %></span>
+    </div>
+    <% post.paragraphs.each do |paragraph| %>
+      <div class="paragraph"><%= parse_paragraph paragraph %></div>
+    <% end %>
+  </div>
+<% end %>
+
+<style type="text/css">
+  .post {
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+
+  .title {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .paragraph {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: justify;
+  }
+
+  .paragraph img {
+    margin: 20px 0;
+    width: 100%;
+  }
+
+  .created-at {
+    font-size: 13 px;
+    color: #555;
+    float: right;
+  }
+
+  .italic { font-style: italic; }
+  .bold { font-weight: bold; }
+  .underline: { text-decoration: underline },
+</style>

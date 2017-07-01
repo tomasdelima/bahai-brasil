@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  admin:
+    actions:
+      export_to_pdf:
+        menu: "Export to PDF"
+        title: "Export to PDF"
+        link: "Export to PDF"
+        breadcrumb: "Export to PDF"
