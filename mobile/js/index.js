@@ -131,7 +131,7 @@ module.exports = React.createClass({
     this.setState({resource: 'post'})
   },
   scrollToOldScrollPosition (i) {
-    if (!global.userTouched) {
+    if (!global.userTouched && global.scrollview) {
       global.scrollview.scrollTo({y: this.oldScrollPosition})
       setTimeout(() => this.scrollToOldScrollPosition(i*2), 100*i)
     }
