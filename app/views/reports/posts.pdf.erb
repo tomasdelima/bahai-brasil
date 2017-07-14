@@ -1,18 +1,25 @@
 <meta charset="utf-8" />
 
-<% @posts.each do |post| %>
-  <div class="post">
-    <div class="title">
-      <%= post.title %>
-      <span class="created-at"><%= post.created_at.strftime("%d/%m/%Y") %></span>
+<%= render 'reports/header' %>
+<div class="posts">
+  <% @posts.each do |post| %>
+    <div class="post">
+      <div class="title">
+        <%= post.title %>
+        <span class="created-at"><%= post.created_at.strftime("%d/%m/%Y") %></span>
+      </div>
+      <% post.paragraphs.each do |paragraph| %>
+        <div class="paragraph"><%= parse_paragraph paragraph %></div>
+      <% end %>
     </div>
-    <% post.paragraphs.each do |paragraph| %>
-      <div class="paragraph"><%= parse_paragraph paragraph %></div>
-    <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>
 
 <style type="text/css">
+  /*.posts {
+    margin-top: ;
+  }*/
+
   .post {
     padding: 20px;
     margin-bottom: 40px;
@@ -21,6 +28,16 @@
   .title {
     font-size: 30px;
     margin-bottom: 20px;
+    position: relative;
+    width: 650px;
+  }
+
+  .created-at {
+    font-size: 13 px;
+    color: #555;
+    position: absolute;
+    top: 0;
+    right: -70px;
   }
 
   .paragraph {
@@ -32,12 +49,6 @@
   .paragraph img {
     margin: 20px 0;
     width: 100%;
-  }
-
-  .created-at {
-    font-size: 13 px;
-    color: #555;
-    float: right;
   }
 
   .italic { font-style: italic; }

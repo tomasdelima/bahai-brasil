@@ -6,7 +6,7 @@ module ReportsHelper
   end
 
   def remove_spaces str
-    str.gsub('\n', '<br/>').gsub('\r', '  ').gsub('\t', '  ')
+    str.gsub("\n", "<br/>").gsub("\r", "  ").gsub("\t", "  ")
   end
 
   def embed_remote_image(url, content_type)
