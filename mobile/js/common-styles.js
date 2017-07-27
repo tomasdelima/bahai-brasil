@@ -36,9 +36,9 @@ var styles = {
 
   category: {
     container:  {  },
-    container2: { flex: 1, flexDirection: 'row', justifyContent: 'flex-start' },
+    container2: { flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' },
     showMore:   { flex: 1, textAlignVertical: 'center', textAlign: 'center', backgroundColor: t.darkWater(0.8), color: 'white', borderRadius: border },
-    name:       { color: c.dark, fontSize: 18, flexWrap: "wrap", width: Width - 55 }, // 75 = s.category.icon.marginRight + 2 * s.category.container.margin
+    name:       { color: c.dark, textAlignVertical: 'center', fontSize: 18, flexWrap: "wrap", width: Width - 55 }, // 75 = s.category.icon.marginRight + 2 * s.category.container.margin
     icon:       { marginRight: 10, color: t.darkWater(0.8) },
   },
 
@@ -83,7 +83,7 @@ var styles = {
     title:         { textAlign: 'center', fontSize: 20, lineHeight: 19, color: 'white' },
     logo:          { marginLeft: 3, height: 50, width: 50 },
     sideContainer: { flex: 0, width: 50 },
-    sideButton:    { textAlign: 'center', flex: 1, textAlignVertical: 'center', backgroundColor: t.darkWater(0.5), color: 'white' },
+    sideButton:    { textAlign: 'center', flex: 1, textAlignVertical: 'center', color: 'white' },
   },
 
   message: {

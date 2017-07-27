@@ -6,6 +6,7 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  TouchableHighlight,
   AsyncStorage,
 } from 'react-native'
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
@@ -41,7 +42,7 @@ module.exports = React.createClass({
       this.shareIcon = <Ionicon style={[s.navbar.sideButton]} size={25} name="md-share" />
     } else {
       this.leftIcon = <Image source={require('../images/white512.png')} style={[s.navbar.logo]}/>
-      this.shareIcon = null
+      this.shareIcon = <Text/>
     }
 
     var refreshControl = <RefreshControl
@@ -53,9 +54,9 @@ module.exports = React.createClass({
 
     return <View>
       <View style={[s.navbar.container, s.row]}>
-        <TouchableOpacity style={[s.navbar.sideContainer]} onPress={this.leftPress}>{this.leftIcon}</TouchableOpacity>
+        <TouchableHighlight underlayColor={s.t.darkWater(0.8)} style={[s.navbar.sideContainer]} onPress={this.leftPress}>{this.leftIcon}</TouchableHighlight>
         <TouchableOpacity style={[s.navbar.center]} onPress={this.scrollToTop}><Text style={[s.navbar.title]}>{this.props.title}</Text></TouchableOpacity>
-        <TouchableOpacity style={[s.navbar.sideContainer]} onPress={global.sharePost}>{this.shareIcon}</TouchableOpacity>
+        <TouchableHighlight underlayColor={s.t.darkWater(0.8)} style={[s.navbar.sideContainer]} onPress={global.sharePost}>{this.shareIcon}</TouchableHighlight>
       </View>
 
       <ScrollView style={[]} ref={(s) => global.scrollview = s} refreshControl={refreshControl} onScroll={(e) => global.scrollOffset = e.nativeEvent.contentOffset.y} onTouchStart={() => global.userTouched = true}>

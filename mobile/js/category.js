@@ -32,9 +32,13 @@ module.exports = React.createClass({
       container: Object.merge(s.category.container, {
         margin: this.animation.interpolate([0, 10]),
       }),
+      container2: Object.merge(s.category.container2, {
+        marginBottom: this.animation.interpolate([0, 15]),
+      }),
       name: Object.merge(s.category.name, {
-        height: this.animation.interpolate([0, 45]),
-        opacity:  this.animation.interpolate([0, 1]),
+        fontSize:  this.animation.interpolate([0, 20]),
+        maxHeight: this.animation.interpolate([0, 100]),
+        opacity:   this.animation.interpolate([0, 1]),
       }),
       posts: this.getPostsFromProps(),
       showMore: Object.merge(s.category.showMore, {height: this.showMoreAnimation.interpolate([0, this.showMoreHeight()])}),
@@ -65,7 +69,7 @@ module.exports = React.createClass({
     }
   },
   showMoreHeight (props) {
-    return (props||this.props).posts.length > this.showing ? 30 : 0
+    return (props || this.props).posts.length > this.showing ? 30 : 0
   },
   render () {
     if (this.state.allPostsAreInline && this.props.category.icon_library && this.props.category.icon_name) {
@@ -78,7 +82,7 @@ module.exports = React.createClass({
     }
 
     return <Animated.View style={[this.state.container]}>
-      <Animated.View style={[s.category.container2]}>
+      <Animated.View style={[this.state.container2]}>
         {icon}
         <Animated.Text style={[this.state.name]}>{this.props.category.name}</Animated.Text>
       </Animated.View>
@@ -88,7 +92,7 @@ module.exports = React.createClass({
           <Post post={post} />
         </TouchableOpacity>
       )}
-      <Animated.Text style={[this.state.showMore]} onPress={this.showMore}>Mostrar mais</Animated.Text>
+      <Animated.Text style={[this.state.showMore]} onPress={this.showMore}>Mais notícias</Animated.Text>
     </Animated.View>
   },
 })
