@@ -91,7 +91,7 @@ module.exports = React.createClass({
     var p = this.props.post
     return <View style={[s.row, {alignItems: 'center'}]}>
       <Animated.Text style={[this.state.title]}>{p.title}</Animated.Text>
-      <Animated.Text style={[this.state.date]}>{HumanDate.relativeTime(p.updated_at)}</Animated.Text>
+      <Animated.Text style={[this.state.date]}>{Date.parse(p.updated_at) > (new Date() - 30*24*60*60*1000) ? HumanDate.relativeTime(p.updated_at) : HumanDate.prettyPrint(p.updated_at)}</Animated.Text>
     </View>
   },
   renderBody () {
