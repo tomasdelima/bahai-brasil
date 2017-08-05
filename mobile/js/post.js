@@ -84,7 +84,7 @@ module.exports = React.createClass({
   renderGallery () {
     return <Modal animationType={"slide"} transparent={true} visible={!!this.state.showGallery} onRequestClose={() => this.setState({showGallery: false})}>
       <Gallery initialPage={this.state.imageCounter} pageMargin={10} style={[s.post.gallery.container]} images={this.images} />
-      <EvilIcon style={[s.post.gallery.back]} size={60} name="chevron-left" onPress={() => this.setState({showGallery: false})} />
+      <EvilIcon style={[s.post.gallery.back]} size={40} name="chevron-left" onPress={() => this.setState({showGallery: false})} />
     </Modal>
   },
   renderTitleAndDate () {
