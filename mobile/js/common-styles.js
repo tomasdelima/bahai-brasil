@@ -11,6 +11,7 @@ var c = {
   blue: '#469',
   pale: '#eee', pale2: '#bbb', pale3: '#777',
   dark: '#333', veryDark: '#111',
+  lightRed: '#700', lightWater: '#077'
 }
 
 var rgba = (r, g, b, a) => 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'
@@ -78,12 +79,19 @@ var styles = {
   },
 
   navbar: {
-    container:     { backgroundColor: t.darkWater(0.8), height: 50, alignItems: 'center'},
+    container:     { backgroundColor: t.darkWater(0.8), alignItems: 'flex-start' },
+    container2:    { flexDirection: 'row', height: 50, alignItems: 'center' },
     center:        { flex: 1 },
     title:         { textAlign: 'center', fontSize: 20, lineHeight: 19, color: 'white' },
     logo:          { marginLeft: 3, height: 50, width: 50 },
     sideContainer: { flex: 0, width: 50 },
     sideButton:    { textAlign: 'center', flex: 1, textAlignVertical: 'center', color: 'white' },
+    categories:    { justifyContent: 'space-between', flexDirection: 'row'},
+    category: {
+      container: { paddingHorizontal: 10, flexDirection: 'row' },
+      icon:      { height: 40, color: 'white' },
+      name:      { padding: 4, paddingLeft: 10, color: 'white'}
+    },
   },
 
   message: {
@@ -101,9 +109,9 @@ var styles = {
       top: 0,
       padding: 3,
     },
-    error:   { backgroundColor: t.red(0.5) },
+    error:   { backgroundColor: c.lightRed },
     warning: { backgroundColor: c.yellow },
-    success: { backgroundColor: t.water(0.7) },
+    success: { backgroundColor: c.lightWater },
   },
 
   md: {},
@@ -114,7 +122,7 @@ var styles = {
   high: (ratio) => { return {height: Height * ratio}},
   Width: Width,
   Height: Height,
-  pagePadding: { paddingBottom: 35 },
+  pagePadding: { paddingBottom: 120 },
 
   left:    { textAlign: 'left' },
   right:   { textAlign: 'right' },

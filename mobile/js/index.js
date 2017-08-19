@@ -29,6 +29,7 @@ module.exports = React.createClass({
     // global.domain = 'https://bahaibrasil.localtunnel.me/'
     global.sharePost = this.sharePost
     global.db = DB
+    global.setCategoryHeight = this.setCategoryHeight
 
     BackAndroid.addEventListener('hardwareBackPress', () => {
       if (this.state.resource == 'post') {
@@ -58,10 +59,10 @@ module.exports = React.createClass({
     DB.log(indent + 'FETCH: ' + url)
     fetch(url).then((response) => {
       DB.log(indent + 'FETCH: ' + (new Date() - t)/1000 + ' seconds')
-      var latestVersion = '' + response._bodyInit
-      var currentVersion = '' + VersionNumber.buildVersion
+      var latestVersion = Number(response._bodyInit)
+      var currentVersion = Number(VersionNumber.buildVersion)
 
-      if (latestVersion != currentVersion) {
+      if (currentVersion < latestVersion) {
         var storeUrl = {
           // ios: '',
           android: 'https://play.google.com/store/apps/details?id=com.bahai.brasil',
@@ -150,18 +151,21 @@ module.exports = React.createClass({
   sharePost () {
     Share.share({message: Markdown.getText(this.getFullPost().title + "\n\n" + this.getFullPost().paragraphs.reduce((m, p) => m = m + p.body , ''))})
   },
+  setCategoryHeight (category, height) {
+    this.state.categories[category].height = height
+  },
   render () {
     var goToPosts = this.state.resource == 'post' ? this.goToPostsAndScroll : null
     var loadPosts = () => this.loadFromRemoteServer(this.state.resource, '  ', (this.state.post || {}).id)
     var title = this.state.resource == 'posts' ? "Bahá'í Brasil" : this.state.post.category.name
 
-    return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts}>
+    return <NavBar title={title} onRefresh={loadPosts} onReturn={goToPosts} categories={this.state.categories}>
       {global.platform == 'android' ? <Push/> : null}
       <View style={[s.posts.container]}>
         <MessageBar message={this.state.message}/>
         <MessageBar message={this.state.message2}/>
 
-        {Object.map(this.state.posts, (category, posts, i) =>
+        {Object.map(this.state.categories, (category, posts, i) =>
           <Category key={i} category={posts[0].category} posts={posts}/>
         )}
         <Text style={[s.pagePadding]}/>

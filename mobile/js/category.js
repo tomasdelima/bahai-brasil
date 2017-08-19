@@ -81,13 +81,13 @@ module.exports = React.createClass({
       var icon = null
     }
 
-    return <Animated.View style={[this.state.container]}>
+    return <Animated.View style={[this.state.container]} onLayout={(e) => global.setCategoryHeight(this.props.category.name, e.nativeEvent.layout.height + 20)}>
       <Animated.View style={[this.state.container2]}>
         {icon}
         <Animated.Text style={[this.state.name]}>{this.props.category.name}</Animated.Text>
       </Animated.View>
 
-      {this.state.posts.map((post, i) =>
+      {this.state.categories.map((post, i) =>
         <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => global.goToPostAndScroll(post)}>
           <Post post={post} />
         </TouchableOpacity>
@@ -96,5 +96,3 @@ module.exports = React.createClass({
     </Animated.View>
   },
 })
-
-

@@ -33,7 +33,9 @@ module.exports = React.createClass({
     }
   },
   render () {
-    var message = this.props.message || {onPress: () => {}}
+    var message = this.props.message || {}
+    message.onPress = message.onPress || function () {}
+
     return message.body ? <TouchableHighlight onPress={() => {this.hide(); message.onPress()}}>
       <Animated.View style={[s.message.container, s.message[message.type], {height: this.state.height}]}>
         <Text style={[s.message.body]}>{message.body}</Text>
