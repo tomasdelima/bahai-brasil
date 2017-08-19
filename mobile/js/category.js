@@ -40,15 +40,15 @@ module.exports = React.createClass({
         maxHeight: this.animation.interpolate([0, 100]),
         opacity:   this.animation.interpolate([0, 1]),
       }),
-      posts: this.getPostsFromProps(),
+      categories: this.getCategoriesFromProps(),
       showMore: Object.merge(s.category.showMore, {height: this.showMoreAnimation.interpolate([0, this.showMoreHeight()])}),
     }
   },
-  getPostsFromProps (nextProps) {
+  getCategoriesFromProps (nextProps) {
     return (nextProps||this.props).posts.map((p, i) => {p.display = i < this.showing ? p.display : 'hidden'; return p})
   },
   componentWillReceiveProps(nextProps) {
-    this.state.posts = this.getPostsFromProps(nextProps)
+    this.state.posts = this.getCategoriesFromProps(nextProps)
     this.state.allPostsAreInline = nextProps.posts.filter((p) => !p.display || p.display == 'inline').length > 0
 
     if (this.state.allPostsAreInline) {

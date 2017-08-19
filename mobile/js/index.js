@@ -21,7 +21,7 @@ require('./custom')
 
 module.exports = React.createClass({
   getInitialState () {
-    return {posts: [], resource: 'posts'}
+    return {categories: [], resource: 'posts'}
   },
   componentDidMount () {
     global.goToPostAndScroll = this.goToPostAndScroll
@@ -100,16 +100,16 @@ module.exports = React.createClass({
       })
   },
   getFullPost () {
-    return Object.map(this.state.posts, (c, posts) => posts.filter((p) => p.display == 'full')[0]).compact()[0]
+    return Object.map(this.state.categories, (category, posts) => posts.filter((p) => p.display == 'full')[0]).compact()[0]
   },
   setPosts (posts, showMessage) {
     var message = showMessage ? {type: 'success', body: 'Postagens atualizadas', timeout: 3000} : null
 
     var filteredPosts = posts.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)).filter((a) => a.status == 'published')
     var categories = filteredPosts.map((p) => p.category.name).unique()
-    var groupedPosts = categories.reduce((m, c) => {m[c] = posts.filter((p) => p.category.name == c); return m}, {})
+    var groupedPosts = categories.reduce((m, category) => {m[category] = posts.filter((p) => p.category.name == category); return m}, {})
 
-    this.setState({posts: groupedPosts, message2: message})
+    this.setState({categories: groupedPosts, message2: message})
     if (this.state.resource == 'post') this.goToPost(this.state.post)
   },
   setPost (post, showMessage) {
@@ -117,15 +117,15 @@ module.exports = React.createClass({
     this.setState({post: post, message2: message})
   },
   goToPosts () {
-    Object.map(this.state.posts, (c, posts) => posts.map((p) => p.display = 'inline'))
+    Object.map(this.state.categories, (category, posts) => posts.map((p) => p.display = 'inline'))
     this.setState({resource: 'posts'})
   },
   goToPost (post) {
     this.setPost(post)
 
-    Object.map(this.state.posts, (c, posts, i) => {
+    Object.map(this.state.categories, (category, posts, i) => {
       posts.map((p, j) => {
-        this.state.posts[c][j].display = p.id == post.id ? 'full' : 'hidden'
+        this.state.categories[category][j].display = p.id == post.id ? 'full' : 'hidden'
       })
     })
 
