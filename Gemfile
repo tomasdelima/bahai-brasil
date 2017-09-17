@@ -16,6 +16,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'rack-timeout'
+gem 'webpacker'
 
 group :development, :test do
   gem 'dotenv-rails'
