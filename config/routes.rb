@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
 
+  root 'front#index'
+
   get 'api/v1/posts' => 'posts#index'
   get 'api/v1/posts/:id' => 'posts#show'
   post 'api/v1/devices' => 'devices#create'
