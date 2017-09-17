@@ -17,6 +17,7 @@
 /tmp
 /log
 /public/system/
+npm-debug.log
 
 .byebug_history
 .env

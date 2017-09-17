@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '5.1.4'
+gem 'erubis'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'rails_admin', '~> 1.1.1'
@@ -19,6 +20,7 @@ gem 'rack-timeout'
 group :development, :test do
   gem 'dotenv-rails'
   gem 'byebug'
+  gem 'listen'
   gem 'sqlite3'
 end
 
