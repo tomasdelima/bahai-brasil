@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   root 'front#index'
+  get '/:page' => 'front#index'
 
   get 'api/v1/posts' => 'posts#index'
   get 'api/v1/posts/:id' => 'posts#show'

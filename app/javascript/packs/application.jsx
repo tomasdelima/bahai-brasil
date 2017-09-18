@@ -2,15 +2,22 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import todoApp from './reducers'
+import reducer from './reducers'
+import Home from './components/home'
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
-global.store = createStore(todoApp)
+global.store = createStore(reducer)
 global.unsubscribe = store.subscribe(() => {})
 
 render(
   <Provider store={store}>
-    <div>
-    </div>
+    <Router>
+      <div>
+        <Link to="/">/</Link>
+        <Route exact path="/" component={Home} />
+        <Route path="/:id" component={Home} />
+      </div>
+    </Router>
   </Provider>,
   document.getElementById('react-root')
 )
