@@ -3,8 +3,9 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducer from './reducers'
-import Home from './components/home'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import Page from './components/page'
+import TopBar from './components/top-bar'
 
 global.store = createStore(reducer)
 global.unsubscribe = store.subscribe(() => {})
@@ -13,9 +14,9 @@ render(
   <Provider store={store}>
     <Router>
       <div>
-        <Link to="/">/</Link>
-        <Route exact path="/" component={Home} />
-        <Route path="/:id" component={Home} />
+        <TopBar/>
+        <Route exact path="/" component={Page} />
+        <Route path="/:slug"  component={Page} />
       </div>
     </Router>
   </Provider>,

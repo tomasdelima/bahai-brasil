@@ -1,2 +1,6 @@
+<script type="text/javascript">
+  var pages = <%= Page.all.to_json.html_safe %>
+</script>
+
 <div id="react-root"/>
 <%= javascript_pack_tag 'application' %>
