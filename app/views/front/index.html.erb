@@ -1,5 +1,7 @@
 <script type="text/javascript">
   var pages = <%= Page.all.to_json.html_safe %>
+  var logoWhite = "<%= asset_url('logo-white.png') %>"
+  var logoGreen = "<%= asset_url('logo-green.png') %>"
 </script>
 
 <div id="react-root"/>

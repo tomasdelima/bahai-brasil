@@ -18,7 +18,7 @@ export default React.createClass({
     }
   },
   render () {
-    return <div>
+    return <div style={[].merge()}>
       {this.renderBody()}
     </div>
   }

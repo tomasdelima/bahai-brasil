@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'bree-serif';
+  src:url('bree_serif.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+}
+
+#top-bar {
+  a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

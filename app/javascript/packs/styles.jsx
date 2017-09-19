@@ -11,6 +11,24 @@ var c = {
   transparent: "transparent",
 }
 
+var rgba = (r, g, b, a) => "rgba("+r+","+g+","+b+","+a+")"
+
+var t = {
+  red:   (alpha) => rgba(255, 0, 0, alpha),
+  green: (alpha) => rgba(0, 255, 0, alpha),
+  blue:  (alpha) => rgba(0, 0, 255, alpha),
+
+  yellow: (alpha) => rgba(126, 126, 0, alpha),
+  purple: (alpha) => rgba(126, 0, 126, alpha),
+  water:  (alpha) => rgba(0, 126, 126, alpha),
+  darkWater: (alpha) => rgba(0, 40, 40, alpha),
+
+  gray: (alpha) => rgba(126, 126, 126, alpha),
+  dark: (alpha) => rgba(16, 16, 16, alpha),
+}
+
+var BG = function (x) {return {background: x}}
+
 export default {
   relative:   {position: "relative"},
   absolute:   {position: "absolute"},
@@ -37,8 +55,7 @@ export default {
   scroll:     {overflow: "auto"},
   noWrap:     {whiteSpace: "nowrap"},
 
-  lora:         {fontFamily: "Lora"},
-  nunito:       {fontFamily: "Nunito"},
+  breeSerif:    {fontFamily: "bree-serif"},
   pointer:      {cursor: "pointer"},
   noSelect:     {userSelect: "none", MozUserSelect:"none", WebkitUserSelect:"none", msUserSelect:"none"},
   noDrag:       {userDrag: "none", MozUserDrag:"none", WebkitUserDrag:"none", msUserDrag:"none"},
@@ -60,13 +77,14 @@ export default {
   red:       {color: "red"},
   lightRed:  {color: "#F33"},
 
-  blueBG:      {background: c.blue},
-  darkBlueBG:  {background: c.darkBlue},
-  opaqueBG:    {background: "rgba(0, 0, 0, 0.5)"},
-  grayBG:      {background: "#4B4B4B"},
-  lightGrayBG: {background: "#E1E1E3"},
-  whiteBG:     {background: "white"},
-  redBG:       {background: "red"},
+  BG:          BG,
+  blueBG:      BG(c.blue),
+  darkBlueBG:  BG(c.darkBlue),
+  opaqueBG:    BG("rgba(0, 0, 0, 0.5)"),
+  grayBG:      BG("#4B4B4B"),
+  lightGrayBG: BG("#E1E1E3"),
+  whiteBG:     BG("white"),
+  redBG:       BG("red"),
   inset:       {boxShadow: "0px 1px 2px #BBB inset"},
   insetBlue:   {boxShadow: "0px 0.5px 0.5px " + c.darkBlue + " inset"},
 
@@ -88,7 +106,8 @@ export default {
   margin:       function ()     {return {margin:  join(arguments)}},
   border:       function (x, y) {return {border: x + "px solid " + y}},
   borderBottom: function (x, y) {return {borderBottom: x + "px solid " + y}},
-  animate:      function (x, y) {return {transition: (x.constructor.prototype.name == "Array" ? x : [x]).join(",") + " " + (y||150) + "ms"}}
+  animate:      function (x, y) {return {transition: (x.constructor.prototype.name == "Array" ? x : [x]).join(",") + " " + (y||150) + "ms"}},
+  m, c, t,
 }
 
 Object.merge = (obj1, obj2) => {obj1 = obj1 || {}; obj2 = obj2 || {};var obj3 = JSON.parse(JSON.stringify(obj1)); Object.keys(obj2).map((key) => obj3[key] = obj2[key]); return obj3}
