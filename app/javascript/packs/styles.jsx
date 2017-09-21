@@ -78,6 +78,7 @@ export default {
   lightRed:  {color: "#F33"},
 
   BG:          BG,
+  darkWaterBG: BG(t.darkWater(0.8)),
   blueBG:      BG(c.blue),
   darkBlueBG:  BG(c.darkBlue),
   opaqueBG:    BG("rgba(0, 0, 0, 0.5)"),
@@ -104,6 +105,7 @@ export default {
   circle:       function (x, y) {x = (m && y) ? y : x; return {borderRadius: 1000, width: x, height: x}},
   padding:      function ()     {return {padding: join(arguments)}},
   margin:       function ()     {return {margin:  join(arguments)}},
+  noBorder:     {border: 0},
   border:       function (x, y) {return {border: x + "px solid " + y}},
   borderBottom: function (x, y) {return {borderBottom: x + "px solid " + y}},
   animate:      function (x, y) {return {transition: (x.constructor.prototype.name == "Array" ? x : [x]).join(",") + " " + (y||150) + "ms"}},

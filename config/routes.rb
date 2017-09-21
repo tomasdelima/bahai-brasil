@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get 'api/v1/app_version' => 'application#mobile_app_version'
   get 'api/v1/reports/posts' => 'reports#posts'
 
+  post 'api/v1/page' => 'page#create'
+  patch 'api/v1/page/:id' => 'page#update'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

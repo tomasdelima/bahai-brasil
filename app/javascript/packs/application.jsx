@@ -15,7 +15,7 @@ global.s = Styles
 render(
   <Provider store={store}>
     <Router>
-      <div>
+      <div style={[s.flex, s.column, s.center2].merge()}>
         <TopBar/>
         <Route exact path="/" component={Page} />
         <Route path="/:slug"  component={Page} />
