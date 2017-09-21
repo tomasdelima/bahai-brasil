@@ -1,5 +1,5 @@
 import React from 'react'
-import MarkdownRenderer from 'react-markdown'
+import Markdown from './markdown'
 
 export default React.createClass({
   getInitialState() {
@@ -52,11 +52,11 @@ export default React.createClass({
           {this.renderToggleEditorButton()}
           <button style={this.buttonStyle} onClick={this.save} disabled={this.state.saving || !this.state.changed}>{this.state.saveStatus}</button>
         </div>
-        <MarkdownRenderer source={this.state.body}/>
+        <Markdown>{this.state.body}</Markdown>
       </div>
     } else {
       return <div>
-        <MarkdownRenderer source={this.state.body}/>
+        <Markdown>{this.state.body}</Markdown>
         {user ? this.renderToggleEditorButton() : null}
       </div>
     }
