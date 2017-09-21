@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  var pages = <%= Page.all.to_json.html_safe %>
+  var pages = <%= Page.all.to_json.html_safe %>.sort((a, b) => a.order > b.order)
   var logoWhite = "<%= asset_url('logo-white.png') %>"
   var logoGreen = "<%= asset_url('logo-green.png') %>"
   var user = <%= current_user.to_json.html_safe %>

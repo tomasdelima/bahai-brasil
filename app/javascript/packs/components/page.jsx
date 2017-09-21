@@ -3,17 +3,25 @@ import MarkdownRenderer from 'react-markdown'
 
 export default React.createClass({
   getInitialState() {
-    this.buttonStyle = [s.wide(85), s.darkWaterBG, s.radius(3), s.noBorder, s.padding(8), s.white, s.breeSerif].merge()
+    this.buttonStyle = [s.wide(85), s.darkWaterBG, s.noSelect, s.pointer, s.radius(3), s.noBorder, s.padding(8), s.white, s.breeSerif].merge()
     return {
       saveStatus: "Salvo",
       editorMode: user && window.location.hash == "#editor",
-      ...pages.filter((p) => p.slug == (this.props.match.params.slug))[0] || pages.filter((p) => p.slug == "")[0],
+      ...this.page(),
     }
+  },
+  page () {
+    return pages.filter((p) => p.slug == this.props.match.params.slug)[0] || pages.filter((p) => p.slug == "")[0]
   },
   toggleEditorMode () {
     if (user) {
       window.location.hash = !this.state.editorMode ? "#editor" : ""
       this.setState({editorMode: !this.state.editorMode})
+    }
+  },
+  componentWillReceiveProps(nextProps) {
+    if (this.state.slug != nextProps.match.params.slug) {
+      this.setState(pages.filter((p) => p.slug == nextProps.match.params.slug)[0] || pages.filter((p) => p.slug == "")[0])
     }
   },
   updateBody (e) {
@@ -27,7 +35,11 @@ export default React.createClass({
       body: JSON.stringify({body: this.state.body})
     })
     .then(() => this.setState({saveStatus: "Salvo", changed: false, saving: false}))
-    .catch(() => this.setState({saveStatus: "Erro"}))
+    .then(() => pages[pages.indexOf(this.page())].body = this.state.body)
+    .catch((error) => {
+      this.setState({saveStatus: "Erro"})
+      console.log(error)
+    })
   },
   renderToggleEditorButton () {
     return <button style={this.buttonStyle} onClick={this.toggleEditorMode}>{this.state.editorMode ? "Visualizar" : "Editar"}</button>
@@ -35,11 +47,12 @@ export default React.createClass({
   renderBody () {
     if (this.state.editorMode) {
       return <div>
-        <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(400), s.margin(10, 0)].merge()}/>
+        <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/>
         <div style={[s.flex, s.spacedIn].merge()}>
           {this.renderToggleEditorButton()}
           <button style={this.buttonStyle} onClick={this.save} disabled={this.state.saving || !this.state.changed}>{this.state.saveStatus}</button>
         </div>
+        <MarkdownRenderer source={this.state.body}/>
       </div>
     } else {
       return <div>
