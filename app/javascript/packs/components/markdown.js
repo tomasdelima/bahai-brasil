@@ -2,19 +2,29 @@ import React, { Component } from 'react'
 
 export default class Markdown extends React.Component {
   static rules = [
-    {name: 'literal',   regexp: (/\[literal\:(.+)\]/),                stopRulesPropagation: true},
-    {name: 'alignment', regexp: (/\[(left|center|right|justify):(.+?)\]\n/), multiMatch: true},
-    {name: 'image',     regexp: (/\[image\:((left|right):)?(.+?)\]/), stopRulesPropagation: true, multiMatch: true},
-    {name: 'url',       regexp: (/\[url\:((.+?):)?(http.+?)\]/),      stopRulesPropagation: true, multiMatch: true},
-    {name: 'new-line',  regexp: (/\n/),                               stopRulesPropagation: true},
-    {name: 'heading',   regexp: (/(\#+) *(.+)/), multiMatch: true},
-    {name: 'float',     regexp: (/\[float\:(.+?):(.+?)\[/), multiMatch: true},
-    {name: 'bold',      regexp: (/\[bold:(.+)\]/)},
+    {name: 'literal',   regexp: (/\[literal:(.+):literal\]/),                stopRulesPropagation: true},
+
+    {name: 'columns', regexp: (/\[columns:([\s\S]+?):columns\]/)},
+    {name: 'width',   regexp: (/\[([1-9]|1[0-2])?:(.+?):([1-9]|1[0-2])\]\n?/), i: 2, multiMatch: true},
+
+    {name: 'left',    type: 'alignment', regexp: (/\[l(eft)?:(.+?):l(eft)?\]\n?/),       i: 2, multiMatch: true},
+    {name: 'center',  type: 'alignment', regexp: (/\[c(enter)?:(.+?):c(enter)?\]\n?/),   i: 2, multiMatch: true},
+    {name: 'right',   type: 'alignment', regexp: (/\[r(ight)?:(.+?):r(ight)?\]\n?/),     i: 2, multiMatch: true},
+    {name: 'justify', type: 'alignment', regexp: (/\[j(ustify)?:(.+?):j(ustify)?\]\n?/), i: 2, multiMatch: true},
+
+    {name: 'image',     regexp: (/\[image:((left|right):)?(.+?)\]/), stopRulesPropagation: true, multiMatch: true},
+    {name: 'url',       regexp: (/\[url:((.+?):)?(http.+?)\]/),      stopRulesPropagation: true, multiMatch: true},
+    {name: 'new-line',  regexp: (/\n/),                              stopRulesPropagation: true},
+    {name: 'heading',   regexp: (/(?:^|\n)(\#+) *(.+)/), multiMatch: true},
+
+    {name: 'bold',      regexp: (/\[bold:(.+):bold\]/)},
     {name: 'bold',      regexp: (/\*(.+?)\*/)},
-    {name: 'quote',     regexp: (/\[quote:(.+)\]/)},
-    {name: 'quote',     regexp: (/\`(.+?)\`/)},
     {name: 'italic',    regexp: (/\/(.+?)\//)},
     {name: 'underline', regexp: (/\_(.+?)\_/)},
+    {name: 'quote',     regexp: (/\[quote:(.+):quote\]/)},
+    {name: 'quote',     regexp: (/\`(.+?)\`/)},
+
+    {name: 'color',     regexp: (/\[(#.{6}|#.{3}):(.+):#(.{6}|.{3})\]/), multiMatch: true},
   ]
 
   constructor(props) {
@@ -28,9 +38,12 @@ export default class Markdown extends React.Component {
       var length = str.match(rule.regexp)[0].length
       var before = str.slice(0, index)
       var matched = str.match(rule.regexp)
-      var fragmentedMatched = rule.stopRulesPropagation ? matched[1] : this.fragmentString(matched[1])
+      var fragmentedMatched = rule.stopRulesPropagation ? matched[1] : this.fragmentString(matched[rule.i || 1])
+      var result = [this.fragmentString(before), {content: rule.multiMatch ? matched : fragmentedMatched, rule: rule.name, type: rule.type}]
+
       var after = str.slice(index + length)
-      var result = [this.fragmentString(before), {content: rule.multiMatch ? matched : fragmentedMatched, rule: rule.name}, this.fragmentString(after)]
+      var fragmentedAfter = this.fragmentString(after)
+      result = fragmentedAfter.constructor.name == "Array" ? [...result, ...fragmentedAfter] : [...result, fragmentedAfter]
 
       return result.compact().flatten()
     } else {
@@ -51,22 +64,28 @@ export default class Markdown extends React.Component {
       if (className == 'String') {
         return fragment
       } else if (className == 'Array') {
-        return <span key={i}>{fragment.map((item, i) => this.compileFragment(item, i))}</span>
+        return <span key={i} className="array" style={[].merge()}>{fragment.map((item, i) => this.compileFragment(item, i))}</span>
       } else if (fragment.rule == 'literal') {
-        return <span key={i}>{fragment.content[1]}</span>
+        return <span key={i} className="literal">{fragment.content}</span>
+      } else if (fragment.rule == 'columns') {
+        return <div key={i} className="columns" style={[s.flex, s.wrap].merge()}>{fragment.content.map((item, i) => this.compileFragment(item, i))}</div>
+      } else if (fragment.rule == 'width') {
+        return <div key={i} className="width" style={[s.wide(100*fragment.content[1]/12 + "%"), s.minWidth(), s.shrink(0)].merge()}>{this.renderString(fragment.content[2])}</div>
       } else if (fragment.rule == 'image') {
-        return <img key={i} style={{float: fragment.content[2], padding: fragment.content[2] ? 10 : 0}} src={fragment.content[3]}/>
-      } else if (fragment.rule == 'alignment') {
-        return <div key={i} style={{textAlign: fragment.content[1]}}>{this.renderString(fragment.content[2])}</div>
+        return <img key={i} className="image" style={{float: fragment.content[2], padding: fragment.content[2] ? 10 : 0}} src={fragment.content[3]}/>
+      } else if (fragment.type == 'alignment') {
+        return <div key={i} className="alignment" style={{textAlign: fragment.rule}}>{this.renderString(fragment.content[2])}</div>
       } else if (fragment.rule == 'heading') {
-        return React.createElement("h" + fragment.content[1].length, {key: i}, fragment.content[2])
+        return React.createElement("h" + fragment.content[1].length, {key: i, className: 'heading'}, fragment.content[2])
       } else if (fragment.rule == 'url') {
         var url = fragment.content
-        return <a key={i} style={[s.url]} href={url[3]}>{url[2] || url[3]}</a>
+        return <a key={i} className="url" style={[s.url]} href={url[3]}>{url[2] || url[3]}</a>
+      } else if (fragment.rule == 'color') {
+        return <div key={i} className="color" style={{color: fragment.content[1]}}>{this.renderString(fragment.content[2])}</div>
       } else if (fragment.rule == 'new-line') {
         return <br key={i}/>
       } else if (className == 'Object') {
-        return <span key={i} style={s[fragment.rule]} className={fragment.rule}>{this.compileFragment(fragment.content)}</span>
+        return <span key={i} className={fragment.rule} style={s[fragment.rule]}>{this.compileFragment(fragment.content)}</span>
       } else {
         console.error('ERROR!!!: UNKNOWN FRAGMENT')
       }
