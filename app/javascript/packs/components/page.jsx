@@ -47,23 +47,23 @@ export default React.createClass({
   },
   renderBody () {
     if (this.state.editorMode) {
-      return <div>
+      return <div className="body">
         <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/>
         <div style={[s.flex, s.spacedIn].merge()}>
           {this.renderToggleEditorButton()}
           <button style={this.buttonStyle} onClick={this.save} disabled={this.state.saving || !this.state.changed}>{this.state.saveStatus}</button>
         </div>
-        <Markdown>{this.state.body}</Markdown>
+        <Markdown args={this.props.args}>{this.state.body}</Markdown>
       </div>
     } else {
-      return <div>
-        <Markdown>{this.state.body}</Markdown>
+      return <div className="body">
+        <Markdown args={this.props.args}>{this.state.body}</Markdown>
         {user && !this.props.preventEditorMode ? this.renderToggleEditorButton() : null}
       </div>
     }
   },
   render () {
-    return <div style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)")].merge()}>
+    return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)")].merge()}>
       {this.renderBody()}
     </div>
   }

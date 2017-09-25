@@ -40,7 +40,7 @@ export default class Markdown extends React.Component {
   compileFragment (fragment) {
     if (fragment) {
       this.i += 1
-      return <Elements key={this.i} fragment={fragment} renderString={this.renderString} compileFragment={this.compileFragment} i={this.i} />
+      return <Elements key={this.i} fragment={fragment} renderString={this.renderString} compileFragment={this.compileFragment} i={this.i} args={this.props.args} />
     } else {
       return null
     }

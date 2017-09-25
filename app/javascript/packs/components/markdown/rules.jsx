@@ -1,10 +1,10 @@
 export default [
-  {name: 'literal',   regexp: (/\[literal:([\s\S]+):literal\]/),                stopRulesPropagation: true},
+  {name: 'literal',   regexp: (/\[literal:([\s\S]+):literal\]/), stopRulesPropagation: true},
 
-  {name: 'columns', regexp: (/\<columns:([\s\S]+?):columns\>\s*/)},
-  {name: 'columns', regexp: (/\<columns2:([\s\S]+?):columns2\>\s*/)},
-  {name: 'column',  regexp: (/\<column:([1-9]|1[0-2])?:\s?([\s\S]+?)\s?:column\>\s*/),   i: 2, multiMatch: true},
-  {name: 'column',  regexp: (/\<column2:([1-9]|1[0-2])?:\s?([\s\S]+?)\s?:column2\>\s*/), i: 2, multiMatch: true},
+  {name: 'columns', regexp: (/\<columns:\s*([\s\S]+?)\s*:columns\>\s*/)},
+  {name: 'columns', regexp: (/\<columns2:\s*([\s\S]+?)\s*:columns2\>\s*/)},
+  {name: 'column',  regexp: (/\<column:([1-9]|1[0-2])?:\s*([\s\S]+?)\s*:column\>\s*/),   i: 2, multiMatch: true},
+  {name: 'column',  regexp: (/\<column2:([1-9]|1[0-2])?:\s*([\s\S]+?)\s*:column2\>\s*/), i: 2, multiMatch: true},
 
   {name: 'left',    regexp: (/\[l(eft)?:([\s\S]+?):l(eft)?\]/),                i: 2, multiMatch: true},
   {name: 'left',    regexp: (/\<l(eft)?:\s*([\s\S]+?)\s*:l(eft)?\>\s*/),       i: 2, multiMatch: true},
@@ -15,9 +15,10 @@ export default [
   {name: 'justify', regexp: (/\[j(ustify)?:([\s\S]+?):j(ustify)?\]/),          i: 2, multiMatch: true},
   {name: 'justify', regexp: (/\<j(ustify)?:\s*([\s\S]+?)\s*:j(ustify)?\>\s*/), i: 2, multiMatch: true},
 
-  {name: 'page',  regexp: (/\[page:(.+?)\]/),                  stopRulesPropagation: true},
-  {name: 'image', regexp: (/\[image:((left|right):)?(.+?)\]/), stopRulesPropagation: true, multiMatch: true},
-  {name: 'url',   regexp: (/\[url:(([\s\S]+?):)?(.+?)\]/),     stopRulesPropagation: true, multiMatch: true},
+  {name: 'page',     regexp: (/\[page:(.+?)\]/),                  stopRulesPropagation: true},
+  {name: 'argument', regexp: (/\[argument:(\d+?)\]/),             stopRulesPropagation: true},
+  {name: 'image',    regexp: (/\[image:((left|right):)?(.+?)\]/), stopRulesPropagation: true, multiMatch: true},
+  {name: 'url',      regexp: (/\[url:(([\s\S]+?):)?(.+?)\]/),     stopRulesPropagation: true, multiMatch: true},
 
   {name: 'new-line',  regexp: (/(\n|\\n)/), stopRulesPropagation: true},
   {name: 'heading',   regexp: (/(?:^|\n)(\#+) *(.+)/), multiMatch: true},

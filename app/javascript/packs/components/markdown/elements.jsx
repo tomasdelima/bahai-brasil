@@ -8,7 +8,7 @@ export default class Elements extends React.Component {
 
     switch (className) {
       case 'String':
-        return <div key={i} className="string" style={[s.padding(5), ].merge()}>{fragment}</div>
+        return <span key={i} className="string" style={[s.inline].merge()}>{fragment}</span>
       case 'Array':
         return <span key={i} className="array" style={[s.rect(), s.inline].merge()}>{fragment.map((item, i) => compileFragment(item, i))}</span>
       default:
@@ -25,9 +25,16 @@ export default class Elements extends React.Component {
       case 'columns':
         return <div key={i} className="columns" style={[s.flex, s.wrap].merge()}>{fragment.content.map((item, i) => compileFragment(item, i))}</div>
       case 'column':
-        return <div key={i} className="column" style={[s.wide(100*fragment.content[1]/12 + "%"), s.minWidth(fragment.content[1] * 30), s.shrink(0)].merge()}>{renderString(fragment.content[2])}</div>
+        return <div key={i} className="column" style={[s.wide(100*fragment.content[1]/12 + "%"), s.minWidth(fragment.content[1] * 30), s.shrink(0)].merge()}>
+          <div style={s.padding(5)}>
+            {renderString(fragment.content[2])}
+          </div>
+        </div>
       case 'page':
-        return <Page slug={fragment.content} preventEditorMode />
+        var args = fragment.content.split(":")
+        return <Page slug={args[0]} args={args} preventEditorMode />
+      case 'argument':
+        return <span key={i} className="argument">{this.props.args[fragment.content]}</span>
       case 'image':
         var style = fragment.content[2] ? [s.maxWidth(), s.padding(10), {float: fragment.content[2]}] : [s.wide()]
         return <img key={i} className="image" style={style.merge()} src={fragment.content[3]}/>
