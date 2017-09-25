@@ -13,5 +13,9 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^2.8.2"
-  }
+  },
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/ruby" }
+  ]
 }
