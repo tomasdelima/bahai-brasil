@@ -93,7 +93,7 @@ export default {
   zindex:       function (x)    {return {zIndex: x}},
   indent:       function (x)    {return {textIndent: x}},
   size:         function (x, y) {return {fontSize: (m && y) ? y : x}},
-  lineHeight:   function (x, y) {return {lineHeight: ((m && y) ? y : x) + "px"}},
+  lineHeight:   function (x, y) {return {lineHeight: (m && y) ? y : x}},
   wide:         function (x, y) {return {width:    (m && y) ? y : (x  || "100%")}},
   minWidth:     function (x, y) {return {minWidth: (m && y) ? y : (x  || "100%")}},
   maxWidth:     function (x, y) {return {maxWidth: (m && y) ? y : (x  || "100%")}},
