@@ -1,4 +1,5 @@
 import React from 'react'
+import Page from '../page'
 
 export default class Elements extends React.Component {
   renderByClassName () {
@@ -7,9 +8,9 @@ export default class Elements extends React.Component {
 
     switch (className) {
       case 'String':
-        return <div key={i} className="string" style={[s.padding(5), s.lineHeight('initial')].merge()}>{fragment}</div>
+        return <div key={i} className="string" style={[s.padding(5), ].merge()}>{fragment}</div>
       case 'Array':
-        return <span key={i} className="array" style={[s.rect(), s.inline, s.lineHeight(0)].merge()}>{fragment.map((item, i) => compileFragment(item, i))}</span>
+        return <span key={i} className="array" style={[s.rect(), s.inline].merge()}>{fragment.map((item, i) => compileFragment(item, i))}</span>
       default:
         return null
     }
@@ -25,15 +26,18 @@ export default class Elements extends React.Component {
         return <div key={i} className="columns" style={[s.flex, s.wrap].merge()}>{fragment.content.map((item, i) => compileFragment(item, i))}</div>
       case 'column':
         return <div key={i} className="column" style={[s.wide(100*fragment.content[1]/12 + "%"), s.minWidth(fragment.content[1] * 30), s.shrink(0)].merge()}>{renderString(fragment.content[2])}</div>
+      case 'page':
+        return <Page slug={fragment.content} preventEditorMode />
       case 'image':
-        return <img key={i} className="image" style={[s.wide(), s.padding(fragment.content[2] ? 10 : 0), {float: fragment.content[2]}].merge()} src={fragment.content[3]}/>
+        var style = fragment.content[2] ? [s.maxWidth(), s.padding(10), {float: fragment.content[2]}] : [s.wide()]
+        return <img key={i} className="image" style={style.merge()} src={fragment.content[3]}/>
       case 'left':
       case 'center':
       case 'right':
       case 'justify':
         return <div key={i} className="alignment" style={{textAlign: fragment.rule}}>{renderString(fragment.content[2])}</div>
       case 'heading':
-        return React.createElement("h" + fragment.content[1].length, {key: i, className: 'heading'}, fragment.content[2])
+        return React.createElement("h" + fragment.content[1].length, {key: i, className: 'heading', style: [s.padding(10)].merge()}, fragment.content[2])
       case 'url':
         var url = fragment.content
         return <a key={i} className="url" style={[s.url]} href={url[3]}>{url[2] || url[3]}</a>
@@ -42,7 +46,7 @@ export default class Elements extends React.Component {
       case 'bg':
         return <div key={i} className="bg" style={[s.rect(), {backgroundColor: fragment.content[1]}].merge()}>{renderString(fragment.content[2])}</div>
       case 'new-line':
-        return <br key={i} style={s.lineHeight('initial')}/>
+        return <br key={i} />
       default:
         null
     }

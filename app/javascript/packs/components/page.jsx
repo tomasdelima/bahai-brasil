@@ -6,15 +6,16 @@ export default React.createClass({
     this.buttonStyle = [s.wide(85), s.darkWaterBG, s.noSelect, s.pointer, s.radius(3), s.noBorder, s.padding(8), s.white, s.breeSerif].merge()
     return {
       saveStatus: "Salvo",
-      editorMode: user && window.location.hash == "#editor",
+      editorMode: user && window.location.hash == "#editor" && !this.props.preventEditorMode,
       ...this.page(),
     }
   },
   page () {
-    return pages.filter((p) => p.slug == this.props.match.params.slug)[0] || pages.filter((p) => p.slug == "")[0]
+    var slug = this.props.slug || this.props.match.params.slug
+    return pages.filter((p) => p.slug == slug)[0] || pages.filter((p) => p.slug == "")[0]
   },
   toggleEditorMode () {
-    if (user) {
+    if (user && !this.props.preventEditorMode) {
       window.location.hash = !this.state.editorMode ? "#editor" : ""
       this.setState({editorMode: !this.state.editorMode})
     }
@@ -57,7 +58,7 @@ export default React.createClass({
     } else {
       return <div>
         <Markdown>{this.state.body}</Markdown>
-        {user ? this.renderToggleEditorButton() : null}
+        {user && !this.props.preventEditorMode ? this.renderToggleEditorButton() : null}
       </div>
     }
   },

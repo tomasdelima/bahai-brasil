@@ -8,7 +8,7 @@ export default React.createClass({
     return <div style={[s.flex, s.spacedIn, s.wide(), s.darkWaterBG, s.breeSerif].merge()} id="top-bar">
       <div style={[s.flex].merge()}>
         <img src={logoWhite} style={[s.square(35), s.padding(5)].merge()}/>
-        {global.pages.map((page, i) => <Link key={i} to={"/" + page.slug + window.location.hash} style={textStyles}>{page.title}</Link>)}
+        {global.pages.filter(p => p.appears_on_menu).map((page, i) => <Link key={i} to={"/" + page.slug + window.location.hash} style={textStyles}>{page.title}</Link>)}
       </div>
 
       <div style={[s.flex].merge()}>
