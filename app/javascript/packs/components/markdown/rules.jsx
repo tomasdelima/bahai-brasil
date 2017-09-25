@@ -15,10 +15,10 @@ export default [
   {name: 'justify', regexp: (/\[j(ustify)?:([\s\S]+?):j(ustify)?\]/),          i: 2, multiMatch: true},
   {name: 'justify', regexp: (/\<j(ustify)?:\s*([\s\S]+?)\s*:j(ustify)?\>\s*/), i: 2, multiMatch: true},
 
-  {name: 'page',     regexp: (/\[page:(.+?)\]/),                  stopRulesPropagation: true},
-  {name: 'argument', regexp: (/\[argument:(\d+?)\]/),             stopRulesPropagation: true},
-  {name: 'image',    regexp: (/\[image:((left|right):)?(.+?)\]/), stopRulesPropagation: true, multiMatch: true},
-  {name: 'url',      regexp: (/\[url:(([\s\S]+?):)?(.+?)\]/),     stopRulesPropagation: true, multiMatch: true},
+  {name: 'page',     regexp: (/\[page:(.+?)\]/),                                 stopRulesPropagation: true},
+  {name: 'argument', regexp: (/\[argument:(\d+?)\]/),                            stopRulesPropagation: true},
+  {name: 'image',    regexp: (/\[image:((left|right):)?(http.?:.+?)(:(.+))?\]/), stopRulesPropagation: true, multiMatch: true},
+  {name: 'url',      regexp: (/\[url:(([^\]]+?):)?(http\S+?)\]/),                stopRulesPropagation: true, multiMatch: true},
 
   {name: 'new-line',  regexp: (/(\n|\\n)/), stopRulesPropagation: true},
   {name: 'heading',   regexp: (/(?:^|\n)(\#+) *(.+)/), multiMatch: true},

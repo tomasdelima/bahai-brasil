@@ -8,7 +8,7 @@ export default class Elements extends React.Component {
 
     switch (className) {
       case 'String':
-        return <span key={i} className="string" style={[s.inline].merge()}>{fragment}</span>
+        return <span key={i} className="string" style={[s.inlinea].merge()}>{fragment}</span>
       case 'Array':
         return <span key={i} className="array" style={[s.rect(), s.inline].merge()}>{fragment.map((item, i) => compileFragment(item, i))}</span>
       default:
@@ -37,7 +37,7 @@ export default class Elements extends React.Component {
         return <span key={i} className="argument">{this.props.args[fragment.content]}</span>
       case 'image':
         var style = fragment.content[2] ? [s.maxWidth(), s.padding(10), {float: fragment.content[2]}] : [s.wide()]
-        return <img key={i} className="image" style={style.merge()} src={fragment.content[3]}/>
+        return <a href={fragment.content[5]}><img key={i} className="image" style={style.merge()} src={fragment.content[3]}/></a>
       case 'left':
       case 'center':
       case 'right':
