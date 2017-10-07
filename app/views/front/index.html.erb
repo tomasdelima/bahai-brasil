@@ -3,6 +3,8 @@
   var logoWhite = "<%= asset_url('logo-white.png') %>"
   var logoGreen = "<%= asset_url('logo-green.png') %>"
   var user = <%= current_user.to_json.html_safe %>
+  var gaKey = "<%= ENV["GA_KEY"] %>"
+  var env =  "<%= Rails.env %>"
 </script>
 
 <div id="react-root"/>

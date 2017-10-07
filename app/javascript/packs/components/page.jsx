@@ -1,5 +1,7 @@
 import React from 'react'
 import Markdown from './markdown'
+import ReactGA from 'react-ga'
+ReactGA.initialize(gaKey)
 
 export default React.createClass({
   getInitialState() {
@@ -20,10 +22,20 @@ export default React.createClass({
       this.setState({editorMode: !this.state.editorMode})
     }
   },
+  componentDidMount() {
+    if (!this.props.embedded) {
+      this.logPageToGoogleAnalytics()
+    }
+  },
   componentWillReceiveProps(nextProps) {
-    if (this.state.slug != nextProps.match.params.slug) {
+    if (this.state.slug != nextProps.match.params.slug || !this.state.slug) {
+      this.logPageToGoogleAnalytics()
       this.setState(pages.filter((p) => p.slug == nextProps.match.params.slug)[0] || pages.filter((p) => p.slug == "")[0])
     }
+  },
+  logPageToGoogleAnalytics () {
+    ReactGA.set({page: window.location.pathname + window.location.search})
+    ReactGA.pageview(window.location.pathname + window.location.search)
   },
   updateBody (e) {
     this.setState({body: e.nativeEvent.target.value, saveStatus: "Alterado", changed: true})
