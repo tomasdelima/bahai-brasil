@@ -236,6 +236,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   erubis
+  font-awesome-rails
   httparty
   jbuilder (~> 2.0)
   jquery-rails
