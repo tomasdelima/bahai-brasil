@@ -5,10 +5,8 @@ ReactGA.initialize(gaKey)
 
 export default React.createClass({
   getInitialState() {
-    this.buttonStyle = [s.wide(85), s.darkWaterBG, s.noSelect, s.pointer, s.radius(3), s.noBorder, s.padding(8), s.white, s.breeSerif].merge()
     return {
-      saveStatus: "Salvo",
-      editorMode: user && window.location.hash == "#editor" && !this.props.preventEditorMode,
+      editorMode: user && window.location.hash == "#editor" && !this.props.embedded,
       ...this.page(),
     }
   },
@@ -17,7 +15,7 @@ export default React.createClass({
     return pages.filter((p) => p.slug == slug)[0] || pages.filter((p) => p.slug == "")[0]
   },
   toggleEditorMode () {
-    if (user && !this.props.preventEditorMode) {
+    if (user && !this.props.embedded) {
       window.location.hash = !this.state.editorMode ? "#editor" : ""
       this.setState({editorMode: !this.state.editorMode})
     }
@@ -38,44 +36,85 @@ export default React.createClass({
     ReactGA.pageview(window.location.pathname + window.location.search)
   },
   updateBody (e) {
-    this.setState({body: e.nativeEvent.target.value, saveStatus: "Alterado", changed: true})
+    this.setState({body: e.nativeEvent.target.value, changed: true, error: false})
   },
   save () {
-    this.setState({saveStatus: "Salvando", saving: true})
+    this.setState({saving: true, error: false})
     fetch('/api/v1/page/' + this.state.id, {
       method: 'PATCH',
       headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
       body: JSON.stringify({body: this.state.body})
     })
-    .then(() => this.setState({saveStatus: "Salvo", changed: false, saving: false}))
+    .then(() => this.setState({changed: false, saving: false}))
     .then(() => pages[pages.indexOf(this.page())].body = this.state.body)
     .catch((error) => {
-      this.setState({saveStatus: "Erro"})
+      this.setState({error: true, saving: false, changed: true})
       console.log(error)
     })
   },
-  renderToggleEditorButton () {
-    return <button style={this.buttonStyle} onClick={this.toggleEditorMode}>{this.state.editorMode ? "Visualizar" : "Editar"}</button>
+  toggleEditButton (value) {
+    this.setState({showEditButton: this.props.embedded && value})
+  },
+  goToEditPage () {
+    window.location = this.props.slug + "#editor"
+  },
+  renderEditor () {
+    return this.state.editorMode ? <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/> : null
+  },
+  renderEditorButton () {
+    if (!user || this.props.embedded) return null
+
+    if (this.state.saving) {
+      var obj = {
+        text: "Salvando",
+        icon: "clock-o",
+        bg: s.lightGrayBG,
+      }
+    } else if (this.state.changed) {
+      var obj = {
+        onClick: this.save,
+        icon: "floppy-o",
+        text: "Salvar",
+        bg: s.yellowBG,
+      }
+    } else if (this.state.editorMode) {
+      var obj = {
+        onClick: this.toggleEditorMode,
+        icon: "eye",
+        text: "Visualizar",
+        bg: s.darkWaterBG,
+      }
+    } else if (this.state.error) {
+      var obj = {
+        onClick: this.save,
+        icon: "exclamation",
+        text: "Houve um erro!",
+        bg: s.darkRedBG,
+      }
+    } else {
+      var obj = {
+        onClick: this.toggleEditorMode,
+        icon: "pencil",
+        text: "Editar",
+        bg: s.darkWaterBG,
+      }
+    }
+
+    return <div style={[s.fixed, s.right(20), s.bottom(10), s.zindex(1), s.flex, s.center2, s.animate(), s.noSelect, s.pointer, s.radius(3), s.noBorder, s.breeSerif, s.white2BG, s.padding(7)].merge()} onClick={obj.onClick} disabled={!obj.onClick}>
+      <span style={s.margin(0, 10)}>{obj.text}</span>
+      <i className={"fa fa-" + obj.icon} style={[s.flex, s.center1, s.center2, s.circle(40), obj.bg, s.white].merge()}/>
+    </div>
   },
   renderBody () {
-    if (this.state.editorMode) {
-      return <div className="body">
-        <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/>
-        <div style={[s.flex, s.spacedIn].merge()}>
-          {this.renderToggleEditorButton()}
-          <button style={this.buttonStyle} onClick={this.save} disabled={this.state.saving || !this.state.changed}>{this.state.saveStatus}</button>
-        </div>
-        <Markdown args={this.props.args}>{this.state.body}</Markdown>
+    return <div style={[s.relative].merge()} onMouseEnter={() => this.toggleEditButton(true)} onMouseLeave={() => this.toggleEditButton(false)}>
+      <Markdown args={this.props.args}>{this.state.body}</Markdown>
+      {this.state.showEditButton ? <i className="fa fa-pencil" onClick={this.goToEditPage} style={[s.absolute, s.top(0), s.right(-15), s.darkWaterBG, s.white, s.radius(4), s.padding(5), s.pointer].merge()}/> : null}
       </div>
-    } else {
-      return <div className="body">
-        <Markdown args={this.props.args}>{this.state.body}</Markdown>
-        {user && !this.props.preventEditorMode ? this.renderToggleEditorButton() : null}
-      </div>
-    }
   },
   render () {
     return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)")].merge()}>
+      {this.renderEditor()}
+      {this.renderEditorButton()}
       {this.renderBody()}
     </div>
   }

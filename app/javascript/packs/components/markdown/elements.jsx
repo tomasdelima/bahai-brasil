@@ -10,7 +10,7 @@ export default class Elements extends React.Component {
       case 'String':
         return <span key={i} className="string" style={[s.inlinea].merge()}>{fragment}</span>
       case 'Array':
-        return <span key={i} className="array" style={[s.rect(), s.inline].merge()}>{fragment.map((item, i) => compileFragment(item, i))}</span>
+        return <span key={i} className="array" style={[s.high()].merge()}>{fragment.map((item, i) => compileFragment(item, i))}</span>
       default:
         return null
     }
@@ -32,9 +32,10 @@ export default class Elements extends React.Component {
         </div>
       case 'page':
         var args = fragment.content.split(":")
-        return <Page slug={args[0]} args={args} preventEditorMode />
+        return <Page slug={args[0]} args={args} embedded />
       case 'argument':
-        return <span key={i} className="argument">{this.props.args[fragment.content]}</span>
+        var args = this.props.args || [null, "Argument 1", "Argument 2", "Argument 3", "Argument 4", "Argument 5", "Argument 6", "Argument 7", "Argument 8", "Argument 9", "Argument 10"]
+        return <span key={i} className="argument">{args[fragment.content]}</span>
       case 'image':
         var style = fragment.content[2] ? [s.maxWidth(), s.padding(10), {float: fragment.content[2]}] : [s.wide()]
         return <a href={fragment.content[5]}><img key={i} className="image" style={style.merge()} src={fragment.content[3]}/></a>
@@ -47,7 +48,7 @@ export default class Elements extends React.Component {
         return React.createElement("h" + fragment.content[1].length, {key: i, className: 'heading', style: [s.padding(10)].merge()}, fragment.content[2])
       case 'url':
         var url = fragment.content
-        return <a key={i} className="url" style={[s.url]} href={url[3]}>{url[2] || url[3]}</a>
+        return <a key={i} className="url" style={[s.wrapWord].merge()} href={url[3]}>{url[2] || url[3]}</a>
       case 'color':
         return <div key={i} className="color" style={{color: fragment.content[1]}}>{renderString(fragment.content[2])}</div>
       case 'bg':

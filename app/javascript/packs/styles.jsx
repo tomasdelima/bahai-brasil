@@ -54,6 +54,7 @@ export default {
   grow:       (x) => {return {flexGrow: x}},
   scroll:     {overflow: "auto"},
   noWrap:     {whiteSpace: "nowrap"},
+  wrapWord:   {wordWrap: "break-word"},
 
   breeSerif:    {fontFamily: "bree-serif"},
   pointer:      {cursor: "pointer"},
@@ -78,14 +79,17 @@ export default {
   lightRed:  {color: "#F33"},
 
   BG:          BG,
-  darkWaterBG: BG(t.darkWater(0.8)),
+  darkWaterBG: BG(t.darkWater(1)),
+  yellowBG:    BG(t.yellow(1)),
   blueBG:      BG(c.blue),
   darkBlueBG:  BG(c.darkBlue),
   opaqueBG:    BG("rgba(0, 0, 0, 0.5)"),
   grayBG:      BG("#4B4B4B"),
   lightGrayBG: BG("#E1E1E3"),
   whiteBG:     BG("white"),
+  white2BG:    BG(rgba(255, 255, 255, 0.3)),
   redBG:       BG("red"),
+  darkRedBG:   BG("#D33"),
   inset:       {boxShadow: "0px 1px 2px #BBB inset"},
   insetBlue:   {boxShadow: "0px 0.5px 0.5px " + c.darkBlue + " inset"},
 
@@ -98,7 +102,10 @@ export default {
   minWidth:     function (x, y) {return {minWidth: (m && y) ? y : (x || "100%")}},
   maxWidth:     function (x, y) {return {maxWidth: (m && y) ? y : (x || "100%")}},
   high:         function (x, y) {return {height:   (m && y) ? y : (x || "100%")}},
-  top:          function (x, y) {return {top:      (m && y) ? y : (x || "100%")}},
+  top:          function (x, y) {return {top:      (m && y) ? y : (x || 0)}},
+  bottom:       function (x, y) {return {bottom:   (m && y) ? y : (x || 0)}},
+  left:         function (x, y) {return {left:     (m && y) ? y : (x || 0)}},
+  right:        function (x, y) {return {right:    (m && y) ? y : (x || 0)}},
   rect:         function (x, y) {x = (m && y) ? y : (x || {}); return [s.wide(x.w), s.high(x.h)].merge()},
   radius:       function (x)    {return {borderRadius: x}},
   opacity:      function (x)    {return {opacity: x}},
@@ -109,7 +116,7 @@ export default {
   noBorder:     {border: 0},
   border:       function (x, y) {return {border: x + "px solid " + y}},
   borderBottom: function (x, y) {return {borderBottom: x + "px solid " + y}},
-  animate:      function (x, y) {return {transition: (x.constructor.prototype.name == "Array" ? x : [x]).join(",") + " " + (y||150) + "ms"}},
+  animate:      function (x, y) {x = x || "all"; return {transition: (x.constructor.prototype.name == "Array" ? x : [x]).join(",") + " " + (y||150) + "ms"}},
   m, c, t,
 }
 
