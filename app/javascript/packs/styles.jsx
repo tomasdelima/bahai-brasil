@@ -17,8 +17,7 @@ var t = {
   red:   (alpha) => rgba(255, 0, 0, alpha),
   green: (alpha) => rgba(0, 255, 0, alpha),
   blue:  (alpha) => rgba(0, 0, 255, alpha),
-
-  yellow: (alpha) => rgba(126, 126, 0, alpha),
+  yellow: (alpha) => rgba(240, 210, 0, alpha),
   purple: (alpha) => rgba(126, 0, 126, alpha),
   water:  (alpha) => rgba(0, 126, 126, alpha),
   darkWater: (alpha) => rgba(0, 40, 40, alpha),

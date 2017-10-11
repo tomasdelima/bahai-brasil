@@ -52,12 +52,6 @@ export default React.createClass({
       console.log(error)
     })
   },
-  toggleEditButton (value) {
-    this.setState({showEditButton: this.props.embedded && value})
-  },
-  goToEditPage () {
-    window.location = this.props.slug + "#editor"
-  },
   renderEditor () {
     return this.state.editorMode ? <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/> : null
   },
@@ -106,13 +100,13 @@ export default React.createClass({
     </div>
   },
   renderBody () {
-    return <div style={[s.relative].merge()} onMouseEnter={() => this.toggleEditButton(true)} onMouseLeave={() => this.toggleEditButton(false)}>
+    return <div style={[s.relative].merge()}>
       <Markdown args={this.props.args}>{this.state.body}</Markdown>
-      {this.state.showEditButton ? <i className="fa fa-pencil" onClick={this.goToEditPage} style={[s.absolute, s.top(0), s.right(-15), s.darkWaterBG, s.white, s.radius(4), s.padding(5), s.pointer].merge()}/> : null}
-      </div>
+      {user && this.props.slug ? <a className="fa fa-pencil" href={this.props.slug + "#editor"} style={[s.absolute, s.top(0), s.right(-8), s.noDecoration, s.darkWaterBG, s.white, s.radius(4), s.padding(5), s.pointer].merge()}/> : null}
+    </div>
   },
   render () {
-    return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)")].merge()}>
+    return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)"), {margin: "auto"}].merge()}>
       {this.renderEditor()}
       {this.renderEditorButton()}
       {this.renderBody()}

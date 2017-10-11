@@ -1,7 +1,17 @@
 import React from 'react'
 import Page from '../page'
+import YouTube from 'react-youtube'
 
 export default class Elements extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  componentWillMount() {
+    this.videos = []
+  }
+
   renderByClassName () {
     var {fragment, renderString, compileFragment, i} = this.props
     var className = fragment.constructor.name
@@ -39,6 +49,10 @@ export default class Elements extends React.Component {
       case 'image':
         var style = fragment.content[2] ? [s.maxWidth(), s.padding(10), {float: fragment.content[2]}] : [s.wide()]
         return <a href={fragment.content[5]}><img key={i} className="image" style={style.merge()} src={fragment.content[3]}/></a>
+      case 'youtube':
+        if (!this.state[fragment.content]) this.state[fragment.content] = {width: "100%", height: "0"}
+        this.videos[fragment.content] = this.videos[fragment.content] || <YouTube ref={fragment.content} id={fragment.content} videoId={fragment.content} opts={this.state[fragment.content]} onReady={() => this.updateVideoDimensions(fragment.content)}/>
+        return this.videos[fragment.content]
       case 'left':
       case 'center':
       case 'right':
@@ -57,6 +71,16 @@ export default class Elements extends React.Component {
         return <br key={i} />
       default:
         null
+    }
+  }
+
+  updateVideoDimensions (videoId) {
+    var obj = {}
+    var e = $('#'+videoId)
+    obj[videoId] = {width: e.width(), height: e.width() * 315/560}
+    if (this.state[videoId] != obj) {
+      this.videos[videoId] = null
+      this.setState(obj)
     }
   }
 

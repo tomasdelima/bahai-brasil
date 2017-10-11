@@ -19,6 +19,7 @@ export default [
   {name: 'argument', regexp: (/\[argument:(\d+?)\]/),                            stopRulesPropagation: true},
   {name: 'image',    regexp: (/\[image:((left|right):)?(http.?:.+?)(:(.+))?\]/), stopRulesPropagation: true, multiMatch: true},
   {name: 'url',      regexp: (/\[url:(([^\]]+?):)?(http\S+?)\]/),                stopRulesPropagation: true, multiMatch: true},
+  {name: 'youtube',  regexp: (/\[youtube:(.+?)\]/)},
 
   {name: 'new-line',  regexp: (/(\n|\\n)/), stopRulesPropagation: true},
   {name: 'heading',   regexp: (/(?:^|\n)(\#+) *(.+)/), multiMatch: true},
