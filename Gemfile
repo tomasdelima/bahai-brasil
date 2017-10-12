@@ -17,6 +17,7 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'rack-timeout'
 gem 'webpacker'
+gem 'paper_trail'
 gem 'font-awesome-rails'
 
 group :development, :test do
