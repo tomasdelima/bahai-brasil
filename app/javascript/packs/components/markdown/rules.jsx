@@ -1,5 +1,5 @@
 export default [
-  {name: 'literal',   regexp: (/\[literal:([\s\S]+):literal\]/), stopRulesPropagation: true},
+  {name: 'literal', regexp: (/\[literal:([\s\S]+?):literal\]/), stopRulesPropagation: true},
 
   {name: 'columns', regexp: (/\<columns:\s*([\s\S]+?)\s*:columns\>\s*/)},
   {name: 'columns', regexp: (/\<columns2:\s*([\s\S]+?)\s*:columns2\>\s*/)},
@@ -21,17 +21,18 @@ export default [
   {name: 'url',      regexp: (/\[url:(([^\]]+?):)?(http\S+?)\]/),                stopRulesPropagation: true, multiMatch: true},
   {name: 'youtube',  regexp: (/\[youtube:(.+?)\]/)},
 
-  {name: 'new-line',  regexp: (/(\n|\\n)/), stopRulesPropagation: true},
-  {name: 'heading',   regexp: (/(?:^|\n)(\#+) *(.+)/), multiMatch: true},
-  {name: 'bold',      regexp: (/\[bold:([\s\S]+):bold\]/)},
-  {name: 'bold',      regexp: (/\*([\s\S]+?)\*/)},
-  {name: 'italic',    regexp: (/\/([\s\S]+?)\//)},
-  {name: 'underline', regexp: (/\_([\s\S]+?)\_/)},
-  {name: 'quote',     regexp: (/\[quote:([\s\S]+):quote\]/)},
-  {name: 'quote',     regexp: (/\`([\s\S]+?)\`/)},
+  {name: 'new-line',    regexp: (/(\n|\\n)/), stopRulesPropagation: true},
+  {name: 'escape-char', regexp: (/\\(.)/)},
+  {name: 'heading',     regexp: (/(?:^|\n)(\#+) *(.+)/), multiMatch: true},
+  {name: 'bold',        regexp: (/\[bold:([\s\S]+):bold\]/)},
+  {name: 'bold',        regexp: (/\*([\s\S]+?)\*/)},
+  {name: 'italic',      regexp: (/\/([\s\S]+?)\//)},
+  {name: 'underline',   regexp: (/\_([\s\S]+?)\_/)},
+  {name: 'quote',       regexp: (/\[quote:([\s\S]+):quote\]/)},
+  {name: 'quote',       regexp: (/\`([\s\S]+?)\`/)},
 
-  {name: 'color', regexp: (/\[color:(#.{6}|#.{3}):\s*([\s\S]+)\s*:color\]/),     multiMatch: true},
-  {name: 'bg',    regexp: (/\[bg:(#.{6}|#.{3}):\s*([\s\S]+)\s*:bg\]/),           multiMatch: true},
-  {name: 'color', regexp: (/\<color:(#.{6}|#.{3}):\s*([\s\S]+?)\s*:color\>\s*/), multiMatch: true},
-  {name: 'bg',    regexp: (/\<bg:(#.{6}|#.{3}):\s*([\s\S]+?)\s*:bg\>\s*/),       multiMatch: true},
+  {name: 'color', regexp: (/\[color:(.+?):\s*([\s\S]+?)\s*:color\]/),    multiMatch: true},
+  {name: 'color', regexp: (/\<color:(.+?):\s*([\s\S]+?)\s*:color\>\s*/), multiMatch: true},
+  {name: 'bg',    regexp: (/\[bg:(.+?):\s*([\s\S]+?)\s*:bg\]/),          multiMatch: true},
+  {name: 'bg',    regexp: (/\<bg:(.+?):\s*([\s\S]+?)\s*:bg\>\s*/),       multiMatch: true},
 ]

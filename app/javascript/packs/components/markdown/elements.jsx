@@ -31,7 +31,8 @@ export default class Elements extends React.Component {
 
     switch (fragment.rule) {
       case 'literal':
-        return <span key={i} className="literal">{fragment.content}</span>
+      case 'escape-char':
+        return <span key={i} className={fragment.rule}>{fragment.content}</span>
       case 'columns':
         return <div key={i} className="columns" style={[s.flex, s.wrap].merge()}>{fragment.content.map((item, i) => compileFragment(item, i))}</div>
       case 'column':
@@ -41,10 +42,21 @@ export default class Elements extends React.Component {
           </div>
         </div>
       case 'page':
-        var args = fragment.content.split(":")
+        var args = ['']
+        var c = fragment.content
+        for (var i =0; i < c.length; i++) {
+          args[args.length-1] += c[i] == ':' ? c[i-1] == '\\' ? ':' : '' : c[i]
+          if (c[i] == ':') {
+            if (c[i-1] != '\\') {
+              args.push('')
+            } else {
+              args[args.length-1] = args[args.length-1].slice(0, -2) + args[args.length-1].slice(-1)
+            }
+          }
+        }
         return <Page slug={args[0]} args={args} embedded />
       case 'argument':
-        var args = this.props.args || [null, "Argument 1", "Argument 2", "Argument 3", "Argument 4", "Argument 5", "Argument 6", "Argument 7", "Argument 8", "Argument 9", "Argument 10"]
+        var args = this.props.args || [...Array(Number(fragment.content)+1||0)].map((v,i)=>"Argument #"+i)
         return <span key={i} className="argument">{args[fragment.content]}</span>
       case 'image':
         var style = fragment.content[2] ? [s.maxWidth(), s.padding(10), {float: fragment.content[2]}] : [s.wide()]
