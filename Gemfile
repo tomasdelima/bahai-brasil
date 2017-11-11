@@ -30,7 +30,7 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem 'localtunnel' # Test the ap on local network: lt -p 3000 -s bahaibrasil
+  gem 'localtunnel' # Test the app on local network: lt -p 3000 -s bahaibrasil
 end
 
 group :production do

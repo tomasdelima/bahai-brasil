@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducer from './reducers'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import Styles from './styles'
+import Styles from 'react-quick-styles'
 import Page from './components/page'
 import TopBar from './components/top-bar'
 

@@ -84,7 +84,7 @@ Justificado: `[j:texto:j]` ou `<j:texto:j>` ou `[justify:texto:justify]` ou `<ju
 Referêcia à página: `[page:texto] e [argument:texto]`
 Imagem: `[image:left:-da-imagem]` ou `[image:right:-da-imagem]` ou `[image:left:-da-imagem:url-ao-clicar]` ou `[image:right:-da-imagem:url-ao-clicar]`
 URL: `[url:url-ao-clicar]` ou `[url:texto:url-ao-clicar]`
-YpuTube: `[youtube:texto]`
+YouTube: `[youtube:texto]`
 Nova linha: `\n`
 Título: `# Texto` ou `## Texto` ou `### Texto`
 Negrito: `*texto*` ou `[bold:texto:bold]`
