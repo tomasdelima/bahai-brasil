@@ -5,18 +5,13 @@ ReactGA.initialize(gaKey)
 
 export default class Page extends React.Component {
   constructor (props) {
-    super(props)
-    this.save = this.save.bind(this)
-    this.updateBody = this.updateBody.bind(this)
+    super(props);
+    ["save", "updateBody", "toggleEditorMode", "customElementsRenderer"].map((i) => this[i] = this[i].bind(this))
     this.state = {
       editorMode: user && window.location.hash == "#editor" && !this.props.embedded,
+      showEditEmbedded: user && window.location.hash == "#editor" && this.props.embedded,
       ...this.page(),
     }
-
-    this.customRules = [
-      {name: 'page',     regexp: (/\[page:(.+?)\]/),      stopRulesPropagation: true},
-      {name: 'argument', regexp: (/\[argument:(\d+?)\]/), stopRulesPropagation: true},
-    ]
   }
 
   page () {
@@ -69,7 +64,7 @@ export default class Page extends React.Component {
   }
 
   renderEditor () {
-    return this.state.editorMode ? <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/> : null
+    return this.state.editorMode && <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/>
   }
 
   renderEditorButton () {
@@ -117,6 +112,26 @@ export default class Page extends React.Component {
     </div>
   }
 
+  renderBody () {
+    return <div style={[s.relative].merge()}>
+      <Markdown customElementsRenderer={this.customElementsRenderer} customRules={this.customRules}>{this.state.body}</Markdown>
+      {this.state.showEditEmbedded && <a className="fa fa-pencil" href={this.props.slug + "#editor"} style={[s.absolute, s.top(0), s.right(-8), s.noDecoration, s.darkWaterBG, s.white, s.radius(4), s.padding(5), s.pointer].merge()}d/>}
+    </div>
+  }
+
+  render () {
+    return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)"), {margin: "auto"}].merge()}>
+      {this.renderEditor()}
+      {this.renderEditorButton()}
+      {this.renderBody()}
+    </div>
+  }
+
+  customRules = [
+    {name: 'page',     regexp: (/\[page:(.+?)\]/),      stopRulesPropagation: true},
+    {name: 'argument', regexp: (/\[argument:(\d+?)\]/), stopRulesPropagation: true},
+  ]
+
   customElementsRenderer (fragment, props) {
     if (fragment.rule == 'page') {
       var args = ['']
@@ -133,23 +148,8 @@ export default class Page extends React.Component {
       }
       return <Page slug={args[0]} args={args} embedded key={props.i}/>
     } else if (fragment.rule == 'argument') {
-      var args = props.args || [...Array(Number(fragment.content)+1||0)].map((v,i) => "Argument #"+i)
+      var args = this.props.args || [...Array(Number(fragment.content)+1||0)].map((v,i) => "Argument #"+i)
       return <span key={props.i} className="argument">{args[fragment.content]}</span>
     }
-  }
-
-  renderBody () {
-    return <div style={[s.relative].merge()}>
-      <Markdown customElementsRenderer={this.customElementsRenderer} customRules={this.customRules}>{this.state.body}</Markdown>
-      {user && this.props.slug ? <a className="fa fa-pencil" href={this.props.slug + "#editor"} style={[s.absolute, s.top(0), s.right(-8), s.noDecoration, s.darkWaterBG, s.white, s.radius(4), s.padding(5), s.pointer].merge()}/> : null}
-    </div>
-  }
-
-  render () {
-    return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)"), {margin: "auto"}].merge()}>
-      {this.renderEditor()}
-      {this.renderEditorButton()}
-      {this.renderBody()}
-    </div>
   }
 }
