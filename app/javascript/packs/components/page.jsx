@@ -1,6 +1,7 @@
 import React from 'react'
 import Markdown from 'react-custom-markdown'
 import ReactGA from 'react-ga'
+import Editor from './editor'
 ReactGA.initialize(gaKey)
 
 export default class Page extends React.Component {
@@ -64,10 +65,6 @@ export default class Page extends React.Component {
     })
   }
 
-  renderEditor () {
-    return this.state.editorMode && <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(0, 0, 10)].merge()}/>
-  }
-
   renderEditorButton () {
     if (!user || this.props.embedded) return null
 
@@ -75,7 +72,7 @@ export default class Page extends React.Component {
       var obj = {
         text: "Salvando",
         icon: "clock-o",
-        bg: s.lightGrayBG,
+        bg: s.BG('#666'),
       }
     } else if (this.state.changed) {
       var obj = {
@@ -122,7 +119,7 @@ export default class Page extends React.Component {
 
   render () {
     return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)"), {margin: "auto"}].merge()}>
-      {this.renderEditor()}
+      <Editor enabled={this.state.editorMode} body={this.state.body} changed={this.state.changed} save={this.save} updateBody={this.updateBody}/>
       {this.renderEditorButton()}
       {this.renderBody()}
     </div>
