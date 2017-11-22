@@ -17,8 +17,10 @@ render(
     <Router>
       <div style={[s.flex, s.column, s.center2].merge()}>
         <TopBar/>
-        <Route exact path="/" component={Page} />
-        <Route path="/:slug"  component={Page} />
+        <div style={[s.wide(), s.margin(15, 0)].merge()}>
+          <Route exact path="/" component={Page} />
+          <Route path="/:slug"  component={Page} />
+        </div>
       </div>
     </Router>
   </Provider>,

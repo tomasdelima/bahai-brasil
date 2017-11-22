@@ -35,6 +35,7 @@ export default class Page extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.state.slug != nextProps.match.params.slug || !this.state.slug) {
       this.logPageToGoogleAnalytics()
+      this.setState({changed: false, error: false})
       this.setState(pages.filter((p) => p.slug == nextProps.match.params.slug)[0] || pages.filter((p) => p.slug == "")[0])
     }
   }
@@ -64,7 +65,7 @@ export default class Page extends React.Component {
   }
 
   renderEditor () {
-    return this.state.editorMode && <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(10, 0)].merge()}/>
+    return this.state.editorMode && <textarea onChange={this.updateBody} value={this.state.body} style={[s.wide("calc(100% - 6px)"), s.high(300), s.margin(0, 0, 10)].merge()}/>
   }
 
   renderEditorButton () {
