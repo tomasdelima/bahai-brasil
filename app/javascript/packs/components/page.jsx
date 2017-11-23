@@ -1,7 +1,6 @@
 import React from 'react'
-import Markdown from 'react-custom-markdown'
+import {Markdown, Editor} from 'react-custom-markdown'
 import ReactGA from 'react-ga'
-import Editor from './editor'
 ReactGA.initialize(gaKey)
 
 export default class Page extends React.Component {
@@ -125,7 +124,7 @@ export default class Page extends React.Component {
 
   render () {
     return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)"), {margin: "auto"}].merge()}>
-      {this.state.editorMode && <Editor body={this.state.body} changed={this.state.changed} save={this.save} updateBody={this.updateBody}/>}
+      {this.state.editorMode && <Editor body={this.state.body} changed={this.state.changed} onSave={this.save} onChange={this.updateBody}/>}
       {this.renderEditorButton()}
       {this.renderBody()}
     </div>
