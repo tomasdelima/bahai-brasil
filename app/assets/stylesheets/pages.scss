@@ -14,3 +14,14 @@ body {
     background: rgba(255, 255, 255, 0.1);
   }
 }
+
+.editor-button-tooltip:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  bottom: 100%;
+  right: calc(50% - 7px);;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #393939;
+}

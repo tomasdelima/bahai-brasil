@@ -4346,9 +4346,9 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-custom-markdown@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/react-custom-markdown/-/react-custom-markdown-1.0.13.tgz#d15cf9fa920291ce6ba44c1838350860fd2b92ef"
+react-custom-markdown@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/react-custom-markdown/-/react-custom-markdown-1.0.14.tgz#93796fd4e362c74c1135cb02ff434b0420a045f6"
   dependencies:
     react "^16.1.0"
     react-quick-styles "^1.0.8"

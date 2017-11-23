@@ -47,7 +47,13 @@ export default class Page extends React.Component {
   }
 
   updateBody (e) {
-    this.setState({body: e.nativeEvent.target.value, changed: true, error: false})
+    try {
+      var body = e.nativeEvent.target.value
+    } catch (err) {
+      var body = e
+    }
+
+    this.setState({body: body, changed: true, error: false})
   }
 
   save () {
@@ -119,7 +125,7 @@ export default class Page extends React.Component {
 
   render () {
     return <div className="page" style={[s.maxWidth(1000, "100%"), s.wide("calc(100% - 16px)"), {margin: "auto"}].merge()}>
-      <Editor enabled={this.state.editorMode} body={this.state.body} changed={this.state.changed} save={this.save} updateBody={this.updateBody}/>
+      {this.state.editorMode && <Editor body={this.state.body} changed={this.state.changed} save={this.save} updateBody={this.updateBody}/>}
       {this.renderEditorButton()}
       {this.renderBody()}
     </div>
