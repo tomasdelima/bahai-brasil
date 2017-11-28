@@ -11,6 +11,7 @@ Títulos: qualquer linha precedida por múltiplos `#`, onde a quantidade de `#` 
     ## Sub-título 2
     ### Sub-sub-título 2.1
 
+Banner: `[banner:http://url.da/sua/imagem/aqui.gif]`
 Imagem: `[image:http://url.da/sua/imagem/aqui.jpg]` ou `[image:left:http://url.da/sua/imagem/aqui.jpg]` ou `[image:right:http://url.da/sua/imagem/aqui.jpg]`, onde os índices `left` e `right` indicam se a imagem deva ser jogada à esquerda ou à direita, respectivamente, com relação ao texto ao redor. Tembém é possível fazer com que, ao clicar na imagem, o usuário seja direcionado para uma página; para isso utilize o padrão `[image:http://url.da/sua/imagem/aqui.jpg:http://sua.url/aqui]` ou `[image:left:http://url.da/sua/imagem/aqui.jpg:http://sua.url/aqui]` ou `[image:right:http://url.da/sua/imagem/aqui.jpg:http://sua.url/aqui]`
 URL: `[url:http://sua.url/aqui]` ou `[url:clique aqui:http://sua.url/aqui]`
 YouTube: `[youtube:XXXXXXXXXX]`, onde `XXXXXXXXXX` é o ID do vídeo. O ID do vídeo é encontrado na URL do vídeo no YouTube. Ex.: em `https://www.youtube.com/watch?v=K-Kd14lwuyI`, o ID é `K-Kd14lwuyI`
@@ -76,20 +77,39 @@ Caracter literal: para escapar um caracter específico, utilize `\X` onde `X` é
 ## Resumo:
 
 Literal: `[literal:texto:literal]` ou `\X`
-Colunas: `<columns:[ ... ]:columns>` e `<column:numero:texto:column>`
+
+Colunas: `<columns: ... :columns>` e `<column:numero:texto:column>`
+
 Esquerda: `[l:texto:l]` ou `[left:texto:left]` ou `<l:texto:l>` ou `<left:texto:left>`
+
 Centro: `[c:texto:c]` ou `[center:texto:center]` ou `<c:texto:c>` ou `<center:texto:center>`
+
 Direita: `[r:texto:r]` ou `<r:texto:r>` ou `[right:texto:right]` ou `<right:texto:right>`
+
 Justificado: `[j:texto:j]` ou `<j:texto:j>` ou `[justify:texto:justify]` ou `<justify:texto:justify>`
-Referêcia à página: `[page:texto] e [argument:texto]`
-Imagem: `[image:left:-da-imagem]` ou `[image:right:-da-imagem]` ou `[image:left:-da-imagem:url-ao-clicar]` ou `[image:right:-da-imagem:url-ao-clicar]`
+
+Referêcia à página: `[page:texto]` e `[argument:texto]`
+
+Banner: `[banner:url-da-imagem]`
+
+Imagem: `[image:left:url-da-imagem]` ou `[image:right:url-da-imagem]` ou `[image:left:url-da-imagem:url-ao-clicar]` ou `[image:right:url-da-imagem:url-ao-clicar]`
+
 URL: `[url:url-ao-clicar]` ou `[url:texto:url-ao-clicar]`
+
 YouTube: `[youtube:texto]`
+
 Nova linha: `\n`
-Título: `# Texto` ou `## Texto` ou `### Texto`
+
+Título: `# Texto` ou `## Texto` ou `### Texto` ou `#### Texto` ou `##### Texto` ou `###### Texto`
+
 Negrito: `*texto*` ou `[bold:texto:bold]`
+
 Itálico: `/texto/`
+
 Sublinhado: `_texto_`
+
 Citação: `texto` ou `[quote:texto:quote]`
+
 Cor do texto: `[color:sua-cor:texto:color]` ou `<color:sua-cor:texto:color>`
+
 Cor de fundo: `[bg:cor:texto:bg]` ou `<bg:cor:texto:bg>`
