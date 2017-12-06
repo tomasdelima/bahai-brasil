@@ -76,6 +76,20 @@ module.exports = React.createClass({
     }).reduce((a, b) => a + b, -1)
     this.setActiveCategory(activeCategoryIndex)
   },
+  renderSecondaryBar () {
+    return <ScrollView horizontal showsHorizontalScrollIndicator={false} ref="scrollview"><View style={[s.navbar.categories]} onLayout={this.scrollCategoriesBar}>
+      {Object.map(this.props.categories, (category, posts, i) => {
+        var icon_library = {EvilIcons: EvilIcons, Ionicons: Ionicons, Entypo: Entypo, Foundation: Foundation, FontAwesome: FontAwesome, MaterialIcons: MaterialIcons, MaterialCommunityIcons: MaterialCommunityIcons, Zocial: Zocial, Octicons: Octicons, SimpleLineIcons: SimpleLineIcons}[posts[0].category.icon_library]
+
+        return <TouchableOpacity key={i} style={[s.navbar.category.container]} onPress={() => this.setActiveCategory(i, true)} onLayout={(e) => this[category] = e.nativeEvent.layout.width}>
+          <Text style={[s.navbar.category.icon,s.red2]}>
+            {React.createElement(icon_library, {name: posts[0].category.icon_name, size: 25})}
+          </Text>
+          {this.state.activeCategoryIndex == i ? <Animated.Text style={[s.navbar.category.name]}>{category}</Animated.Text> : null}
+        </TouchableOpacity>
+      })}
+    </View></ScrollView>
+  },
   render () {
     if (this.props.onReturn) {
       this.leftIcon = <EvilIcons style={[s.navbar.sideButton]} size={40} name="chevron-left" />
@@ -100,18 +114,7 @@ module.exports = React.createClass({
           <TouchableHighlight underlayColor={s.t.darkWater(0.8)} style={[s.navbar.sideContainer]} onPress={global.sharePost}>{this.shareIcon}</TouchableHighlight>
         </View>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} ref="scrollview"><View style={[s.navbar.categories]} onLayout={this.scrollCategoriesBar}>
-          {Object.map(this.props.categories, (category, posts, i) => {
-            var icon_library = {EvilIcons: EvilIcons, Ionicons: Ionicons, Entypo: Entypo, Foundation: Foundation, FontAwesome: FontAwesome, MaterialIcons: MaterialIcons, MaterialCommunityIcons: MaterialCommunityIcons, Zocial: Zocial, Octicons: Octicons, SimpleLineIcons: SimpleLineIcons}[posts[0].category.icon_library]
-
-            return <TouchableOpacity key={i} style={[s.navbar.category.container]} onPress={() => this.setActiveCategory(i, true)} onLayout={(e) => this[category] = e.nativeEvent.layout.width}>
-              <Text style={[s.navbar.category.icon,s.red2]}>
-                {React.createElement(icon_library, {name: posts[0].category.icon_name, size: 25})}
-              </Text>
-              {this.state.activeCategoryIndex == i ? <Animated.Text style={[s.navbar.category.name]}>{category}</Animated.Text> : null}
-            </TouchableOpacity>
-          })}
-        </View></ScrollView>
+        {!this.props.onReturn && this.renderSecondaryBar()}
       </View>
 
       <ScrollView style={[]} ref={(s) => global.scrollview = s} refreshControl={refreshControl} onScroll={this.onScroll} onTouchStart={() => global.userTouched = true}>

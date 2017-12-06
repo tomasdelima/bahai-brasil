@@ -27,21 +27,21 @@ module.exports = React.createClass({
 
     return {
       banner: Object.merge(s.post.banner.image, {
-        height: this.animation.interpolate([0, 100, 200]),
+        height:  this.animation.interpolate([0, 100, 200]),
         opacity: this.animation.value,
       }),
       title: Object.merge(s.post.title, {
-        fontSize: this.animation.interpolate([0, 16, 20]),
-        height:   this.animation.interpolate([0, 40, 50]),
-        margin:   this.animation.interpolate([0, 15, 25]),
-        opacity:  this.animation.value,
+        fontSize:      this.animation.interpolate([0, 16, 20]),
+        margin:        this.animation.interpolate([0, 15, 25]),
+        paddingBottom: this.animation.interpolate([0, 10, 10]),
+        opacity:       this.animation.value,
       }),
       date: Object.merge(s.post.date, {height: this.animation.interpolate([0, 30, 30])}),
       body: Object.merge(s.post.paragraph, {opacity: this.animation.interpolate([0, 0, 1])}),
     }
   },
   componentWillMount() {
-    this.images = [this.props.post.banner_url, ...Markdown.getImages(this.props.post.paragraphs.map((a)=>a.body).join(''))].compact()
+    this.images = [this.props.post.banner_url, ...Markdown.getImages(this.props.post.paragraphs.map((a) => a.body).join(''))].compact()
   },
   componentDidMount() {
     Image.getSize(this.props.post.banner_url, (width, height) => {
@@ -89,7 +89,7 @@ module.exports = React.createClass({
   },
   renderTitleAndDate () {
     var p = this.props.post
-    return <View style={[s.row, {alignItems: 'center'}]}>
+    return <View>
       <Animated.Text style={[this.state.title]}>{p.title}</Animated.Text>
       <Animated.Text style={[this.state.date]}>{Date.parse(p.updated_at) > (new Date() - 30*24*60*60*1000) ? HumanDate.relativeTime(p.updated_at) : HumanDate.prettyPrint(p.updated_at)}</Animated.Text>
     </View>

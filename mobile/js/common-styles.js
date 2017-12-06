@@ -49,8 +49,8 @@ var styles = {
       container: { borderTopLeftRadius: 3, borderTopRightRadius: 3, overflow: 'hidden' },
       image: {  },
     },
-    title:     { flex: 1, textAlign: 'left', textAlignVertical: 'center' },
-    date:      { flex: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: c.pale2, textAlign: 'right' },
+    title:     { textAlign: 'left' },
+    date:      { position: 'absolute', right: 0, bottom: 0, paddingLeft: 10, paddingRight: 10, textAlignVertical: 'center', color: c.pale2, textAlign: 'right' },
     paragraph: { fontSize: 15, padding: 20 },
 
     gallery: {
