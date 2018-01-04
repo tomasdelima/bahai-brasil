@@ -1,4 +1,62 @@
-# Documentação da edição de páginas
+# Bahá'í Brasil
+
+Este repositório contém o projeto do aplicativo web em Ruby e React e o projeto do aplicativo móvel em React Native
+
+## Rodando o aplicativo móvel
+
+Vá para a página do aplicativo:
+
+    cd mobile
+
+Instale as dependências:
+
+    npm install
+
+Caso queira desenvolver em iOS:
+
+    react-native run-ios
+
+Caso queira desenvolver em Android:
+
+    react-native run-android
+
+Caso o aplicativo não instale imediatamente, siga os passos em https://facebook.github.io/react-native/docs/running-on-device.html
+
+Para gerar um build para iOS, siga as instruções em https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/TestingYouriOSApp/TestingYouriOSApp.html
+
+Para gerar um build de debug para Android, basta rodar:
+
+    ./build debug
+
+Para gerar um build de produção para Android, basta rodar:
+
+    ./build release
+
+Nos casos de build para produção, é necessário ter os arquivos de licença/assinatura (que comprovam que você tem o direito sobre aquele aplicativo e para evitar que ele seja falsificado). Fale com um dos desenvolvedores para ter acesso a esses arquivos.
+
+## Rodando o aplicativo web
+
+Instale o RVM, Ruby e o Ruby on Rails em https://rvm.io/
+
+Instale o Bundler:
+
+    gem install bundler
+
+Instale as dependências do Rails:
+
+    bundle install
+
+Instale as dependências do React:
+
+    npm install
+
+Rode o servidor:
+
+    rails server
+
+`Nota: o aplicativo móvel obtem os dados do aplicativo web em produção, portanto não depende do aplicativo web rodando em desenvolvimento.`
+
+## Documentação da edição de páginas
 
 Negrito: `*o seu texto em negrito aqui*` ou `[bold:o seu texto em negrito aqui]`
 Itálico: `/o seu texto em itálico aqui/` ou `[italic:o seu texto em itálico aqui]`
