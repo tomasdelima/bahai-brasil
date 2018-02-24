@@ -1,4 +1,4 @@
-class AddOrderingToParagraph < ActiveRecord::Migration
+class AddOrderingToParagraph < ActiveRecord::Migration[4.2]
   def self.up
     add_column :paragraphs, :ordering, :integer
 

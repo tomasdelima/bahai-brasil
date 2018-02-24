@@ -12,6 +12,8 @@ Instale as dependências:
 
     npm install
 
+Como é um aplicativo nativo, não é possível testá-lo em um browser; é necessário rodá-lo em um aparelho (real ou virtual).
+
 Caso queira desenvolver em iOS:
 
     react-native run-ios
