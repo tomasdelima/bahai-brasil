@@ -1,15 +1,18 @@
 import React from 'react'
-import {Markdown, Editor} from 'react-custom-markdown'
+// import {Markdown, Editor} from 'react-custom-markdown'
+import {Markdown, Editor} from '/home/tomas/Projects/react-custom-markdown'
 import TopBar from './top-bar'
 import Banner from './banner'
 import ReactGA from 'react-ga'
+
+import CustomElements from './custom-elements'
 
 ReactGA.initialize(gaKey)
 
 export default class Page extends React.Component {
   constructor (props) {
     super(props);
-    ["save", "updateBody", "toggleEditorMode", "customElementsRenderer"].map((i) => this[i] = this[i].bind(this))
+    ["save", "updateBody", "toggleEditorMode"].map((i) => this[i] = this[i].bind(this))
     this.state = {
       editorMode: user && window.location.hash == "#editor" && !this.props.embedded,
       showEditEmbedded: user && window.location.hash == "#editor" && this.props.embedded,
@@ -123,7 +126,7 @@ export default class Page extends React.Component {
       <div style={s.relative}>
         {this.state.showEditEmbedded && <a className="fa fa-pencil" href={this.props.slug + "#editor"} style={[s.absolute, s.top(0), s.right(-8), s.noDecoration, s.darkWaterBG, s.white, s.radius(4), s.padding(5), s.pointer].merge()}d/>}
       </div>
-      <Markdown customElementsRenderer={this.customElementsRenderer} customRules={this.customRules}>{this.state.body}</Markdown>
+      <Markdown customElementsRenderer={CustomElements.renderer.bind(this)} customRules={CustomElements.rules}>{this.state.body}</Markdown>
     </div>
   }
 
@@ -137,34 +140,5 @@ export default class Page extends React.Component {
         {this.renderBody()}
       </div>
     </div>
-  }
-
-  customRules = [
-    {name: 'page',     regexp: (/\[page:(.+?)\]/),      stopRulesPropagation: true},
-    {name: 'argument', regexp: (/\[argument:(\d+?)\]/), stopRulesPropagation: true},
-    {name: 'banner',   regexp: (/\[banner:(.+?)\]/),    stopRulesPropagation: true},
-  ]
-
-  customElementsRenderer (fragment, props) {
-    if (fragment.rule == 'page') {
-      var args = ['']
-      var c = fragment.content
-      for (var i =0; i < c.length; i++) {
-        args[args.length-1] += c[i] == ':' ? c[i-1] == '\\' ? ':' : '' : c[i]
-        if (c[i] == ':') {
-          if (c[i-1] != '\\') {
-            args.push('')
-          } else {
-            args[args.length-1] = args[args.length-1].slice(0, -2) + args[args.length-1].slice(-1)
-          }
-        }
-      }
-      return <Page slug={args[0]} args={args} embedded key={props.i}/>
-    } else if (fragment.rule == 'argument') {
-      var args = this.props.args || [...Array(Number(fragment.content)+1||0)].map((v,i) => "Argument #"+i)
-      return <span key={props.i} className="argument">{args[fragment.content]}</span>
-    } else if (fragment.rule == 'banner') {
-      return <Banner banner={fragment.content}/>
-    }
   }
 }

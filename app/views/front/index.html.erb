@@ -5,6 +5,13 @@
   var user = <%= current_user.to_json.html_safe %>
   var gaKey = "<%= ENV["GA_KEY"] %>"
   var env =  "<%= Rails.env %>"
+
+  var images = {
+    greenBackground: "<%= asset_url('green-background.png') %>",
+    whiteBackground: "<%= asset_url('white-background.png') %>",
+    homepageBackground: "<%= asset_url('homepage-background.png') %>",
+    vidaEspiritualBanner: "<%= asset_url('vida-espiritual-banner.png') %>",
+  }
 </script>
 
 <div id="react-root"/>
