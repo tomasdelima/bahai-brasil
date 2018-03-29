@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 <script type="text/javascript">
   var pages = <%= Page.all.to_json.html_safe %>.sort((a, b) => a.order > b.order)
   var logoWhite = "<%= asset_url('logo-white.png') %>"
@@ -11,6 +13,8 @@
     whiteBackground: "<%= asset_url('white-background.png') %>",
     homepageBackground: "<%= asset_url('homepage-background.png') %>",
     vidaEspiritualBanner: "<%= asset_url('vida-espiritual-banner.png') %>",
+
+    logo: "<%= asset_url('logo-comunidade-bahai-wb.png') %>",
   }
 </script>
 

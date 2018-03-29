@@ -6,6 +6,7 @@ import reducer from './reducers'
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
 
 require('./import')
+require('./theme')
 
 global.store = createStore(reducer)
 global.unsubscribe = store.subscribe(() => {})
@@ -13,13 +14,13 @@ global.unsubscribe = store.subscribe(() => {})
 render(
   <Provider store={store}>
     <Router>
-      <div style={[s.flex, s.column, s.center2].merge()}>
+      <Flex start1 column>
+        <TopBar/>
+
         <Switch>
-          {/*<Route exact path="/" component={Page} />*/}
-          {/*<Route path="/:slug"  component={Page} />*/}
           <Route path="/"  component={Home} />
         </Switch>
-      </div>
+      </Flex>
     </Router>
   </Provider>,
   document.getElementById('react-root')
