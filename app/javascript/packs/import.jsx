@@ -11,3 +11,4 @@ global.Home = require('./Containers/Home').default
 
 global.TopBar = require('./Components/TopBar').default
 global.TopBarButton = require('./Components/TopBarButton').default
+global.Banner = require('./Components/Banner').default
