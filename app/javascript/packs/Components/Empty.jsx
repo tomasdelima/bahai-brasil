@@ -6,7 +6,7 @@ export default class Empty extends Optimized {
   componentWillMount() {}
   componentDidMount() {}
   componentWillReceiveProps (nextProps) {}
-  shouldComponentUpdate (nextProps, nextState) {}
+  shouldComponentUpdate (nextProps, nextState) {return true}
   componentWillUpdate (nextProps, nextState) {}
   componentDidUpdate (prevProps, prevState) {}
   componentWillUnmount () {}
