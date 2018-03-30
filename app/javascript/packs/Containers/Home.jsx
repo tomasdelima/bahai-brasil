@@ -4,6 +4,7 @@ import Optimized from '../Lib/Optimized'
 export default class Home extends Optimized {
   initialize () {
     this.bind = ["setFindBahaisButtonColor"]
+    this.state = {findBahaisButtonColor: "transparent"}
   }
 
   componentDidMount() {
@@ -34,6 +35,14 @@ export default class Home extends Optimized {
         </Flex>
 
         <Carousel items={[a, a, a]}/>
+
+        <Flex bgImage={images.greenBackground} wide style={[s.padding(55, 0), {borderBottom: "9px solid " + t.green}]}>
+          <Flex end2 spacedOut wide style={s.margin(0, 180)}>
+            <BottomLink icon={images.jornal}    label="Notícias >" to="foo"/>
+            <BottomLink icon={images.star}      label="Orações >"  to="foo"/>
+            <BottomLink icon={images.microfone} label="Imprensa >" to="foo"/>
+          </Flex>
+        </Flex>
       </Flex>
     </Flex>
   }

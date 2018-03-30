@@ -15,18 +15,10 @@ export default class Carousel extends Optimized {
     this.offset = (this.containerWidth - this.itemWidth)/2
   }
 
-  // componentWillMount() {}
   componentDidMount() {
     this.setMeasurements()
     this.scrollTo(0)
   }
-
-  // componentWillReceiveProps (nextProps) {}
-  // shouldComponentUpdate (nextProps, nextState) {}
-  // componentWillUpdate (nextProps, nextState) {}
-  // componentDidUpdate (prevProps, prevState) {}
-  // componentWillUnmount () {}
-  // componentDidCatch (prevProps, prevState) {}
 
   scrollTo (index) {
     this.setState({active: index, left: this.offset - index * this.itemWidth, a: $("body").prop("clientWidth")})
