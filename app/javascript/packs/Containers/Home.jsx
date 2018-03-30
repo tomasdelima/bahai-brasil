@@ -29,9 +29,7 @@ export default class Home extends Optimized {
         <Flex column alignCenter padding={100}>
           <Flex wide={945} padding={15} opacity={0.8} size={28} style={{color: t.white, fontFamily: 'Roboto'}}>Os bahá'ís se esforçam para contribuir para a construção de uma sociedade justa e unida ao lado de pessoas, movimentos e organizações que compartilham desse mesmo ideal.</Flex>
           <Flex wide={945} padding={15} opacity={0.8} size={28} style={{color: t.white, fontFamily: 'Roboto'}}>Inspirados pela visão de Bahá'u'lláh, o princípio que inspira e orienta nosso esforços é o da unicidade da humanodade. Acreditamos que toda a humanodade está interligada e pode viver como um só corpo: um sistema complexo, diverso em seu interior, organicamente interdependente, dinâmico e vivo.</Flex>
-          <Flex radius={4} margin={45} size={17.5} BG={this.state.findBahaisButtonColor} onMouseEnter={() => this.setFindBahaisButtonColor(t.green)} onMouseLeave={() => this.setFindBahaisButtonColor("transparent")} style={[s.animate("all", 300), {border: "2px solid " + t.green, color: t.white, fontFamily: 'Roboto'}]}>
-            <Link to="foo" style={[s.padding(20), s.noDecoration, {color: t.white}].merge()}>Encontre bahá'ís perto de você</Link>
-          </Flex>
+          <Button to="foo" margin={45} padding={20} size={17.5} label="Encontre bahá'ís perto de você"/>
         </Flex>
 
         <Carousel items={[a, a, a]}/>

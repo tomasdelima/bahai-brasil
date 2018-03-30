@@ -33,7 +33,7 @@ export default class Carousel extends Optimized {
             <Flex size={39} padding={30} style={{}}>{item.title}</Flex>
             <Flex size={20} wide={550} alignCenter style={{}}>{item.text1}</Flex>
             <Flex size={20} wide={550} alignCenter style={{}}>{item.text2}</Flex>
-            <Flex size={20} radius={3} BG={"rgba(" + t.greenRgb + ", 0.5)"} style={s.padding(13, 30)} margin={40}><Link to={item.to} style={[s.noDecoration, {color: t.white}].merge()}>{item.buttonLabel}</Link></Flex>
+            <Button margin={40} paddingH={30} paddingV={13} size={20} radius={3} bgColor={"rgba(" + t.greenRgb + ", 0.5)"} activeBgColor={t.green} to={item.to} label={item.buttonLabel} border={"none"}/>
           </Flex>}
         </Flex>)}
       </Flex>
