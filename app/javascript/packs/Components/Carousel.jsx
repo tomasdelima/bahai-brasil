@@ -29,7 +29,7 @@ export default class Carousel extends Optimized {
     return <Flex column>
       <Flex start1 relative wide={this.containerWidth} high={this.itemHeight} style={[{overflow: "hidden"}]}>
         {this.props.items.map((item, i) => <Flex onClick={() => this.scrollTo(i)} relative shrink={0} radius={3} key={i} bgImage={item.image} wide={this.itemWidth} high={this.itemHeight} style={[s.animate("all", 300), {left: this.state.left,backgroundPosition: "center center", backgroundSize: "cover", marginLeft: 15, marginRight: 15}]}>
-          {a != i ? <Flex wide high BG={s.t.dark(0.5)} radius={3}/> : <Flex end1 column high style={[{color: t.white, fontFamily: "Roboto"}]}>
+          {a != i ? <Flex wide pointer high BG={s.t.dark(0.5)} radius={3}/> : <Flex end1 column high style={[{color: t.white, fontFamily: "Roboto"}]}>
             <Flex size={39} padding={30} style={{}}>{item.title}</Flex>
             <Flex size={20} wide={550} alignCenter style={{}}>{item.text1}</Flex>
             <Flex size={20} wide={550} alignCenter style={{}}>{item.text2}</Flex>

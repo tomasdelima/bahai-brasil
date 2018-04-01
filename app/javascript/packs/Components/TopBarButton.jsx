@@ -14,7 +14,7 @@ export default class TopBarButton extends Optimized {
 
   render () {
     return <Link to={this.props.to} style={s.noDecoration}>
-      <Flex white margin={5} radius={4} size={16} pointer bold BG={t[this.props.background] || "transparent"} style={[s.padding(10, 10), this.props.style, s.animate('all', 200), {fontFamily: 'Roboto', color: this.state.color}]} onMouseEnter={this.toggleColor} onMouseLeave={this.toggleColor}>{this.props.title}</Flex>
+      <Flex white margin={5} radius={4} size={16} pointer bold alignCenter BG={t[this.props.background] || "transparent"} style={[s.padding(10, 10), this.props.style, s.animate('all', 200), {fontFamily: 'Roboto', color: this.state.color}]} onMouseEnter={this.toggleColor} onMouseLeave={this.toggleColor}>{this.props.title}</Flex>
     </Link>
   }
 }
