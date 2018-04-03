@@ -79,7 +79,7 @@ export default class Banner extends Optimized {
       {this.props.image && <img src={this.props.image} style={[s.wide()].merge()}/>}
 
       <Flex absolute wide={600} left="calc(50% - 300px)" top="50%" bold size={28} style={{color: t.white, fontFamily: 'Roboto'}}>{this.props.body}</Flex>
-      <Flex absolute wide={30} high={30} className={"fa fa-volume-" + (this.state.muted ? "off" : "up")} size={30} right={30} bottom={30} bold style={{color: t.white}} onClick={this.toggleMute}/>
+      <Flex absolute wide={30} pointer high={30} className={"fa fa-volume-" + (this.state.muted ? "off" : "up")} size={30} right={30} bottom={30} bold style={{color: t.white}} onClick={this.toggleMute}/>
     </Flex>
   }
 }

@@ -3,20 +3,38 @@ import Optimized from '../Lib/Optimized'
 
 export default class TopBar extends Optimized {
   initialize () {
-    this.bind = ["setHeight"]
+    this.bind = ["setHeight", "setTop"]
+    this.state = {top: 0, height: 0}
   }
 
   componentDidMount () {
+    this.doc = $(document)
     this.setHeight()
+    this.setTop()
+
+    this.doc.on("scroll", this.setTop)
   }
 
   setHeight () {
-    this.setState({height: document.getElementById("topbar").clientHeight})
+    var height = document.getElementById("topbar").clientHeight
+    this.setState({height: height})
+  }
+
+  setTop () {
+    var windowTop = this.doc.scrollTop()
+    var top = windowTop/4 - this.state.height
+
+    if (top > 0) top = 0
+
+    this.setState({
+      top: top,
+      bg: windowTop >= window.innerHeight + 9 ? s.bgImage(images.homepageBackground) : s.BG('transparent'),
+    })
   }
 
   render () {
-    return <Flex start1 zindex={10}>
-      <Flex absolute top="0" left="0" right="0" id="topbar" style={s.padding(31, 0)}>
+    return <Flex zindex={10} fixed top={this.state.top} left="0" right="0" id="topbar" style={[s.padding(31, 0)]}>
+      <Flex zindex={11} start1>
         <Link to="/" style={[s.noDecoration, s.size(0)].merge()}>
           <img src={images.logo} style={[s.wide(210)].merge()} onLoad={this.setHeight}/>
         </Link>
@@ -33,7 +51,7 @@ export default class TopBar extends Optimized {
         <TopBarButton to="foo" title="Contato" activeColor="white" background="green" style={s.padding(10, 27)}/>
       </Flex>
 
-      {/*<Flex high={this.state.height} wide/>*/}
+      <Flex absolute top={this.state.top} left={0} right={0} high={this.state.height} opacity={0.7} style={[this.state.bg]}/>
     </Flex>
   }
 }
