@@ -20,6 +20,8 @@ render(
         <Switch>
           <Route path="/"  component={Home} />
         </Switch>
+
+        <Footer/>
       </Flex>
     </Router>
   </Provider>,
