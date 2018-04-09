@@ -8,11 +8,15 @@ global.s = require('react-quick-styles').default
 global.Flex = require('./Lib/Flex').default
 
 global.Home = require('./Containers/Home').default
+global.VidaEspiritual = require('./Containers/VidaEspiritual').default
 
 global.TopBar = require('./Components/TopBar').default
 global.TopBarButton = require('./Components/TopBarButton').default
 global.Footer = require('./Components/Footer').default
+global.Card = require('./Components/Card').default
+global.GreenStrip = require('./Components/GreenStrip').default
 global.Banner = require('./Components/Banner').default
+global.Video = require('./Components/Video').default
 global.Carousel = require('./Components/Carousel').default
 global.BottomLink = require('./Components/BottomLink').default
 global.Button = require('./Components/Button').default

@@ -6,7 +6,13 @@ export default class Optimized extends React.Component {
     this.state = {}
     this.props = props
     this.initialize()
-    this.bind.map(fn => this[fn] = this[fn].bind(this))
+    this.bind.map(fn => {
+      try {
+        this[fn] = this[fn].bind(this)
+      } catch (e) {
+        console.error("Error binding function: " + fn)
+      }
+    })
   }
 
   bind = []

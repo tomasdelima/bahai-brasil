@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
 
 require('./import')
 require('./theme')
+require('./Lib/Styles')
 
 global.store = createStore(reducer)
 global.unsubscribe = store.subscribe(() => {})
@@ -14,15 +15,11 @@ global.unsubscribe = store.subscribe(() => {})
 render(
   <Provider store={store}>
     <Router>
-      <Flex start1 column>
-        <TopBar/>
-
-        <Switch>
-          <Route path="/"  component={Home} />
-        </Switch>
-
-        <Footer/>
-      </Flex>
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/vida-espiritual" component={VidaEspiritual} />
+        <Route path="/" component={Home} />
+      </Switch>
     </Router>
   </Provider>,
   document.getElementById('react-root')

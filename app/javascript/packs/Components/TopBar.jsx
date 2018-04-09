@@ -4,7 +4,8 @@ import Optimized from '../Lib/Optimized'
 export default class TopBar extends Optimized {
   initialize () {
     this.bind = ["setHeight", "setTop"]
-    this.state = {top: 0, height: 0}
+    this.state = {top: 0, height: 0, behavior: this.props.behavior || "fixed"}
+    global.topbar = this
   }
 
   componentDidMount () {
@@ -15,21 +16,29 @@ export default class TopBar extends Optimized {
     this.doc.on("scroll", this.setTop)
   }
 
+  componentWillUnmount () {
+    this.doc.off("scroll")
+  }
+
   setHeight () {
-    var height = document.getElementById("topbar").clientHeight
-    this.setState({height: height})
+    this.height = document.getElementById("topbar").clientHeight
+    this.setState({height: this.height})
   }
 
   setTop () {
-    var windowTop = this.doc.scrollTop()
-    var top = windowTop/4 - this.state.height
+    if (this.state.behavior == "fixed") {
+      this.setState({bg: s.bgImage(images.homepageBackground)})
+    } else {
+      var windowTop = this.doc.scrollTop()
+      var top = windowTop/4 - this.height
 
-    if (top > 0) top = 0
+      if (top > 0) top = 0
 
-    this.setState({
-      top: top,
-      bg: windowTop >= window.innerHeight + 9 ? s.bgImage(images.homepageBackground) : s.BG('transparent'),
-    })
+      this.setState({
+        top: top,
+        bg: windowTop >= window.innerHeight + 9 ? s.bgImage(images.homepageBackground) : s.BG('transparent'),
+      })
+    }
   }
 
   render () {
@@ -41,7 +50,7 @@ export default class TopBar extends Optimized {
 
         <Flex style={s.margin(0, 15)}>
           <TopBarButton to="foo" title="Bahá'ís no Brasil"/>
-          <TopBarButton to="foo" title="Vida Espiritual"/>
+          <TopBarButton to="/vida-espiritual" title="Vida Espiritual"/>
           <TopBarButton to="foo" title="Transformando a Realidade Social"/>
           <TopBarButton to="foo" title="Notícias"/>
           <TopBarButton to="foo" title="Orações"/>
