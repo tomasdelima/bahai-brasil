@@ -2,16 +2,6 @@ import React from 'react'
 import Optimized from '../Lib/Optimized'
 
 export default class Footer extends Optimized {
-  initialize () {this.bind = []}
-  componentWillMount() {}
-  componentDidMount() {}
-  componentWillReceiveProps (nextProps) {}
-  shouldComponentUpdate (nextProps, nextState) {return true}
-  componentWillUpdate (nextProps, nextState) {}
-  componentDidUpdate (prevProps, prevState) {}
-  componentWillUnmount () {}
-  componentDidCatch (prevProps, prevState) {}
-
   render () {
     var style = [s.noDecoration, s.size(19), {fontFamily: 'Roboto', color: t.white}].merge()
 
@@ -33,7 +23,7 @@ export default class Footer extends Optimized {
 
       <Flex column start2 lineHeight="27px">
         <Link to={"/foo"} style={style}>Bahá'ís no Brasil</Link>
-        <Link to={"/foo"} style={style}>Vida Espiritual</Link>
+        <Link to={"/vida-espiritual"} style={style}>Vida Espiritual</Link>
         <Link to={"/foo"} style={style}>Notícias</Link>
         <Link to={"/foo"} style={style}>Orações</Link>
         <Link to={"/foo"} style={style}>Imprensa</Link>
@@ -44,10 +34,10 @@ export default class Footer extends Optimized {
 
         <Flex style={s.margin(15, 0, 0)}>
           <style>
-            ::placeholder {JSON.stringify(style).replace(/,/g,';').replace(/"/g,'')}
+            #newsletter-email::placeholder {JSON.stringify(style).replace(/,/g,';').replace(/"/g,'')}
           </style>
 
-          <input id="foo" placeholder="email" style={[style, s.high(22), s.padding(12, 20), s.noBorder, s.radius("4px 0 0 4px"), s.BG(t.gray)].merge()}/>
+          <input id="newsletter-email" placeholder="email" style={[style, s.padding(12, 20), s.noBorder, s.radius("4px 0 0 4px"), s.BG(t.gray)].merge()}/>
           <Button to="foo" label="inscrever-se" margin="0" bgColor={t.green} radius="0 4px 4px 0"/>
         </Flex>
       </Flex>
