@@ -4,19 +4,19 @@ import Optimized from '../Lib/Optimized'
 export default class Banner extends Optimized {
   initialize () {
     this.bind = ["toogleShadow"]
-    this.state = {shadow: 0}
+    this.state = {shadow: s.isMobile() ? 4 : 0}
   }
 
   toogleShadow () {
-    if (this.props.to) this.setState({shadow: 4 - this.state.shadow})
+    if (this.props.to && !s.isMobile()) this.setState({shadow: 4 - this.state.shadow})
   }
 
   renderBody () {
     return <Flex column>
       <img src={this.props.image} style={[s.wide(), {borderRadius: "5px 5px 0 0"}].merge()}/>
       <Flex text column padding={40} alignCenter>
-        <Flex color={t.black} size={20} style={s.margin(0, 0, 13)}>{this.props.title}</Flex>
-        <Flex color={t.gray} size={16}>{this.props.body}</Flex>
+        <Flex color={t.black} large style={s.margin(0, 0, 13)}>{this.props.title}</Flex>
+        <Flex color={t.gray} medium>{this.props.body}</Flex>
       </Flex>
     </Flex>
   }
