@@ -11,7 +11,7 @@ export default class Buttom extends Optimized {
     this.margin = this.props.margin || 15
     this.paddingV = this.props.paddingV || this.props.padding || 10
     this.paddingH = this.props.paddingH || this.props.padding || 35
-    this.size = this.props.size || 19
+    this.size = this.props.size || (s.isMobile() ? "xx-large" : "larger")
     this.radius = this.props.radius || 4
 
     this.state = {buttonColor: this.bgColor}
@@ -23,7 +23,7 @@ export default class Buttom extends Optimized {
 
   render () {
     return <Flex margin={this.margin} size={this.size} radius={this.radius} BG={this.state.buttonColor} onMouseEnter={() => this.setButtonColor(this.bgActiveColor)} onMouseLeave={() => this.setButtonColor(this.bgColor)} style={[s.animate("all", 300), {border: this.border, color: this.color, fontFamily: 'Roboto'}]}>
-      <Link to={this.props.to} style={[s.padding(this.paddingV, this.paddingH), s.shrink(0), s.noDecoration, {color: t.white}].merge()}>
+      <Link to={this.props.to} style={[s.padding(this.paddingV, this.paddingH), s.shrink(0), s.noDecoration, s.flex, s.noWrap, {color: t.white}].merge()}>
         {this.props.label}
       </Link>
     </Flex>

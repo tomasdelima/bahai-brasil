@@ -16,14 +16,14 @@ export default class Home extends Optimized {
         <Video videos={homeVideos} body='“...em meio à desintegração, está tomando forma um novo modo de vida coletiva que dá expressão prática a tudo que é divino nos seres humanos.”'/>
         <GreenStrip/>
 
-        <Flex column bgImage={images.homepageBackground}>
+        <Flex column bgImage={images.homepageBackground} contain>
           <Flex column alignCenter padding={100}>
-            <Flex padding={15} opacity={0.8} size={28} style={{color: t.white, fontFamily: 'Roboto'}}>Os bahá'ís se esforçam para contribuir para a construção de uma sociedade justa e unida ao lado de pessoas, movimentos e organizações que compartilham desse mesmo ideal.</Flex>
-            <Flex padding={15} opacity={0.8} size={28} style={{color: t.white, fontFamily: 'Roboto'}}>Inspirados pela visão de Bahá'u'lláh, o princípio que inspira e orienta nosso esforços é o da unicidade da humanodade. Acreditamos que toda a humanodade está interligada e pode viver como um só corpo: um sistema complexo, diverso em seu interior, organicamente interdependente, dinâmico e vivo.</Flex>
-            <Button to="foo" margin={45} padding={20} size={17.5} label="Encontre bahá'ís perto de você"/>
+            <Flex padding={15} opacity={0.8} size="x-large" text color={t.white}>Os bahá'ís se esforçam para contribuir para a construção de uma sociedade justa e unida ao lado de pessoas, movimentos e organizações que compartilham desse mesmo ideal.</Flex>
+            <Flex padding={15} opacity={0.8} size="x-large" text color={t.white}>Inspirados pela visão de Bahá'u'lláh, o princípio que inspira e orienta nosso esforços é o da unicidade da humanodade. Acreditamos que toda a humanodade está interligada e pode viver como um só corpo: um sistema complexo, diverso em seu interior, organicamente interdependente, dinâmico e vivo.</Flex>
+            <Button to="foo" margin={45} padding={20} label="Encontre bahá'ís perto de você"/>
           </Flex>
 
-          <Carousel items={[a, a, a]}/>
+          <Carousel itemWidth={s.isMobile() && 600} items={[a, a, a]}/>
 
           <Flex bgImage={images.greenBackground} wide style={[s.padding(55, 0), {borderBottom: "9px solid " + t.green}]}>
             <Flex end2 spacedOut wide style={s.margin(0, 180)}>
