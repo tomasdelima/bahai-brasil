@@ -14,6 +14,8 @@ export default class Home extends Optimized {
 
       <Flex wide stretch2 column>
         <Video videos={homeVideos} body='“...em meio à desintegração, está tomando forma um novo modo de vida coletiva que dá expressão prática a tudo que é divino nos seres humanos.”'/>
+        <GreenStrip/>
+
         <Flex column bgImage={images.homepageBackground}>
           <Flex column alignCenter padding={100}>
             <Flex padding={15} opacity={0.8} size={28} style={{color: t.white, fontFamily: 'Roboto'}}>Os bahá'ís se esforçam para contribuir para a construção de uma sociedade justa e unida ao lado de pessoas, movimentos e organizações que compartilham desse mesmo ideal.</Flex>
