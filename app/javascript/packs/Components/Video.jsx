@@ -63,7 +63,7 @@ export default class Video extends Optimized {
   }
 
   render () {
-    return <Flex wide high={this.height} relative style={{overflow: "hidden"}} zindex={this.props.zindex}>
+    return <Flex BG="white" wide high={this.height} relative style={{overflow: "hidden"}} zindex={this.props.zindex}>
       <video ref="video" width={$("body").prop("clientWidth")} muted={this.state.muted} onProgress={this.onProgress} autoPlay>
         <source src={this.props.videos[this.state.videoIndex]} type="video/mp4"/>
         Your browser does not support the video tag.

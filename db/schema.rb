@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128005338) do
+ActiveRecord::Schema.define(version: 20180413225105) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -44,8 +44,9 @@ ActiveRecord::Schema.define(version: 20171128005338) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order"
-    t.boolean "appears_on_menu", default: true
-    t.boolean "menu_has_transition"
+    t.string "banner_url"
+    t.text "quote"
+    t.string "author"
   end
 
   create_table "paragraphs", force: :cascade do |t|

@@ -11,13 +11,14 @@ require('./Lib/Styles')
 
 global.store = createStore(reducer)
 global.unsubscribe = store.subscribe(() => {})
+global.m = s.isMobile() || $(document).width() < 1300
 
 render(
   <Provider store={store}>
     <Router>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/vida-espiritual" component={VidaEspiritual} />
+        {pages.map((page, i) => <Route key={page.title} path={page.slug} component={Page}/>)}
         <Route path="/" component={Home} />
       </Switch>
     </Router>

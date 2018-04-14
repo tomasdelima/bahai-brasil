@@ -4,7 +4,7 @@ import Optimized from '../Lib/Optimized'
 export default class Footer extends Optimized {
   render () {
     var m = s.isMobile()
-    var fontSize = m ? "xx-large" : "larger"
+    var fontSize = m ? "xx-large" : "large"
     var style = [s.noDecoration, s.size(fontSize), s.text, s.color(t.white)].merge()
 
     return <Flex wrap spacedOut BG={t.darkGreen} wide style={[s.padding(43, 0), style]}>
@@ -24,11 +24,7 @@ export default class Footer extends Optimized {
       </Flex>
 
       {!m && <Flex column start2 lineHeight="27px">
-        <Link to={"/foo"} style={style}>Bahá'ís no Brasil</Link>
-        <Link to={"/vida-espiritual"} style={style}>Vida Espiritual</Link>
-        <Link to={"/foo"} style={style}>Notícias</Link>
-        <Link to={"/foo"} style={style}>Orações</Link>
-        <Link to={"/foo"} style={style}>Imprensa</Link>
+        {pages.map((page, i) => <Button key={i} to={page.slug} style={style} label={page.title} size={fontSize} border="none" margin="0" padding="0" bgActiveColor="transparent" activeColor={t.green} />)}
       </Flex>}
 
       <Flex start2 column style={m && [s.wide("100%"), s.center2, s.margin(50, 0, 0)]}>
@@ -40,7 +36,7 @@ export default class Footer extends Optimized {
           </style>
 
           <input id="newsletter-email" placeholder="email" type="email" style={[style, s.padding(12, 20), s.noBorder, s.radius("4px 0 0 4px"), s.BG(t.gray)].merge()}/>
-          <Button to="foo" label="inscrever-se" margin="0" bgColor={t.green} radius="0 4px 4px 0"/>
+          <Button to="foo" label="inscrever-se" size={fontSize} margin="0" bgColor={t.green} radius="0 4px 4px 0"/>
         </Flex>
       </Flex>
     </Flex>
