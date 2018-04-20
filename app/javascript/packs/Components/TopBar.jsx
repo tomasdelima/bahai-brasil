@@ -4,13 +4,24 @@ import Optimized from '../Lib/Optimized'
 export default class TopBar extends Optimized {
   initialize () {
     this.bind = ["setHeight", "toogleMenu"]
-    this.state = {height: 0}
+    this.state = {overlayHeight: 0, top: this.props.scroll ? -1000 : 0}
     global.topbar = this
   }
 
+  componentDidMount () {
+    if (this.props.scroll) {
+      $(document).on("scroll", (e) => {
+        var windowTop = $(window).scrollTop()/4
+        if (windowTop <= this.state.overlayHeight) this.setState({top: windowTop - this.state.overlayHeight})
+      })
+    }
+  }
+  componentWillUnmount () {
+    $(document).off("scroll")
+  }
+
   setHeight () {
-    this.height = document.getElementById("topbar").clientHeight
-    this.setState({height: this.height})
+    this.setState({overlayHeight: document.getElementById("topbar").clientHeight})
   }
 
   toogleMenu () {
@@ -25,7 +36,7 @@ export default class TopBar extends Optimized {
 
   render () {
     return <Flex size="0">
-      <Flex fixed id="topbar" spacedIn wrap zindex={11} wide top={0} left={0} style={[m ? s.column : s.row, s.padding(31, 0), s.bgImage(images.homepageBackground)]}>
+      <Flex fixed id="topbar" spacedIn wrap zindex={11} wide top={this.state.top} left={0} style={[m ? s.column : s.row, s.padding(31, 0), this.props.bg ? s.BG(this.props.bg) : s.bgImage(images.homepageBackground)]}>
         <Flex spacedIn style={[s.margin(0, 0, 0, 50), m && s.wide()]}>
           <Link to="/" style={[s.noDecoration, s.size(0)].merge()}>
             <img src={images.logo} style={[s.wide(m ? 300 : 210)].merge()} onLoad={this.setHeight}/>
@@ -40,7 +51,7 @@ export default class TopBar extends Optimized {
         </Flex>}
       </Flex>
 
-      {!this.props.overlay && <Flex high={this.state.height}/>}
+      {!this.props.overlay && <Flex high={this.state.overlayHeight}/>}
     </Flex>
   }
 }
