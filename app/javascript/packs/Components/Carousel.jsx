@@ -4,8 +4,8 @@ import Optimized from '../Lib/Optimized'
 export default class Carousel extends Optimized {
   initialize () {
     this.setMeasurements()
-    this.bind = ["scrollTo"]
-    this.state = {left: 0}
+    this.bind = ["scrollTo", "loop"]
+    this.state = {left: 0, active: -1}
   }
 
   setMeasurements () {
@@ -17,7 +17,12 @@ export default class Carousel extends Optimized {
 
   componentDidMount() {
     this.setMeasurements()
-    this.scrollTo(0)
+    this.loop()
+  }
+
+  loop () {
+    this.scrollTo(this.state.active == this.props.items.length - 1 ? 0 : this.state.active + 1)
+    setTimeout(this.loop, 5000)
   }
 
   scrollTo (index) {
