@@ -22,6 +22,7 @@ export default class TopBar extends Optimized {
   calculateTop () {
     var windowTop = $(window).scrollTop()/3
     if (windowTop <= this.state.overlayHeight) this.setState({top: windowTop - this.state.overlayHeight})
+    else this.setState({top: 0})
   }
 
   setHeight () {

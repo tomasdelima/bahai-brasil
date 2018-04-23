@@ -7,8 +7,6 @@ export default class Home extends Optimized {
   }
 
   render () {
-    var a = {image: images.vidaEspiritualBanner, title: 'A VIDA DO ESPÍRITO', text1: "“Tu és Minha lâmpada e Minha luz está em ti. Que obtenhas dela teu resplendor e não aspires a outro senão a Mim.”", text2: "–Bahá'u'lláh", buttonLabel: "Leia mais >", to: "/vida-espiritual"}
-
     return <Flex start1 wide stretch2 column>
       <TopBar overlay scroll/>
 
@@ -20,10 +18,10 @@ export default class Home extends Optimized {
           <Flex padding={15} opacity={0.8} size="x-large" text color={t.white}>A comunidade bahá’í busca contribuir para a construção de uma sociedade unida e justa ao lado de pessoas, movimentos e organizações que compartilham desse mesmo ideal.</Flex>
           <Flex padding={15} opacity={0.8} size="x-large" text color={t.white}>Inspirados pela visão de Bahá'u'lláh, acreditamos que toda a humanidade pode viver como um só corpo: um sistema complexo, diverso em seu interior, organicamente interdependente, dinâmico e vivo.</Flex>
           <Flex padding={15} opacity={0.8} size="x-large" text color={t.white}>No Brasil, somos das mais diversas origens sociais e culturais aprendendo juntos a traduzir os princípios trazidos por Bahá’u’lláh em realidade.</Flex>
-          <Button to="foo" margin={45} padding={20} label="Encontre bahá'ís perto de você"/>
+          {/*<Button to="foo" margin={45} padding={20} label="Encontre bahá'ís perto de você"/>*/}
         </Flex>
 
-        <Carousel itemWidth={s.isMobile() && 600} items={[a, a, a]}/>
+        <Carousel itemWidth={s.isMobile() && 600} items={pages}/>
       </Flex>
 
       <Footer/>

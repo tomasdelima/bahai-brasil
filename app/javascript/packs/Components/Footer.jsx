@@ -27,7 +27,7 @@ export default class Footer extends Optimized {
         {pages.map((page, i) => <Button key={i} to={page.slug} style={style} label={page.title} size={fontSize} border="none" margin="0" padding="0" bgActiveColor="transparent" activeColor={t.green} />)}
       </Flex>}
 
-      <Flex start2 column style={m && [s.wide("100%"), s.center2, s.margin(50, 0, 0)]}>
+      {/*<Flex start2 column style={m && [s.wide("100%"), s.center2, s.margin(50, 0, 0)]}>
         <Flex>Receba nossa newsletter</Flex>
 
         <Flex style={s.margin(15, 0, 0)}>
@@ -38,7 +38,7 @@ export default class Footer extends Optimized {
           <input id="newsletter-email" placeholder="email" type="email" style={[style, s.padding(12, 20), s.noBorder, s.radius("4px 0 0 4px"), s.BG(t.gray)].merge()}/>
           <Button to="foo" label="inscrever-se" size={fontSize} margin="0" bgColor={t.green} radius="0 4px 4px 0"/>
         </Flex>
-      </Flex>
+      </Flex>*/}
     </Flex>
   }
 }
