@@ -4,6 +4,20 @@ import Optimized from '../Lib/Optimized'
 export default class Page extends Optimized {
   initialize () {
     this.page = allPages.filter(page => page.slug == this.props.match.path)[0]
+    this.setCards()
+  }
+
+  setCards () {
+    var tempCards = this.page.sub_pages.length ? this.page.sub_pages : (this.page.parent_page || {}).sub_pages || []
+
+    tempCards.map((card, i) => {
+      if (card.id == this.page.id) tempCards.splice(i, 1)
+    })
+
+    this.cards = []
+    this.cards[0] = tempCards.splice(Math.floor(Math.random() * tempCards.length), 1)[0]
+    this.cards[1] = tempCards.splice(Math.floor(Math.random() * tempCards.length), 1)[0]
+    this.cards[2] = tempCards.splice(Math.floor(Math.random() * tempCards.length), 1)[0]
   }
 
   componentDidMount() {
@@ -34,9 +48,9 @@ export default class Page extends Optimized {
           {this.page.body.split("\n").map((paragraph, i) => <Flex key={i} size={23} padding={15}>{paragraph}</Flex>)}
 
           <Flex start2 style={[s.isMobile() && s.column,s.margin(85, 0, 50)]}>
-            <Card margin={10} to={"foo"} image={images.vidaEspiritualBanner} title="Vida e Morte" body="Pequena descrição ou citação pode vir aqui para introduzir o tema"/>
-            <Card margin={10} to={"foo"} image={images.vidaEspiritualBanner} title="Porque sofremos" body="Pequena descrição ou citação pode vir aqui para introduzir o tema"/>
-            <Card margin={10} to={"foo"} image={images.vidaEspiritualBanner} title="Familia" body="Pequena descrição ou citação pode vir aqui para introduzir o tema"/>
+            {this.cards.map((subPage, i) =>
+              subPage && <Card key={i} margin={10} to={subPage.slug} image={subPage.banner_url} title={subPage.title} body={subPage.body}/>
+            )}
           </Flex>
         </Flex>
       </Flex>
