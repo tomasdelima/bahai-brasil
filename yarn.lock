@@ -4533,9 +4533,9 @@ react-quick-styles@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/react-quick-styles/-/react-quick-styles-1.0.8.tgz#96fce7441d244ac92e06da85bcd18ced79612b93"
 
-react-quick-styles@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/react-quick-styles/-/react-quick-styles-1.0.9.tgz#c88946e36cfbce9b3932c9413b55803033fe04db"
+react-quick-styles@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-quick-styles/-/react-quick-styles-2.0.4.tgz#048e2ee60abbd72d0c7584f1df51b6e095307d81"
 
 react-redux@^5.0.6:
   version "5.0.6"

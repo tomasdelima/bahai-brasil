@@ -4,6 +4,7 @@ global.Fragment = React.Fragment
 global.Link = require('react-router-dom').Link
 
 global.s = require('react-quick-styles').default
+global.Markdown = require('react-custom-markdown').Markdown
 
 global.Flex = require('./Lib/Flex').default
 

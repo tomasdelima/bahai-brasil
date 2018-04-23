@@ -45,7 +45,9 @@ export default class Page extends Optimized {
         <Flex color={t.darkGray} text style={[s.padding(35, 120)]} column>
           <Flex padding={20} opacity={0.8} size={39} noWrap bold color={t.black}>{this.page.title}</Flex>
 
-          {this.page.body.split("\n").map((paragraph, i) => <Flex key={i} size={23} padding={15}>{paragraph}</Flex>)}
+          {this.page.body.split("\n").map((paragraph, i) => <Flex key={i} size={23} padding={15}>
+            <Markdown>{paragraph}</Markdown>
+          </Flex>)}
 
           <Flex start2 style={[s.isMobile() && s.column,s.margin(85, 0, 50)]}>
             {this.cards.map((subPage, i) =>
