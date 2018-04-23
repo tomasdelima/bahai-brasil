@@ -21,3 +21,4 @@ global.Video = require('./Components/Video').default
 global.Carousel = require('./Components/Carousel').default
 global.BottomLink = require('./Components/BottomLink').default
 global.Button = require('./Components/Button').default
+global.Contact = require('./Components/Contact').default

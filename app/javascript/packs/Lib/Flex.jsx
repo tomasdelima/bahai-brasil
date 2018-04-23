@@ -20,7 +20,7 @@ export default class Flex extends Optimized {
           style.push(s[prop])
         }
       } else {
-        if (["children", "style", "id", "onMouseEnter", "onMouseLeave", "onClick", "className"].indexOf(prop) >= 0) {
+        if (["children", "style", "id", "onMouseEnter", "onMouseLeave", "onChange", "onClick", "className"].indexOf(prop) >= 0) {
           props[prop] = this.props[prop]
         } else {
           console.log("Ignoring unknown div attribute: " + prop)

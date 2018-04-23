@@ -18,14 +18,15 @@ export default class TopBarButton extends Optimized {
 
   render () {
     var m = s.isMobile()
+    var element = this.props.to ? Link : Flex
+    var props = {to:this.props.to, onClick: this.props.onClick, style: s.noDecoration}
+    var children = <Flex white margin={5} radius={4} size={m ? "xx-large" : "medium"} pointer alignCenter BG={t[this.props.background] || "transparent"} text color={this.state.color} style={[s.padding(10, 10), this.props.style, s.animate('all', 200), !m && s.bold]} onMouseEnter={this.toggleColor} onMouseLeave={this.toggleColor}>{this.props.title}</Flex>
 
     return <Flex relative onMouseEnter={this.toggleSubPages} onMouseLeave={this.toggleSubPages}>
-      <Link to={this.props.to} style={s.noDecoration}>
-        <Flex white margin={5} radius={4} size={s.isMobile() ? "xx-large" : "medium"} pointer alignCenter BG={t[this.props.background] || "transparent"} text color={this.state.color} style={[s.padding(10, 10), this.props.style, s.animate('all', 200), !m && s.bold]} onMouseEnter={this.toggleColor} onMouseLeave={this.toggleColor}>{this.props.title}</Flex>
-      </Link>
+      {React.createElement(element, props, children)}
 
-      {this.state.showSubPages && <Flex column absolute top={"100%"} left={0} right={0}>
-        {this.props.subPages && this.props.subPages.map((subPage, i) => <Button size={s.isMobile() ? "xx-large" : "medium"} key={i} margin={1} padding={15} radius="0" label={subPage.title} to={subPage.slug} bgColor={t.darkBlue} border="none"  />)}
+      {this.state.showSubPages && !m && <Flex column absolute top={"100%"} left={0} right={0}>
+        {this.props.subPages && this.props.subPages.map((subPage, i) => <Button size={m ? "xx-large" : "medium"} key={i} margin={1} padding={15} radius="0" label={subPage.title} to={subPage.slug} bgColor={t.darkBlue} border="none" />)}
       </Flex>}
     </Flex>
   }

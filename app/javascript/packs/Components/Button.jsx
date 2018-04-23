@@ -27,10 +27,11 @@ export default class Buttom extends Optimized {
   }
 
   render () {
+    var element = this.props.to ? Link : Flex
+    var props = {to: this.props.to, onClick: this.props.onClick, style: [s.animate("all", 300), s.padding(this.paddingV, this.paddingH), s.shrink(0), s.noDecoration, s.pointer, s.flex, s.noWrap, {color: this.state.color}].merge()}
+
     return <Flex margin={this.margin} size={this.size} radius={this.radius} BG={this.state.bgColor} onMouseEnter={() => this.setButtonColor(true)} onMouseLeave={() => this.setButtonColor()} style={[s.animate("all", 300), {border: this.border, color: this.color, fontFamily: 'Roboto'}]}>
-      <Link to={this.props.to} style={[s.animate("all", 300), s.padding(this.paddingV, this.paddingH), s.shrink(0), s.noDecoration, s.flex, s.noWrap, {color: this.state.color}].merge()}>
-        {this.props.label}
-      </Link>
+      {React.createElement(element, props, this.props.label)}
     </Flex>
   }
 }

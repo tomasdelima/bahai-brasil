@@ -3,7 +3,7 @@ import Optimized from '../Lib/Optimized'
 
 export default class TopBar extends Optimized {
   initialize () {
-    this.bind = ["setHeight", "toogleMenu", "calculateTop"]
+    this.bind = ["setHeight", "toggleMenu", "toggleContacts", "calculateTop"]
     this.state = {overlayHeight: 0, top: this.props.scroll ? -1000 : 0}
     global.topbar = this
   }
@@ -28,8 +28,12 @@ export default class TopBar extends Optimized {
     this.setState({overlayHeight: document.getElementById("topbar").clientHeight})
   }
 
-  toogleMenu () {
+  toggleMenu () {
     this.setState({showMenu: !this.state.showMenu}, this.setHeight)
+  }
+
+  toggleContacts () {
+    this.setState({showContacts: !this.state.showContacts})
   }
 
   renderMenu () {
@@ -46,14 +50,16 @@ export default class TopBar extends Optimized {
             <img src={images.logo} style={[s.wide(m ? 300 : 210)].merge()} onLoad={this.setHeight}/>
           </Link>
 
-          {m && <Flex color={t.white} className="fa fa-bars" size={60} onClick={this.toogleMenu} style={s.margin(0, 50, 0, 0)}/>}
+          {m && <Flex color={t.white} className="fa fa-bars" size={60} onClick={this.toggleMenu} style={s.margin(0, 50, 0, 0)}/>}
         </Flex>
 
         {(!m || this.state.showMenu) && this.renderMenu()}
         {(!m || this.state.showMenu) && <Flex style={s.margin(0, m ? 0 : 50, 0, 0)} wrap>
-          <TopBarButton to="foo" title="Contato" activeColor="white" background="green" style={s.padding(10, 27)}/>
+          <TopBarButton onClick={this.toggleContacts} title="Contato" activeColor="white" background="green" style={s.padding(10, 27)}/>
         </Flex>}
       </Flex>
+
+      <Contact show={this.state.showContacts} onClose={this.toggleContacts}/>
 
       {!this.props.overlay && <Flex high={this.state.overlayHeight}/>}
     </Flex>
