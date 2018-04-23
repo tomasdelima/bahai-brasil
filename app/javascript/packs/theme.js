@@ -3,6 +3,7 @@ window.t = {
   green:     "#00B36E",
   darkGreen: "#0D1B20",
   blue:      "#0D1B20",
+  darkBlue:  "#172C36",
   white:     "#FFFFFF",
   gray:      "#79868F",
   black:     "#000000",

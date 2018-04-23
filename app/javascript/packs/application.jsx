@@ -18,7 +18,8 @@ render(
     <Router>
       <Switch>
         <Route path="/" exact component={Home} />
-        {pages.map((page, i) => <Route key={page.title} path={page.slug} component={Page}/>)}
+        {pages.map(page => page.sub_pages.map(subPage => <Route key={subPage.title} path={subPage.slug} component={Page}/>))}
+        {pages.map(page => <Route key={page.title} path={page.slug} component={Page}/>)}
         <Route path="/" component={Home} />
       </Switch>
     </Router>

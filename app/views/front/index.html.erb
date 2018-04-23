@@ -1,7 +1,8 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 <script type="text/javascript">
-  var pages = <%= Page.all.to_json.html_safe %>.sort((a, b) => a.order > b.order)
+  var pages = <%= Page.where(parent_page_id: nil).order(:order).to_json(include: :sub_pages).html_safe %>
+  var allPages = <%= Page.all.to_json.html_safe %>
   var logoWhite = "<%= asset_url('logo-white.png') %>"
   var logoGreen = "<%= asset_url('logo-green.png') %>"
   var user = <%= current_user.to_json.html_safe %>
@@ -23,7 +24,6 @@
     microfone: "<%= asset_url('microfone.png') %>",
   }
 
-  var pages = <%= Page.all.order(:order).to_json.html_safe %>
 
   var homeVideos = [
     "https://s3-sa-east-1.amazonaws.com/imagens-bahai.org.br/video+homepage.mp4",

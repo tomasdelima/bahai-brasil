@@ -30,7 +30,7 @@ export default class TopBar extends Optimized {
 
   renderMenu () {
     return <Flex margin={15} spacedOut wrap style={[m ? s.column : s.row]}>
-      {pages.map((page, i) => <TopBarButton key={page.title} to={page.slug} title={page.title}/>)}
+      {pages.map((page, i) => <TopBarButton key={page.title} to={page.slug} title={page.title} subPages={page.sub_pages}/>)}
     </Flex>
   }
 

@@ -3,7 +3,7 @@ import Optimized from '../Lib/Optimized'
 
 export default class Page extends Optimized {
   initialize () {
-    this.page = pages.filter(page => page.slug == this.props.match.path)[0]
+    this.page = allPages.filter(page => page.slug == this.props.match.path)[0]
   }
 
   componentDidMount() {
