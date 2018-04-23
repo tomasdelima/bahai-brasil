@@ -1,6 +1,7 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 <script type="text/javascript">
+  var home = <%= HomePage.last.to_json.html_safe %>
   var pages = <%= Page.where(parent_page_id: nil).order(:order).to_json(include: :sub_pages).html_safe %>
   var allPages = <%= Page.all.to_json(include: [:sub_pages, parent_page: {include: :sub_pages}]).html_safe %>
   var logoWhite = "<%= asset_url('logo-white.png') %>"
