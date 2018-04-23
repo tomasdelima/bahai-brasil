@@ -3,21 +3,25 @@ import Optimized from '../Lib/Optimized'
 
 export default class TopBar extends Optimized {
   initialize () {
-    this.bind = ["setHeight", "toogleMenu"]
+    this.bind = ["setHeight", "toogleMenu", "calculateTop"]
     this.state = {overlayHeight: 0, top: this.props.scroll ? -1000 : 0}
     global.topbar = this
   }
 
   componentDidMount () {
     if (this.props.scroll) {
-      $(document).on("scroll", (e) => {
-        var windowTop = $(window).scrollTop()/3
-        if (windowTop <= this.state.overlayHeight) this.setState({top: windowTop - this.state.overlayHeight})
-      })
+      $("#topbar img").on("load", this.calculateTop)
+      $(document).on("scroll", this.calculateTop)
     }
   }
+
   componentWillUnmount () {
     $(document).off("scroll")
+  }
+
+  calculateTop () {
+    var windowTop = $(window).scrollTop()/3
+    if (windowTop <= this.state.overlayHeight) this.setState({top: windowTop - this.state.overlayHeight})
   }
 
   setHeight () {

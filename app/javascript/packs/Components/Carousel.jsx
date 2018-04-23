@@ -20,9 +20,15 @@ export default class Carousel extends Optimized {
     this.loop()
   }
 
+  componentWillUnmount () {
+    this.isUnmounted = true
+  }
+
   loop () {
-    this.scrollTo(this.state.active == this.props.items.length - 1 ? 0 : this.state.active + 1)
-    setTimeout(this.loop, 5000)
+    if (!this.isUnmounted) {
+      this.scrollTo(this.state.active == this.props.items.length - 1 ? 0 : this.state.active + 1)
+      setTimeout(this.loop, 5000)
+    }
   }
 
   scrollTo (index) {
