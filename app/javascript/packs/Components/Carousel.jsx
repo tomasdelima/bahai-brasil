@@ -50,8 +50,7 @@ export default class Carousel extends Optimized {
         {this.props.items.map((item, i) => <Flex onClick={() => this.scrollTo(i)} relative shrink={0} radius={3} key={i} bgImage={item.banner_url} wide={this.itemWidth} high={this.itemHeight} style={[s.animate("all", 300), {left: this.state.left,backgroundPosition: "center center", backgroundSize: "cover", marginLeft: this.marginH, marginRight: this.marginH}]}>
           {a != i ? <Flex wide pointer high BG={s.t.dark(0.5)} radius={3}/> : <Flex end1 column high style={[{color: t.white, fontFamily: "Roboto"}]}>
             <Flex size={39} padding={30} style={{}}>{item.title}</Flex>
-            <Flex size={20} wide={550} alignCenter style={{}}>{item.quote}</Flex>
-            <Flex size={20} wide={550} alignCenter style={{}}>{item.author}</Flex>
+            <Flex size={20} wide={550} alignCenter style={{}}>{item.short_description}</Flex>
             <Button margin={40} paddingH={30} paddingV={13} size={20} radius={3} bgColor={"rgba(" + t.greenRgb + ", 0.5)"} activeBgColor={t.green} to={item.slug} label="Leia mais >" border={"none"}/>
           </Flex>}
         </Flex>)}

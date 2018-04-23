@@ -10,7 +10,7 @@ export default class Home extends Optimized {
     return <Flex start1 wide stretch2 column>
       <TopBar overlay scroll/>
 
-      <Video video={home.video} quote={home.video_quote} author={home.video_author}/>
+      {s.isMobile() ? <Banner image={home.banner_url}/> : <Video video={home.video} quote={home.video_quote} author={home.video_author}/>}
       <GreenStrip/>
 
       <Flex column bgImage={images.homepageBackground} contain>
