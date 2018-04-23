@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423225914) do
+ActiveRecord::Schema.define(version: 20180423233746) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20180423225914) do
     t.text "quote"
     t.string "author"
     t.integer "parent_page_id"
+    t.text "short_description"
     t.index ["parent_page_id"], name: "index_pages_on_parent_page_id"
   end
 

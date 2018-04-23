@@ -51,7 +51,7 @@ export default class Page extends Optimized {
 
           <Flex start2 style={[s.isMobile() && s.column,s.margin(85, 0, 50)]}>
             {this.cards.map((subPage, i) =>
-              subPage && <Card key={i} margin={10} to={subPage.slug} image={subPage.banner_url} title={subPage.title} body={subPage.body}/>
+              subPage && <Card key={i} margin={10} to={subPage.slug} image={subPage.banner_url} title={subPage.title} body={subPage.short_description}/>
             )}
           </Flex>
         </Flex>
