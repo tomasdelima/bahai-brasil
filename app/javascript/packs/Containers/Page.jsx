@@ -33,7 +33,7 @@ export default class Page extends Optimized {
       <TopBar/>
 
       <Flex wide stretch2 column>
-        <Banner height={600} image={this.page.banner_url}/>
+        <Banner image={this.page.banner_url}/>
         <Flex column bgImage={images.whiteBackground}>
           <Flex column alignCenter padding={100}>
             <img src={images.star} style={s.wide(65)}/>
