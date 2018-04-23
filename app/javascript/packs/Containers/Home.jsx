@@ -10,7 +10,7 @@ export default class Home extends Optimized {
     var a = {image: images.vidaEspiritualBanner, title: 'A VIDA DO ESPÍRITO', text1: "“Tu és Minha lâmpada e Minha luz está em ti. Que obtenhas dela teu resplendor e não aspires a outro senão a Mim.”", text2: "–Bahá'u'lláh", buttonLabel: "Leia mais >", to: "/vida-espiritual"}
 
     return <Flex start1 wide stretch2 column>
-      <TopBar overlay bg="transparent" scroll/>
+      <TopBar overlay bg={t.overlay} scroll/>
 
       <Video videos={homeVideos} quote='“...que suas ações dia a dia possam ser belas preces.”' author='— ‘Abdu’l-Bahá'/>
       <GreenStrip/>

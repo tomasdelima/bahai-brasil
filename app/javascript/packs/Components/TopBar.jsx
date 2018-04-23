@@ -11,7 +11,7 @@ export default class TopBar extends Optimized {
   componentDidMount () {
     if (this.props.scroll) {
       $(document).on("scroll", (e) => {
-        var windowTop = $(window).scrollTop()/4
+        var windowTop = $(window).scrollTop()/3
         if (windowTop <= this.state.overlayHeight) this.setState({top: windowTop - this.state.overlayHeight})
       })
     }
