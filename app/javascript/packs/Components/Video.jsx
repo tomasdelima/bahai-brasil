@@ -69,9 +69,12 @@ export default class Video extends Optimized {
         Your browser does not support the video tag.
       </video>
 
-      <Flex absolute wide={600} left="calc(50% - 300px)" bottom={95} bold size={28} style={{color: t.white, fontFamily: 'Roboto'}}>{this.props.quote}</Flex>
-      <Flex absolute wide={600} left="calc(50% - 300px)" bottom={60} bold size={28} style={{color: t.white, fontFamily: 'Roboto'}}>{this.props.author}</Flex>
-      <Flex absolute wide={30} pointer high={30} className={"fa fa-volume-" + (this.state.muted ? "off" : "up")} size={30} right={30} bottom={30} bold style={{color: t.white}} onClick={this.toggleMute}/>
+      <Flex absolute bottom={0} left={0} wide BG={t.overlay} column padding={20}>
+        <Flex bold padding={10} size={28} style={{color: t.white, fontFamily: 'Roboto'}}>{this.props.quote}</Flex>
+        <Flex bold padding={10} size={28} style={{color: t.white, fontFamily: 'Roboto'}}>{this.props.author}</Flex>
+      </Flex>
+
+      {/*<Flex absolute wide={30} pointer high={30} className={"fa fa-volume-" + (this.state.muted ? "off" : "up")} size={30} right={30} bottom={30} bold style={{color: t.white}} onClick={this.toggleMute}/>*/}
     </Flex>
   }
 }
