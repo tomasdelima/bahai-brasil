@@ -107,7 +107,7 @@ export default class Contact extends Optimized {
   }
 
   render () {
-    return this.props.show ? <Flex fixed wide high zindex={12} BG={t.overlay} left={0}>
+    return this.props.show ? <Flex fixed wide high zindex={12} BG={t.overlay} top={0} left={0}>
       <Flex relative BG={t.white} radius={5} text color={t.white} size={30} column padding={30}>
         <Flex className="fa fa-times" absolute right={20} top={20} color={t.darkBlue} pointer onClick={this.props.onClose}/>
         <Flex color={t.darkBlue}>Contato</Flex>
