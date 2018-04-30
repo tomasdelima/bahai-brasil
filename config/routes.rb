@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   devise_for :users
 
   root 'front#index'
-  get '/*page' => 'front#index'
 
   get 'api/v1/posts' => 'posts#index'
   get 'api/v1/posts/:id' => 'posts#show'
@@ -15,6 +14,8 @@ Rails.application.routes.draw do
 
   post 'api/v1/page' => 'pages#create'
   patch 'api/v1/page/:id' => 'pages#update'
+
+  get '/*page' => 'front#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
